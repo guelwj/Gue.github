@@ -1,6 +1,7 @@
 git init demo 初始化
 
 git add 将修改过的文件add一下
+git add . 添加所有修改过的文件
 
 git ls -la 列出
 git ls -lat 列出  (两者结果一样，排列顺序不同)
@@ -12,7 +13,9 @@ git status -s 会出现M 第一列出现M含义：版本库和处理中间状态有差异
 git commit -m "comment" 提交
 git commit -a -m "comment" 加了参数-a之后不需要git add就能git commit  (不推荐)
 
+git push origin master 推送到远程仓库
 
+git branch 创建分支
 
 ----------------------
 撤销操作：
