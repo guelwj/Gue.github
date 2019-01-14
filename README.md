@@ -4,11 +4,10 @@
 
 ## 目录：
 1. [分享一个不错的git教学视频](#分享一个不错的git教学视频)
-1. 分享一个不错的git教学视频
-2. 微信公众平台-小程序
-3. 大白话讲解Promise
-4. 前端布局神器display:flex
-5. js模块化编程之彻底弄懂CommonJS和AMD/CMD
+2. [微信公众平台文档](#微信公众平台文档)
+3. [大白话讲解Promise](#大白话讲解Promise)
+4. [前端布局神器display:flex](#前端布局神器display:flex)
+5. [js模块化编程之彻底弄懂CommonJS和AMD/CMD](#js模块化编程之彻底弄懂CommonJS和AMD/CMD)
 6. git push错误failed to push some refs to
 7. 使用Flexible实现手淘H5页面的终端适配
 8. 入门Webpack，看这篇就够了
@@ -24,35 +23,24 @@
 18. airbnb/javascript标准
 
 
------------------------------------------------------------------------------
 ## 分享一个不错的git教学视频
-git权威指南教程
-网址：http://www.icoolxue.com/album/show/41
------------------------------------------------------------------------------
+git权威指南教程：http://www.icoolxue.com/album/show/41
 
 
------------------------------------------------------------------------------
-2. 微信公众平台-小程序
-网址：https://developers.weixin.qq.com/miniprogram/dev/
------------------------------------------------------------------------------
+## 微信公众平台文档
+https://developers.weixin.qq.com/miniprogram/dev/
 
 
------------------------------------------------------------------------------
-3. 大白话讲解Promise
-网址：https://www.cnblogs.com/lvdabao/p/es6-promise-1.html
------------------------------------------------------------------------------
+## 大白话讲解Promise
+https://www.cnblogs.com/lvdabao/p/es6-promise-1.html
 
 
------------------------------------------------------------------------------
-4. 前端布局神器display:flex
-网址：https://www.cnblogs.com/qingchunshiguang/p/8011103.html
------------------------------------------------------------------------------
+## 前端布局神器display:flex
+https://www.cnblogs.com/qingchunshiguang/p/8011103.html
 
 
------------------------------------------------------------------------------
-5. js模块化编程之彻底弄懂CommonJS和AMD/CMD
-网址：https://www.cnblogs.com/chenguangliang/p/5856701.html
------------------------------------------------------------------------------
+## js模块化编程之彻底弄懂CommonJS和AMD/CMD
+https://www.cnblogs.com/chenguangliang/p/5856701.html
 
 
 -----------------------------------------------------------------------------
