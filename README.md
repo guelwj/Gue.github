@@ -50,7 +50,7 @@ https://www.cnblogs.com/chenguangliang/p/5856701.html
 使用指令 git pull --rebase origin master
 这条指令的意思是把远程库中的更新合并到本地库中，--rebase的作用是取消掉本地库中刚刚的commit，并把他们接到更新后的版本库之中。
 
-网址：https://blog.csdn.net/mbuger/article/details/70197532
+https://blog.csdn.net/mbuger/article/details/70197532
 
 
 ## 使用Flexible实现手淘H5页面的终端适配
@@ -73,24 +73,26 @@ https://segmentfault.com/q/1010000004436205/a-1020000004436328
 ## js控制输入框光标位置（setSelectionRange详解）
 
 解决方案：
+```javascript
 var inpObj = document.getElementById(inputId);
 if (inpObj.setSelectionRange) {
     inpObj.setSelectionRange(0, inpObj.value.length);
 }
+```
 
-网址：https://blog.csdn.net/foralienzhou/article/details/52437929
+https://blog.csdn.net/foralienzhou/article/details/52437929
 
 
 ## jquery中attr和prop的区别介绍
 
-•对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。
-•对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
+对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。
+对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
 
-网址：https://www.jb51.net/article/88068.htm
+https://www.jb51.net/article/88068.htm
 
 
 ## 拖放排序插件Sortable.js
-网址：https://segmentfault.com/a/1190000008209715
+https://segmentfault.com/a/1190000008209715
 
 
 ## ios与android差异，new_Date()之坑
@@ -109,7 +111,7 @@ new Date(date)
 new Date(date.replace(/\-/g,'/').replace('.0',''));
 //The Feb 18 2016 16:42:54 GMT+0800 (CST)
 
-网址：http://www.mamicode.com/info-detail-1392511.html
+http://www.mamicode.com/info-detail-1392511.html
 
 
 ## 原生js实现瀑布流效果
@@ -132,4 +134,4 @@ https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
 
 
 ## airbnb/javascript标准
-网址：https://github.com/airbnb/javascript#table-of-contents
+https://github.com/airbnb/javascript#table-of-contents
