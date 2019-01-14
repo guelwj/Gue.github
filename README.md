@@ -1,7 +1,8 @@
-# Gue君爷的note
-# 记录平时项目中遇到问题时的解决方案，附上能找到答案的网址
-# 分享一些不错的资源
-# record by Gue君爷
+# Gue君爷的日常note
+
+## 记录平时项目中遇到问题时的解决方案，附上能找到答案的网址
+## 分享一些不错的资源
+## record by Gue君爷
 
 ##目录：
 1. 分享一个不错的git教学视频
@@ -17,7 +18,7 @@
 11. js控制输入框光标位置（setSelectionRange详解）
 12. jquery中attr和prop的区别介绍
 13. 拖放排序插件Sortable.js
-14. ios 与 android 差异 --- new Date() 之坑
+14. ios 与 android 差异 - new Date() 之坑
 15.原生js实现瀑布流效果
 16. 微信小程序RSA签名验签加密解密
 17.解决Visual Studio 2017隐藏“高级保存选项”命令
