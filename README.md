@@ -211,7 +211,6 @@ export function log(sth) {
   return sth;
 }
 对应的导入方式：
-
 //b.js
 import { str, log } from 'a'; //也可以分开写两次，导入的时候带花括号
 
@@ -221,7 +220,6 @@ import { str, log } from 'a'; //也可以分开写两次，导入的时候带花
 const str = "blablabla~";
 export default str;
 对应的导入方式：
-
 //b.js
 import str from 'a'; //导入的时候没有花括号
 
