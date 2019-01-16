@@ -21,7 +21,7 @@
 16. [微信小程序rsa签名验签加密解密](#微信小程序rsa签名验签加密解密)
 17. [解决vs2017隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
 18. [airbnb_javascript标准](#airbnb_javascript标准)
-19.[export_default和export的区别](#export_default和export的区别)
+19. [export_default和export的区别](#export_default和export的区别)
 
 
 ## git基本操作
