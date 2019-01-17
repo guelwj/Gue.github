@@ -26,10 +26,10 @@
 
 ## git基本操作
 ```javascript
-git init demo 初始化
+git init demo //初始化
 
-git add 将修改过的文件add一下
-git add . 添加所有修改过的文件
+git add 文件名 //将修改过的文件add一下
+git add . //添加所有修改过的文件
 
 git ls -la 列出
 git ls -lat 列出  (两者结果一样，排列顺序不同)
@@ -41,53 +41,53 @@ git status -s 会出现M 第一列出现M含义：版本库和处理中间状态
 git commit -m "comment" 提交
 git commit -a -m "comment" 加了参数-a之后不需要git add就能git commit  (不推荐)
 
-git push origin master 推送到远程仓库
+git push origin master //推送到远程仓库
 
 git branch 分支名称 //创建分支
-
 git checkout 分支名称 //切换到对应分支
+
+git fetch 分支名 //拉取
+git merge 分支名 //合并
+
+git pull 分支名 //拉取并合并
 
 使用Git下载指定分支命令为：git clone -b 分支名仓库地址
 例如：使用Git下载 gue 分支代码，使用命令：git clone -b gue https://github.com/guelwj/Gue.github.git
-
 ----------------------
 撤销操作：
-git checkout .             修改过某个文件，没有git add，想撤销这次修改
+git checkout .             //修改过某个文件，没有git add，想撤销这次修改
 
-git reset                  所有在暂存区的都撤销
-git reset example.txt      修改过某个文件，已经git add过，撤销这次修改 (暂存区目录树的重写)。
-git reset --soft commitId  如果已经修改某几个文件，但是想撤销到某个版本，但是当前暂存区、工作区不想撤销
-git reset --hard commitId  直接撤销回某个版本
+git reset                  //所有在暂存区的都撤销
+git reset example.txt      //修改过某个文件，已经git add过，撤销这次修改 (暂存区目录树的重写)。
+git reset --soft commitId  //如果已经修改某几个文件，但是想撤销到某个版本，但是当前暂存区、工作区不想撤销
+git reset --hard commitId  //直接撤销回某个版本
 
-git reflog                 可显示版本号
+git reflog                 //可显示版本号
 git reset --hard HEAD@{0}
 ----------------------
-
 git stash     当前工作区暂停
 git stash pop 继续当前工作
-
 ----------------------
 比较差异：
-git diff             比较工作目录和临时修改区域（未git add加入到暂存区域）之间的差异
-git diff branchName  比较当前目录与某个分支的差异
-git diff head        显示工作版本和head的差别
+git diff             //比较工作目录和临时修改区域（未git add加入到暂存区域）之间的差异
+git diff branchName  //比较当前目录与某个分支的差异
+git diff head        //显示工作版本和head的差别
 ----------------------
-
-git merge 加上分支名，可以把在某个分支上做过的修改，融合到需要融合的分支上。
-
 git cat-file -p HEAD 可以查看当前版本的父版本parent，如果当前版本是由两个分支merge的话，会出现两个parent
 
-
-printf git |sha1sum            保证每次提交全球唯一
-printf gitchina.org |sha1sum   保证每次提交全球唯一
-
+printf git |sha1sum            //保证每次提交全球唯一
+printf gitchina.org |sha1sum   //保证每次提交全球唯一
 ----------------------
 linux命令：
-cd    更换当前目录
+cd    //更换当前目录
+mkdir //创建一个新目录
+vim   //创建、修改文件
 
-mkdir 创建一个新目录
-
-vim   创建、修改文件
+rm    //删除文件；一般的删除操作用rm即可
+-f, --force    忽略不存在的文件，从不给出提示。
+-i, --interactive 进行交互式删除
+-r, -R, --recursive   指示rm将参数中列出的全部目录和子目录均递归地删除。
+-v, --verbose    详细显示进行的步骤
 ----------------------
 ```
 git权威指南教程：http://www.icoolxue.com/album/show/41
