@@ -43,7 +43,12 @@ git commit -a -m "comment" 加了参数-a之后不需要git add就能git commit 
 
 git push origin master 推送到远程仓库
 
-git branch 创建分支
+git branch 分支名称 //创建分支
+
+git checkout 分支名称 //切换到对应分支
+
+使用Git下载指定分支命令为：git clone -b 分支名仓库地址
+例如：使用Git下载v.2.8.1分支代码，使用命令：git clone -b gue https://github.com/guelwj/Gue.github.git
 
 ----------------------
 撤销操作：
