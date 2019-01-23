@@ -22,6 +22,7 @@
 17. [解决vs2017隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
 18. [airbnb_javascript标准](#airbnb_javascript标准)
 19. [export_default和export的区别](#export_default和export的区别)
+20. [微信小程序授权的写法](#微信小程序授权的写法)
 
 
 ## git基本操作
@@ -243,3 +244,134 @@ import any12 from "./a.js"
 console.log(any,any12)   // boy,boy
 ```
 https://www.jianshu.com/p/edaf43e9384f
+
+
+## 微信小程序授权的写法
+```javascript
+// utils.js
+export const getCurrentLocation = () => {
+  return new Promise((res, rej) => {
+    wx.getLocation({
+      type: 'wgs84',
+      success: ({ latitude, longitude }) => {
+        res({ lat: latitude, lng: longitude });
+      },
+      fail: rej
+    });
+  });
+};
+
+/**
+ * 获取授权情况promisify封装
+ * @param {String} keyName
+ * @return {Promise}
+ */
+export const getSetting = keyName => {
+  return new Promise((res, rej) => {
+    wx.getSetting({
+      success: ({ authSetting }) => {
+        res(authSetting[keyName]);
+      },
+      fail: rej
+    });
+  });
+};
+
+/**
+ * 获取重新授权过程
+ * @param {Object} dataJson
+ * @return {Promise}
+ */
+export const reauthenticate = (
+  keyName = '',
+  { askMessage = '检测到未授权，是否重新授权？' } = {}
+) => {
+  return new Promise((res, rej) => {
+    getSetting(keyName).then(settingRs => {
+      if (!settingRs) {
+        showModal({
+          title: '提示',
+          content: askMessage,
+          success: modalRs => {
+            // 用户同意重新授权，跳转授权页面
+            if (modalRs.confirm) {
+              wx.openSetting({
+                success: reSettingRs => {
+                  // 用户成功重新授权，则重新获取授权信息并继续第一个授权时的resolve操作
+                  if (reSettingRs.authSetting[keyName]) {
+                    res();
+                  } else {
+                    // 这里是用户同意重新授权，但没点击授权
+                    rej();
+                  }
+                }
+              });
+            } else {
+              // 这里是用户不同意重新授权
+              rej();
+            }
+          }
+        });
+      } else {
+        res();
+      }
+    });
+  });
+};
+
+
+// 调用
+import * as utils from 'utils/util';
+
+// example 1
+getCurrentLocation() {
+  utils.getCurrentLocation()
+    .then(({ lat, lng }) => {
+      // 用户确认授权
+      console.log(lat)
+      console.log(lng)
+    })
+    .catch(() => {
+      // 用户取消授权，重新引导授权
+      utils.reauthenticate('scope.userLocation', {
+        askMessage: '检测到您拒绝了授权，将无法获取位置信息，是否重新授权'
+      })
+      .then(() => {
+        // 重新授权
+        this.getCurrentLocation()
+      })
+      .catch(() => {
+        console.log('这里是用户同意重新授权，但没点击授权');
+      });
+    })
+}
+
+// example 2
+getWxInvoice(noRetry) {
+  wx.chooseInvoiceTitle({
+    success: res => {
+      this.setData({
+        InvoiceHeaderType: String(res.type),
+        InvoiceHeader: res.title,
+        InvoiceTaxNo: res.taxNumber,
+        InvoiceAddress: res.companyAddress,
+        InvoicePhone: res.telephone,
+        InvoiceBankName: res.bankName,
+        InvoiceBankAcctID: res.bankAccount
+      });
+    },
+    fail: () => {
+      if (!noRetry) {
+        utils
+          .reauthenticate('scope.invoiceTitle')
+          .then(() => {
+            this.getWxInvoice(true);
+          })
+          .catch(() => {
+            console.log('获取失败');
+          });
+      }
+    }
+  });
+}
+```
