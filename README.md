@@ -251,6 +251,7 @@ https://www.jianshu.com/p/edaf43e9384f
 // utils.js
 export const getCurrentLocation = () => {
   return new Promise((res, rej) => {
+    // 调用需要授权的方法时，小程序会自动弹出授权窗
     wx.getLocation({
       type: 'wgs84',
       success: ({ latitude, longitude }) => {
@@ -348,6 +349,7 @@ getCurrentLocation() {
 
 // example 2
 getWxInvoice(noRetry) {
+  // 调用需要授权的方法时，小程序会自动弹出授权窗
   wx.chooseInvoiceTitle({
     success: res => {
       this.setData({
