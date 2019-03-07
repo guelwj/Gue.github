@@ -1,13 +1,13 @@
 /**
 * WxParse.wxParse(bindName , type, data, target,imagePadding)
-* 1.bindName°ó¶¨µÄÊı¾İÃû(±ØÌî)
-* 2.type¿ÉÒÔÎªhtml»òÕßmd(±ØÌî)
-* 3.dataÎª´«ÈëµÄ¾ßÌåÊı¾İ(±ØÌî)
-* 4.targetÎªPage¶ÔÏó,Ò»°ãÎªthis(±ØÌî)
-* 5.imagePaddingÎªµ±Í¼Æ¬×ÔÊÊÓ¦ÊÇ×óÓÒµÄµ¥Ò»padding(Ä¬ÈÏÎª0,¿ÉÑ¡)
+* 1.bindNameç»‘å®šçš„æ•°æ®å(å¿…å¡«)
+* 2.typeå¯ä»¥ä¸ºhtmlæˆ–è€…md(å¿…å¡«)
+* 3.dataä¸ºä¼ å…¥çš„å…·ä½“æ•°æ®(å¿…å¡«)
+* 4.targetä¸ºPageå¯¹è±¡,ä¸€èˆ¬ä¸ºthis(å¿…å¡«)
+* 5.imagePaddingä¸ºå½“å›¾ç‰‡è‡ªé€‚åº”æ˜¯å·¦å³çš„å•ä¸€padding(é»˜è®¤ä¸º0,å¯é€‰)
 */
 
-// µ÷ÓÃÀı×Ó£º
+// è°ƒç”¨ä¾‹å­ï¼š
 const WxParse = require('.wxParse/wxParse.js');
 
 Page({

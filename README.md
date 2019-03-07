@@ -25,6 +25,16 @@
 20. [微信小程序授权的写法](#微信小程序授权的写法)
 21. [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
 22. [微信小程序解决富文本不支持的问题](#微信小程序解决富文本不支持的问题)
+23. [jQuery的deferred对象详解](#jQuery的deferred对象详解)
+24. [不错的code练习网站](#不错的code练习网站)
+25. [深入理解css中vertical_align属性](#深入理解css中vertical_align属性)
+26. [JS订阅模式](#JS订阅模式)
+27. [Vue用js触发input选取文件点击事件](#Vue用js触发input选取文件点击事件)
+28. [浏览器同源政策及其规避方法](#浏览器同源政策及其规避方法)
+29. [使用async&await封装axios](#使用async&await封装axios)
+30. [微信小程序好友列表右侧字母导航功能](#微信小程序好友列表右侧字母导航功能)
+31. [axios使用post方式传递参数后端接收不到](#axios使用post方式传递参数后端接收不到)
+32. [axios_POST提交数据的三种请求方式写法](#axios_POST提交数据的三种请求方式写法)
 
 
 
@@ -395,3 +405,105 @@ prevPage.setData({ 键: 值 })// 设置数据
 ## 微信小程序解决富文本不支持的问题
 https://blog.csdn.net/milli236/article/details/79668162
 https://blog.csdn.net/zhuming3834/article/details/74380079
+
+
+## jQuery的deferred对象详解
+http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html
+
+
+## 不错的code练习网站
+https://www.codewars.com/
+
+
+## 深入理解css中vertical_align属性
+https://www.cnblogs.com/starof/p/4512284.html?utm_source=tuicool&utm_medium=referral
+
+
+## JS订阅模式
+https://www.jianshu.com/p/0aacfec05046
+
+
+## Vue用js触发input选取文件点击事件
+```javascript
+<input
+  type="file"
+  multiple
+  name="file"
+  accept=".pdf"
+  ref="inputFile"
+  class="upload_input"
+  @click="inputFileOnClick"
+  @change="inputFileOnChange"
+>
+
+// 调起文件选择弹窗
+this.$refs.inputFile.click();
+
+// 或者
+this.$refs.inputFile.dispatchEvent(new MouseEvent('click'));
+```
+https://www.cnblogs.com/hzx-5/p/9957726.html
+
+
+## 在浏览器上安装Vue_Devtools工具
+https://www.cnblogs.com/feiyu159/p/8666865.html
+
+
+## 浏览器同源政策及其规避方法
+http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
+
+
+## 使用async&await封装axios
+```javascript
+import axios from 'axios'
+const qs = require('qs')
+const api = {
+  async get (url, data) {
+    try {
+      let res = await axios.get(url, {params: data})
+      res = res.data
+      return new Promise((resolve) => {
+        if (res.code === 0) {
+          resolve(res)
+        } else {
+          resolve(res)
+        }
+      })
+    } catch (err) {
+      alert('服务器出错')
+      console.log(err)
+    }
+  },
+  async post (url, data) {
+    try {
+      let res = await axios.post(url, qs.stringify(data))
+      res = res.data
+      return new Promise((resolve, reject) => {
+        if (res.code === 0) {
+          resolve(res)
+        } else {
+          reject(res)
+        }
+      })
+    } catch (err) {
+      // return (e.message)
+      alert('服务器出错')
+      console.log(err)
+    }
+  },
+}
+export { api }
+```
+https://www.jianshu.com/p/4168efdc172b
+
+
+## 微信小程序好友列表右侧字母导航功能
+https://blog.csdn.net/qq_25252769/article/details/81116597
+
+
+## axios使用post方式传递参数后端接收不到
+https://segmentfault.com/a/1190000012635783
+
+
+## axios_POST提交数据的三种请求方式写法
+https://segmentfault.com/a/1190000015261229
