@@ -23,6 +23,9 @@
 18. [airbnb_javascript标准](#airbnb_javascript标准)
 19. [export_default和export的区别](#export_default和export的区别)
 20. [微信小程序授权的写法](#微信小程序授权的写法)
+21. [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
+22. [微信小程序解决富文本不支持的问题](#微信小程序解决富文本不支持的问题)
+
 
 
 ## git基本操作
@@ -377,3 +380,18 @@ getWxInvoice(noRetry) {
   });
 }
 ```
+
+
+## 微信小程序获取和修改上一个页面的数据
+```javascript
+var pages = getCurrentPages();
+var Page = pages[pages.length - 1];//当前页
+var prevPage = pages[pages.length - 2];  //上一个页面
+var info = prevPage.data // 获取数据
+prevPage.setData({ 键: 值 })// 设置数据
+```
+
+
+## 微信小程序解决富文本不支持的问题
+https://blog.csdn.net/milli236/article/details/79668162
+https://blog.csdn.net/zhuming3834/article/details/74380079

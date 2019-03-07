@@ -1,3 +1,3 @@
-调用：
+// 调用：
 let pinyinInstance = pinyin.initPinyin();
 let pinyinName = pinyinInstance.getCamelChars(value);
