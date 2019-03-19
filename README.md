@@ -34,7 +34,7 @@
 29. [使用async&await封装axios](#使用async&await封装axios)
 30. [微信小程序好友列表右侧字母导航功能](#微信小程序好友列表右侧字母导航功能)
 31. [axios使用post方式传递参数后端接收不到](#axios使用post方式传递参数后端接收不到)
-32. [axios_POST提交数据的三种请求方式写法](#axios_POST提交数据的三种请求方式写法)
+32. [axios_post提交数据的三种请求方式写法](#axios_post提交数据的三种请求方式写法)
 
 
 
@@ -505,5 +505,5 @@ https://blog.csdn.net/qq_25252769/article/details/81116597
 https://segmentfault.com/a/1190000012635783
 
 
-## axios_POST提交数据的三种请求方式写法
+## axios_post提交数据的三种请求方式写法
 https://segmentfault.com/a/1190000015261229
