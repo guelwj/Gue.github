@@ -518,21 +518,33 @@ let set = new Set(arr);
 let newArr = Array.from(set);
 console.log(newArr); // [1, 2, 3]
 
+
 // 数组降序
 [1, 2, 3, 4, 5].sort((a, b) => b - a);
+
 
 // 数组扁平化
 // Array.flat(n) 是ES10扁平数组的api, n表示维度, n值为Infinity时维度为无限大
 [1, [2, 3]].flat(2); // [1, 2, 3]
 [1, [2, 3, [4, 5[...]]]].flat(Infinity); // [1,2,3,4...n]
 
+
 // 获取数组最大值
 let arr = [1, 2, 3];
 let max = Math.max(...arr);
 
+
+// 让数组中的前项与后项做某种计算
+let resultArr = [1, 2, 3, 4, 5].reduce((prev, next) => {
+  return prev + next;
+})
+console.log(resultArr) // 15
+
+
 // 数组合并
 [1, 2].concat([3, 4]) // [1, 2, 3, 4]
 [...[1, 2, 3], ...[3, 4, 5]] // [1, 2, 3, 3, 4, 5]
+
 
 // 判断数组是否包含值
 [1, 2, 3].includes(4) // false
@@ -540,12 +552,14 @@ let max = Math.max(...arr);
 [1, 2, 3, 4, 3].find(item => item === 3) // 3 获取数组中符合的第一个元素
 [1, 2, 3].find(item => item === 3) // 2
 
+
 // 类数组转化
 // 类数组：有length属性，但是不具备数组的方法
 Array.prototype.slice.call(args)
 Array.prototype.slice.apply(args)
 Array.from(args)
 [...args]
+
 
 // 数组每一项设置值
 // fill语法: array.fill(value, start, end)
@@ -555,14 +569,18 @@ Array.from(args)
 [1, 2, 3, 4, 5].fill(6, 2, 4) // [1, 2, 6, 6, 5]
 [1, 2, 3].map(() => 4)
 
+
 // 有一项满足条件
 [1, 2, 3].some(item => item > 2) // true
+
 
 // 每一项都满足条件
 [1, 2, 3].every(item => item > 2) // false
 
+
 // 过滤数组
 [1, 2, 3].filter(item => item > 1) // [2, 3]
+
 
 // 对象和数组转化
 // Object.entries()方法返回一个给定对象自身可枚举属性的键值对数组
