@@ -513,7 +513,7 @@ https://segmentfault.com/a/1190000015261229
 ## 数组的一些操作
 ```javascript
 // 数组去重
-let arr = [1, 2, 2, 3 , 3, 3];
+let arr = [1, 2, 2, 3, 3, 3];
 let set = new Set(arr);
 let newArr = Array.from(set);
 console.log(newArr); // [1, 2, 3]
