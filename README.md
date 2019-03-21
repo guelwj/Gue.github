@@ -35,6 +35,7 @@
 30. [微信小程序好友列表右侧字母导航功能](#微信小程序好友列表右侧字母导航功能)
 31. [axios使用post方式传递参数后端接收不到](#axios使用post方式传递参数后端接收不到)
 32. [axios_post提交数据的三种请求方式写法](#axios_post提交数据的三种请求方式写法)
+33. [数组的一些操作](#数组的一些操作)
 
 
 
@@ -507,3 +508,67 @@ https://segmentfault.com/a/1190000012635783
 
 ## axios_post提交数据的三种请求方式写法
 https://segmentfault.com/a/1190000015261229
+
+
+## 数组的一些操作
+```javascript
+// 数组去重
+let arr = [1, 2, 2, 3 , 3, 3];
+let set = new Set(arr);
+let newArr = Array.from(set);
+console.log(newArr); // [1, 2, 3]
+
+// 数组降序
+[1, 2, 3, 4, 5].sort((a, b) => b - a);
+
+// 数组扁平化
+// Array.flat(n) 是ES10扁平数组的api, n表示维度, n值为Infinity时维度为无限大
+[1, [2, 3]].flat(2); // [1, 2, 3]
+[1, [2, 3, [4, 5[...]]]].flat(Infinity); // [1,2,3,4...n]
+
+// 获取数组最大值
+let arr = [1, 2, 3];
+let max = Math.max(...arr);
+
+// 数组合并
+[1, 2].concat([3, 4]) // [1, 2, 3, 4]
+[...[1, 2, 3], ...[3, 4, 5]] // [1, 2, 3, 3, 4, 5]
+
+// 判断数组是否包含值
+[1, 2, 3].includes(4) // false
+[1, 2, 3].indexOf(4) // -1
+[1, 2, 3, 4, 3].find(item => item === 3) // 3 获取数组中符合的第一个元素
+[1, 2, 3].find(item => item === 3) // 2
+
+// 类数组转化
+// 类数组：有length属性，但是不具备数组的方法
+Array.prototype.slice.call(args)
+Array.prototype.slice.apply(args)
+Array.from(args)
+[...args]
+
+// 数组每一项设置值
+// fill语法: array.fill(value, start, end)
+// value: 必需。填充的值。
+// start: 可选。开始填充位置。
+// end: 	可选。停止填充位置 (默认为 array.length)
+[1, 2, 3, 4, 5].fill(6, 2, 4) // [1, 2, 6, 6, 5]
+[1, 2, 3].map(() => 4)
+
+// 有一项满足条件
+[1, 2, 3].some(item => item > 2) // true
+
+// 每一项都满足条件
+[1, 2, 3].every(item => item > 2) // false
+
+// 过滤数组
+[1, 2, 3].filter(item => item > 1) // [2, 3]
+
+// 对象和数组转化
+// Object.entries()方法返回一个给定对象自身可枚举属性的键值对数组
+// Object.fromEntries()方法把键值对列表转换为一个对象。
+Object.keys({ name: 'Gue', age: 18}) // ['name', 'age']
+Object.values({ name: 'Gue', age: 18}) // ['Gue', 18]
+Object.entries({ name: 'Gue', age: 18}) // [['name', 'Gue'], ['age', 18]]
+Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18}
+```
