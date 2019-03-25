@@ -37,6 +37,7 @@
 32. [axios_post提交数据的三种请求方式写法](#axios_post提交数据的三种请求方式写法)
 33. [数组的一些操作](#数组的一些操作)
 34. [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
+35. [Vue响应式原理及实现](#Vue响应式原理及实现)
 
 
 
@@ -595,3 +596,65 @@ Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18}
 
 ## 浅谈控制反转与依赖注入
 https://zhuanlan.zhihu.com/p/33492169
+
+
+## Vue响应式原理及实现
+```javascript
+class Dep {  // 初始化
+  constructor () {          
+    this.subscribers = new Set()
+  }  // 订阅update函数列表
+  depend () {    
+    if (activeUpdate) {     
+      this.subscribers.add(activeUpdate)
+    }
+  }  // 所有update函数重新运行
+  notify () {              
+    this.subscribers.forEach(sub => sub())
+  }
+}
+
+function observe (obj) {  // 迭代对象的所有属性
+  // 并使用Object.defineProperty()转换成getter/setters
+  Object.keys(obj).forEach(key => {    
+    let internalValue = obj[key]    // 每个属性分配一个Dep实例
+    const dep = new Dep()    
+    Object.defineProperty(obj, key, {    
+      // getter负责注册订阅者
+      get () {
+        dep.depend()        
+        return internalValue
+      },      
+      // setter负责通知改变
+      set (newVal) {        
+        const changed = internalValue !== newVal
+        internalValue = newVal        
+        // 触发后重新计算
+        if (changed) {
+          dep.notify()
+        }
+      }
+    })
+  })  
+  return obj
+}
+
+let activeUpdate = null
+function autorun (update) {  // 包裹update函数到"wrappedUpdate"函数中，
+  // "wrappedUpdate"函数执行时注册和注销自身
+  const wrappedUpdate = () => {
+    activeUpdate = wrappedUpdate
+    update()
+    activeUpdate = null
+  }
+  wrappedUpdate()
+}
+
+// 调用
+const state = {  count: 0 }
+observe(state)
+autorun(() => {  
+  console.log(state.count)
+})// 输出 count is: 0
+state.count++// 输出 count is: 1
+```
