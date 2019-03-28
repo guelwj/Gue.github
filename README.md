@@ -38,6 +38,7 @@
 33. [数组的一些操作](#数组的一些操作)
 34. [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
 35. [Vue响应式原理及实现](#Vue响应式原理及实现)
+36. [vue_cli搭建vue项目](#vue_cli搭建vue项目)
 
 
 
@@ -651,10 +652,29 @@ function autorun (update) {  // 包裹update函数到"wrappedUpdate"函数中，
 }
 
 // 调用
-const state = {  count: 0 }
+const state = { count: 0 }
 observe(state)
 autorun(() => {  
   console.log(state.count)
 })// 输出 count is: 0
 state.count++// 输出 count is: 1
+```
+
+
+## vue_cli搭建vue项目
+```javascript
+// 下载vue-cli脚手架
+npm install --global vue-cli
+
+// 生成项目，形成基本结构
+vue init webpack projectName
+
+// 安装需要的依赖包
+npm install packageName
+
+// 运行
+npm run dev
+
+// 打包
+npm run build
 ```
