@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>test debounce</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <style type="text/css"></style>
+</head>
+<body>
+  <div class="page-container">
+    <input type="text" id="input">
+    <div id="content" style="display: none;">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+    </div>
+  </div>
+  <script>
+    var debounce = function(fn, delayTime) {
+      var timer = null;
+      return function() {
+        if(timer) clearTimeout(timer);
+        var _this = this;
+        var args = arguments;
+        timer = setTimeout(function(){
+          fn.apply(_this, args);
+        }, delayTime)
+      }
+    }
+
+    input.onkeydown = debounce(function() { 
+      console.log('show content box')
+      content.style.display = "block";
+    }, 2000);
+  </script>
+</body>
+</html>

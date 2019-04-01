@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>test throttle</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <style type="text/css">
+    .part1-content {
+      height: 600px;
+      background: #00f;
+    }
+    .part1 {
+      height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="part1" id="part1">
+      <div class="part1-content"></div>
+    </div>
+  </div>
+  <script>
+    var throttle = function(fn, delayTime) {
+      var isFinished = true;
+      return function() {
+        if(!isFinished) return;
+        isFinished = false;
+        var _this = this;
+        var args = arguments;
+        setTimeout(function(){
+          fn.apply(_this, args);
+          isFinished = true;
+        }, delayTime)
+      }
+    }
+
+    part1.onscroll = throttle(function() { 
+      console.log('scroll')
+    }, 2000);
+  </script>
+</body>
+</html>

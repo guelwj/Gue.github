@@ -39,6 +39,7 @@
 34. [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
 35. [Vue响应式原理及实现](#Vue响应式原理及实现)
 36. [vue_cli搭建vue项目](#vue_cli搭建vue项目)
+37. [防抖与节流](#防抖与节流)
 
 
 
@@ -677,4 +678,48 @@ npm run dev
 
 // 打包
 npm run build
+```
+
+
+## 防抖与节流
+```javascript
+// 防抖
+var debounce = function(fn, delayTime) {
+  var timer = null;
+  return function() {
+    if(timer) clearTimeout(timer);
+    var _this = this;
+    var args = arguments;
+    timer = setTimeout(function(){
+      fn.apply(_this, args);
+    }, delayTime)
+  }
+}
+
+input.onkeydown = debounce(function() { 
+  // do something
+}, 2000);
+
+
+// 节流
+var throttle = function(fn, delayTime) {
+  var isFinished = true;
+  return function() {
+    if(!isFinished) return;
+    isFinished = false;
+    var _this = this;
+    var args = arguments;
+    setTimeout(function(){
+      fn.apply(_this, args);
+      isFinished = true;
+    }, delayTime)
+  }
+}
+
+part1.onscroll = throttle(function() { 
+    console.log('scroll')
+}, 2000);
+
+
+// 注：demo文件夹里有例子
 ```
