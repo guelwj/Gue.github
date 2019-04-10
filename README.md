@@ -40,6 +40,7 @@
 35. [Vue响应式原理及实现](#Vue响应式原理及实现)
 36. [vue_cli搭建vue项目](#vue_cli搭建vue项目)
 37. [防抖与节流](#防抖与节流)
+38. [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
 
 
 
@@ -722,4 +723,43 @@ part1.onscroll = throttle(function() {
 
 
 // 注：demo文件夹里有例子
+```
+
+
+## 调用iframe的子iframe里的function
+```javascript
+// 遇到的问题： 有时候 window.frames['iframeName'] 能获取到，但有时又是undefined
+// 试过 iframe.contentWindow.document.getElementById ，也是undefined
+// 下面调试均是在控制台里输入
+// 例子一：
+var iframe_1 = window.frames['iframe1'];
+iframe_1// Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+var iframe_2 = iframe_1.frames['layui-layer-iframe1']// VM8981:1 Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
+iframe_1// Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:1
+window.name// iframe1
+
+// 例子二：
+window.name// ""
+var iframe_1 = window.frames['iframe1']// undefined
+iframe_1// undefined
+window.name// iframe1
+
+// 例子三：
+window.name// ""
+var iframe_1 = window.frames['iframe1']// undefined
+iframe_1// Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+iframe_1// 这里再确认一遍 Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+var iframe_2 = iframe_1.frames['layui-layer-iframe1']// Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
+window.name// iframe1
+
+// 现象：看上去很奇怪，iframe_1一时是有值的，一时缺变成了undefined
+// 估计：难道与F12选中的当前窗口有关系？
+// 总结：经过验证，就是与F12选中的当前页面有关。因为在找名称为 layui-layer-iframe1 的iframe时，用F12选择元素后，改变了当前的window。用 window.name 判断清楚当前的页面就一目了然了。
+
+// 附上帮龙爷解决问题的代码：
+// 浏览器为ie11
+var frame_mainFrame = window.frames['mainFrame'];
+var frame_main = frame_mainFrame.document.frames['main'];
+var frame_page = frame_main.document.frames['page'];
+frame_page.downloadData(1, 3000);
 ```
