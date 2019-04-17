@@ -41,6 +41,8 @@
 36. [vue_cli搭建vue项目](#vue_cli搭建vue项目)
 37. [防抖与节流](#防抖与节流)
 38. [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
+39. [对象深克隆](#对象深克隆)
+
 
 
 
@@ -738,11 +740,13 @@ var iframe_2 = iframe_1.frames['layui-layer-iframe1']// VM8981:1 Uncaught Refere
 iframe_1// Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:1
 window.name// iframe1
 
+
 // 例子二：
 window.name// ""
 var iframe_1 = window.frames['iframe1']// undefined
 iframe_1// undefined
 window.name// iframe1
+
 
 // 例子三：
 window.name// ""
@@ -752,9 +756,11 @@ iframe_1// 这里再确认一遍 Window {speechSynthesis: SpeechSynthesis, cache
 var iframe_2 = iframe_1.frames['layui-layer-iframe1']// Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
 window.name// iframe1
 
+
 // 现象：看上去很奇怪，iframe_1一时是有值的，一时缺变成了undefined
 // 估计：难道与F12选中的当前窗口有关系？
 // 总结：经过验证，就是与F12选中的当前页面有关。因为在找名称为 layui-layer-iframe1 的iframe时，用F12选择元素后，改变了当前的window。用 window.name 判断清楚当前的页面就一目了然了。
+
 
 // 附上帮龙爷解决问题的代码：
 // 浏览器为ie11
@@ -763,3 +769,34 @@ var frame_main = frame_mainFrame.document.frames['main'];
 var frame_page = frame_main.document.frames['page'];
 frame_page.downloadData(1, 3000);
 ```
+
+
+## 对象深克隆
+```javascript
+const deepClone = obj => JSON.parse(JSON.stringify(obj));
+
+// 上述clone的方法会忽略function和undefined的字段，对date类型支持貌似也不友好。而且只能克隆原始对象自身的值
+// 结论：对于纯数据的json对象的深克隆，可以使用JSON.parse()和JSON.stringify()方法
+
+
+const deepClone = obj => {
+    if(obj === null) return null;
+    if(obj.constructor !== 'object') return obj;
+    if(obj.constructor === Date) return new Date(obj);
+    if(obj.constructor === RegExp) return new RegExp(obj);
+    var newObj = new obj.constructor(); //保持继承的原型
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            let val = obj[key];
+            //newObj[key] = typeof val === 'object' ? arguments.callee(val) : val;
+            newObj[key] = typeof val === 'object' ? deepClone(val) : val;// 避免使用aguments.callee
+        }
+    }
+    return newObj;
+}
+
+// 上述方法能完美实现深拷贝
+// 拓展：callee 是 arguments 对象的一个属性。它可以用于引用该函数的函数体内当前正在执行的函数。这在函数的名称是未知时很有用，例如在没有名称的函数表达式 (也称为“匿名函数”)内。
+// 警告：在严格模式下，第5版 ECMAScript (ES5) 禁止使用 arguments.callee()。当一个函数必须调用自身的时候, 避免使用 arguments.callee(), 通过要么给函数表达式一个名字,要么使用一个函数声明.
+```
+https://www.cnblogs.com/tangjiao/p/9313829.html
