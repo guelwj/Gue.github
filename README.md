@@ -10,7 +10,7 @@
 5. [js模块化编程之彻底弄懂amd与cmd](#js模块化编程之彻底弄懂amd与cmd)
 6. [git_push错误failed_to_push_some_refs_to](#git_push错误failed_to_push_some_refs_to)
 7. [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
-8. [webpack入门](#webpack入门)
+8. [webpack](#webpack)
 9. [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
 10. [video在安卓大部分浏览器包括微信最顶层的问题](#video在安卓大部分浏览器包括微信最顶层的问题)
 11. [js控制输入框光标位置](#js控制输入框光标位置)
@@ -145,8 +145,64 @@ https://blog.csdn.net/mbuger/article/details/70197532
 https://github.com/amfe/article/issues/17?utm_source=caibaojian.com
 
 
-## webpack入门
-https://www.jianshu.com/p/42e11515c10f
+## webpack
+```javascript
+// 在终端中使用npm init命令可以自动创建这个package.json文件
+npm init
+
+
+// 安装Webpack
+npm install --save-dev webpack
+
+
+// webpack的使用方法，填写路径的时候不用添加{}    webpack {entry file} {destination for bundled file}
+// webpack非全局安装的情况    例如：node_modules/.bin/webpack app/main.js public/bundle.js
+webpack demo.js demo.bundle.js
+// 报错。这是为什么呢?原因是我的webpack版本过高,原来的命令已经不适用了
+// 更换打包命令
+webpack demo.js -o demo.bundle.js
+
+
+// 使用webpack构建本地服务器
+npm install --save-dev webpack-dev-server
+
+
+// 配置package.json中的scripts对象，用以开启本地服务器：
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "start": "webpack",
+  "server": "webpack-dev-server --open"
+}
+
+
+// 安装babel，npm一次性安装多个依赖模块，模块之间用空格隔开
+// `babel-loader@8.x`是webpack用于`Babel 7.x`的一个整合loader模块，`Babel 7.x`已经把所有的相关的包从`babel-`迁移到了`@babel`的npm环境仓库。
+// 所以通过使用`@babel/core`代替`babel-core`来安装：
+// 总的来说，babel舍弃了以前的 babel-*-* 的命名方式，改成了@babel/*-*，修改依赖和.babelrc文件后就能正常启动项目了。
+npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/cli
+
+
+// 使用React，记得先安装 React 和 React-DOM
+npm install --save react react-dom
+
+
+// presets里的参数也要改，presets: ["@babel/preset-env", "@babel/preset-react"]
+module: {
+  rules: [
+    {
+      test: /(\.jsx|\.js)$/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-env", "@babel/preset-react"]
+        }
+      },
+      exclude: /node_modules/
+    }
+  ]
+}
+```
+仅供参考（版本太旧）：https://www.jianshu.com/p/42e11515c10f
 
 
 ## video搭配canvas的神奇效果
