@@ -42,7 +42,9 @@
 37. [防抖与节流](#防抖与节流)
 38. [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
 39. [对象深克隆](#对象深克隆)
-
+40. [px2rem_postcss](#px2rem_postcss)
+41. [eventBus](#eventBus)
+42. [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
 
 
 
@@ -548,8 +550,17 @@ prevPage.setData({ 键: 值 })// 设置数据
 
 
 ## 微信小程序解决富文本不支持的问题
+```javascript
+使用wxParse插件
+
+wxParse空格解析不生效的解决方案：
+在wxDiscode.js文件的strcharacterDiscode方法中
+把
+str = str.replace(/&nbsp;/g, ' ');
+修改为
+str = str.replace(/&nbsp;/g, '\xa0');
+```
 https://blog.csdn.net/milli236/article/details/79668162
-https://blog.csdn.net/zhuming3834/article/details/74380079
 
 
 ## jQuery的deferred对象详解
@@ -937,3 +948,86 @@ const deepClone = obj => {
 // 警告：在严格模式下，第5版 ECMAScript (ES5) 禁止使用 arguments.callee()。当一个函数必须调用自身的时候, 避免使用 arguments.callee(), 通过要么给函数表达式一个名字,要么使用一个函数声明.
 ```
 https://www.cnblogs.com/tangjiao/p/9313829.html
+
+
+## px2rem_postcss
+```javascript
+npm install postcss-loader
+
+var px2rem = require('postcss-px2rem');
+
+module.exports = {
+  module: {
+    loaders: [
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader!postcss-loader"
+      }
+    ]
+  },
+  postcss: function() {
+    return [px2rem({remUnit: 75})];
+  }
+}
+```
+https://github.com/songsiqi/px2rem-postcss
+
+
+## eventBus
+```javascript
+// eventBus.js
+import Vue from "vue";
+export default new Vue();
+
+// main.js
+import bus from "./store/eventBus";
+Vue.prototype.$bus = bus;
+
+// App.vue
+// 监听事件
+created() {
+  this.$bus.$on("eventName", e => {
+    // do something
+  });
+}
+
+// 触发事件
+onMenuIconClick() {
+  this.$bus.$emit("eventName");
+}
+```
+https://www.jianshu.com/p/af9cb05bfbaf
+
+
+## 在Vue中使用RSA加密解密加签解签
+```javascript
+// 首先引入jsencrypt
+npm install jsencrypt --save
+
+// 在main.js中引入
+import JsEncrypt from 'jsencrypt'
+Vue.prototype.$jsEncrypt = JsEncrypt
+
+let publicKey = '这里是封装的公钥'
+let privateKey = '这里是封装的私钥'
+
+//加密方法
+RSAencrypt(pas) {
+  //实例化jsEncrypt对象
+  let jse = new JSEncrypt();
+  //设置公钥
+  jse.setPublicKey(publicKey);
+  // console.log('加密：'+jse.encrypt(pas))
+  return jse.encrypt(pas);
+}
+  
+//解密方法
+RSAdecrypt(pas) {
+  let jse = new JSEncrypt();
+  // 私钥
+  jse.setPrivateKey(privateKey)
+  // console.log('解密：'+jse.decrypt(pas))
+  return jse.decrypt(pas);
+}
+```
+https://juejin.im/post/5c27331be51d4535c9267fa9
