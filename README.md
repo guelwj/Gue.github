@@ -45,6 +45,7 @@
 40. [px2rem_postcss](#px2rem_postcss)
 41. [eventBus](#eventBus)
 42. [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
+43. [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
 
 
 
@@ -1031,3 +1032,27 @@ RSAdecrypt(pas) {
 }
 ```
 https://juejin.im/post/5c27331be51d4535c9267fa9
+
+
+## JSON数据中含有需要unescape字符串的处理
+```javascript
+// 登录后返回的数据需要经过以下处理（为了统一进行unescape处理）
+JSON.parse(unescape(JSON.stringify(res.data)))
+
+// 返回的结果
+{"errcode":"0","errmsg":"","resultcode":"0","resultmsg":"","data":{"tableCount":"3","table1_rowCount":"1","table1":[{"UserID":"888840717208","UserCode":"13926112334","UserName":"伍永祺","IsAdmin":"0","JobName":"销售顾问","HeadImg":"hbb/UserHeadImg/888840717208_1491905224578_969.PNG","DepID":"680770339","Phone":"13926112334","GesturesPWD":"","EntID":"881000000001","EntCode":"hbb","EntName":"货宝宝网络科技有限公司","LogoImg":"881000000001/Other/888120596564_1523328944332_355.JPG","DepName":"厦门代理"}],"table2_rowCount":"1","table2":[{"CommunicationsSig":"{"IsSucc":1,"UserSig":{"TLS.Identifier":"888840717208","TLS.account_type":"1552","TLS.appid_at_3rd":"1400002796","TLS.expiry_after":"604800","TLS.sdk_appid":"1400002796","TLS.sig":"eJx1kE1PgzAAhu-8iqZXjJauH2CyAzN16XAuBBIXLw1CWapYEQqZGv*7C2rk4nt9nuRJ3g8PAADzm*y8KMuXwTrl3loNwSWAAaUYnv3xtjWVKpxadNU3J*g0zCM2s-SxNZ1WRe10N1kMkRChmWEqbZ2pzQ8PTyOIBxyjcGb11ZOaiv*nenOY4FakV1J00pLRHtaYJ9bdjT67j-OjkD3VOtv4i8FcvK4e9o1Yu9jEQb2JrV9ub5MikTTi0fXA6-24yx5Fk4g0blbSL98HyvN0uZwlnXn*-YZxRDhmBHqf3hd*tFZf","TLS.signed":"appid_at_3rd,account_type,identifier,sdk_appid,time,expire_after","TLS.time" : "2019/8/29 10:54:24"}}","accountID":"1200","accountType":"1552","env":"0","HWPushID":"161","XMPushID":"162"}],"table3_rowCount":"1","table3":[{"BankService":"http://service.hbbyun.com:8012/HBB_BankDataWebService/DataWebService.asmx","OssService":"http://service.hbbyun.com:8012/HBB_OssDataWebService/DataWebService.asmx","OssSystemDomain":"http://cdn-hbbsystem.hbbyun.com","OssCustomerDomain":"http://hbbcustomer-test.hbbyun.com","Bucket":"hbbcustomer-test","Endpoint":"http://oss-cn-shenzhen.aliyuncs.com","LogsService":"http://service.hbbyun.com:8012/HBB_LogsDataWebService/DataWebService.asmx","OpenService":"http://service.hbbyun.com:8012/HBB_OpenDataWebService/DataWebService.asmx"}]}}
+
+// 由于table2中的CommunicationsSig字段内容的本来就含有escape了的字符串
+// 所以在执行unescape时，把CommunicationsSig字段的内容也解析了
+// 导致双引号的匹配错乱了，JSON.parse时报错
+
+// 解决方法：
+// 把CommunicationsSig字段内容的双引号（%22）替换为（%2522）
+// 将%号转义为%25
+JSON.parse(unescape(JSON.stringify(res.data).replace(/%22/g, '%2522')))
+
+// 最后就能得到一个JSON.parse后的正确的object
+// 附：
+// escape('"') 的结果为 "%22"
+// escape('%') 的结果为 "%25"
+```
