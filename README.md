@@ -1048,8 +1048,8 @@ JSON.parse(unescape(JSON.stringify(res.data)))
 
 // 解决方法：
 // 把CommunicationsSig字段内容的双引号（%22）替换为（%2522）
-// 将%号转义为%25
-JSON.parse(unescape(JSON.stringify(res.data).replace(/%22/g, '%2522')))
+// 将%号转义为%25，再把回车%0D和换行%0A替换为空字符串
+JSON.parse(unescape(JSON.stringify(res.data).replace(/%22/g, '%2522').replace(/%0D/g,'').replace(/%0A/g,'')))
 
 // 最后就能得到一个JSON.parse后的正确的object
 // 附：
