@@ -1106,7 +1106,8 @@ function generateLoaders(loader, loaderOptions) {
   }
 }
 
-// vue 使用lib-flexable，px2rem 进行移动端适配 但是引入的第三方UI组件 vux 的样式缩小，解决方案
+// vue 使用lib-flexable，px2rem 进行移动端适配 但是引入的第三方UI组件 vux 的样式缩小
+// 解决方案:将vux组件中px转化为PX，避免被转成rem
 // 在webpack.base.conf.js中 vuxLoader中配置以下代码
 module.exports = vuxLoader.merge(webpackConfig, {
   plugins: [
