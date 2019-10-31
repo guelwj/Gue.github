@@ -46,6 +46,8 @@
 41. [eventBus](#eventBus)
 42. [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
 43. [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
+43. [px2rem](#px2rem)
+
 
 
 
@@ -1055,4 +1057,106 @@ JSON.parse(unescape(JSON.stringify(res.data).replace(/%22/g, '%2522').replace(/%
 // 附：
 // escape('"') 的结果为 "%22"
 // escape('%') 的结果为 "%25"
+```
+
+
+## px2rem
+```javascript
+// 1.下载并引入lib-flexible
+npm install --save lib-flexible
+// 在main.js中 ：import 'lib-flexible/flexible'
+
+// 2.引入px2rem-loader
+npm install --save px2rem-loader
+
+// 3.将px2rem-loader添加到cssLoaders
+// 在build/utils.js中，添加如下配置
+// 在generateLoaders方法中增加px2remLoader
+var px2remLoader = {
+  loader: "px2rem-loader",
+  options: {
+    remUnit: 75 // 设计稿宽度/10
+  }
+};
+
+function generateLoaders(loader, loaderOptions) {
+  // const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+  const loaders = [
+    ...(options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]),
+    px2remLoader
+  ];
+  if (loader) {
+    loaders.push({
+      loader: loader + "-loader",
+      options: Object.assign({}, loaderOptions, {
+        sourceMap: options.sourceMap
+      })
+    });
+  }
+
+  // Extract CSS when that option is specified
+  // (which is the case during production build)
+  if (options.extract) {
+    return ExtractTextPlugin.extract({
+      use: loaders,
+      fallback: "vue-style-loader"
+    });
+  } else {
+    return ["vue-style-loader"].concat(loaders);
+  }
+}
+
+// vue 使用lib-flexable，px2rem 进行移动端适配 但是引入的第三方UI组件 vux 的样式缩小，解决方案
+// 在webpack.base.conf.js中 vuxLoader中配置以下代码
+module.exports = vuxLoader.merge(webpackConfig, {
+  plugins: [
+    "vux-ui",
+    {
+      name: "after-less-parser",
+      fn: function(source) {
+        if (
+          this.resourcePath.replace(/\\/g, "/").indexOf("vux/src/components") >
+          -1
+        ) {
+          source = source.replace(/px/g, "PX");
+        }
+        // 自定义的全局样式大部分不需要转换
+        if (this.resourcePath.replace(/\\/g, "/").indexOf("App.vue") > -1) {
+          source = source.replace(/px/g, "PX").replace(/-1PX/g, "-1px");
+        }
+        return source;
+      }
+    },
+    {
+      name: "style-parser",
+      fn: function(source) {
+        if (
+          this.resourcePath.replace(/\\/g, "/").indexOf("vux/src/components") >
+          -1
+        ) {
+          source = source.replace(/px/g, "PX");
+        }
+        // 避免转换1PX.less文件路径
+        if (source.indexOf("1PX.less") > -1) {
+          source = source.replace(/1PX.less/g, "1px.less");
+        }
+        return source;
+      }
+    },
+    "progress-bar",
+    {
+      name: "duplicate-style",
+      options: {
+        cssProcessorOptions: {
+          safe: true,
+          zindex: false,
+          autoprefixer: {
+            add: true,
+            browsers: ["iOS >= 7", "Android >= 4.1"]
+          }
+        }
+      }
+    }
+  ]
+});
 ```
