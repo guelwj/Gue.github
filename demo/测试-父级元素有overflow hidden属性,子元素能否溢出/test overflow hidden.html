@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>测试父级元素有overflow hidden属性,子元素能否溢出</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      /* 关键看父级元素a是否有position: relative属性 */
+      .a {
+        /* position: relative; */
+        width: 200px;
+        height: 200px;
+        background: #f00;
+        overflow: hidden;
+      }
+
+      .b {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 150px;
+        height: 300px;
+        background: #00f;
+      }
+
+      .c {
+        width: 500px;
+        height: 100px;
+        background: #0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-container">
+      <!--其他元素-->
+      <div class="c"></div>
+      <!--父级元素-->
+      <div class="a">
+        <!--子级元素-->
+        <div class="b"></div>
+      </div>
+    </div>
+    <div>结论：只要父级元素就算有overflow: hidden属性，但没有position: relatvie，此时给子元素position: absolute，就可以实现需求。</div>
+  </body>
+</html>
