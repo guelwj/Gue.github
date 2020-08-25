@@ -1,58 +1,59 @@
-# Gue 君爷的日常 note
+# Gue君爷的日常note
 
-> 记录平时项目中遇到问题时的解决方案，附上能找到答案的网址。分享一些不错的资源。
+>记录平时项目中遇到问题时的解决方案，附上能找到答案的网址。分享一些不错的资源。
 
 ## 目录：
-
-1. [git 基本操作](#git基本操作)
+1. [git基本操作](#git基本操作)
 2. [微信公众平台文档](#微信公众平台文档)
-3. [大白话讲解 promise](#大白话讲解promise)
-4. [前端布局神器 flex](#前端布局神器flex)
-5. [js 模块化编程之彻底弄懂 amd 与 cmd](#js模块化编程之彻底弄懂amd与cmd)
-6. [git_push 错误 failed_to_push_some_refs_to](#git_push错误failed_to_push_some_refs_to)
-7. [使用 flexible 实现手淘 h5 页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
+3. [大白话讲解promise](#大白话讲解promise)
+4. [前端布局神器flex](#前端布局神器flex)
+5. [js模块化编程之彻底弄懂amd与cmd](#js模块化编程之彻底弄懂amd与cmd)
+6. [git_push错误failed_to_push_some_refs_to](#git_push错误failed_to_push_some_refs_to)
+7. [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
 8. [webpack](#webpack)
-9. [video 搭配 canvas 的神奇效果](#video搭配canvas的神奇效果)
-10. [video 在安卓大部分浏览器包括微信最顶层的问题](#video在安卓大部分浏览器包括微信最顶层的问题)
-11. [js 控制输入框光标位置](#js控制输入框光标位置)
-12. [jquery 中 attr 和 prop 的区别介绍](#jquery中attr和prop的区别介绍)
-13. [拖放排序插件 sortable](#拖放排序插件sortable)
-14. [ios 与 android 的 new_date 之坑](#ios与android的new_date之坑)
-15. [原生 js 实现瀑布流效果](#原生js实现瀑布流效果)
-16. [微信小程序 rsa 签名验签加密解密](#微信小程序rsa签名验签加密解密)
-17. [解决 vs2017 隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
-18. [airbnb_javascript 标准](#airbnb_javascript标准)
-19. [export_default 和 export 的区别](#export_default和export的区别)
+9. [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
+10. [video在安卓大部分浏览器包括微信最顶层的问题](#video在安卓大部分浏览器包括微信最顶层的问题)
+11. [js控制输入框光标位置](#js控制输入框光标位置)
+12. [jquery中attr和prop的区别介绍](#jquery中attr和prop的区别介绍)
+13. [拖放排序插件sortable](#拖放排序插件sortable)
+14. [ios与android的new_date之坑](#ios与android的new_date之坑)
+15. [原生js实现瀑布流效果](#原生js实现瀑布流效果)
+16. [微信小程序rsa签名验签加密解密](#微信小程序rsa签名验签加密解密)
+17. [解决vs2017隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
+18. [airbnb_javascript标准](#airbnb_javascript标准)
+19. [export_default和export的区别](#export_default和export的区别)
 20. [微信小程序授权的写法](#微信小程序授权的写法)
 21. [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
 22. [微信小程序解决富文本不支持的问题](#微信小程序解决富文本不支持的问题)
-23. [jQuery 的 deferred 对象详解](#jQuery的deferred对象详解)
-24. [不错的 code 练习网站](#不错的code练习网站)
-25. [深入理解 css 中 vertical_align 属性](#深入理解css中vertical_align属性)
-26. [JS 订阅模式](#JS订阅模式)
-27. [Vue 用 js 触发 input 选取文件点击事件](#Vue用js触发input选取文件点击事件)
+23. [jQuery的deferred对象详解](#jQuery的deferred对象详解)
+24. [不错的code练习网站](#不错的code练习网站)
+25. [深入理解css中vertical_align属性](#深入理解css中vertical_align属性)
+26. [JS订阅模式](#JS订阅模式)
+27. [Vue用js触发input选取文件点击事件](#Vue用js触发input选取文件点击事件)
 28. [浏览器同源政策及其规避方法](#浏览器同源政策及其规避方法)
-29. [使用 async&await 封装 axios](#使用async&await封装axios)
+29. [使用async&await封装axios](#使用async&await封装axios)
 30. [微信小程序好友列表右侧字母导航功能](#微信小程序好友列表右侧字母导航功能)
-31. [axios 使用 post 方式传递参数后端接收不到](#axios使用post方式传递参数后端接收不到)
-32. [axios_post 提交数据的三种请求方式写法](#axios_post提交数据的三种请求方式写法)
+31. [axios使用post方式传递参数后端接收不到](#axios使用post方式传递参数后端接收不到)
+32. [axios_post提交数据的三种请求方式写法](#axios_post提交数据的三种请求方式写法)
 33. [数组的一些操作](#数组的一些操作)
 34. [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
-35. [Vue 响应式原理及实现](#Vue响应式原理及实现)
-36. [vue_cli 搭建 vue 项目](#vue_cli搭建vue项目)
+35. [Vue响应式原理及实现](#Vue响应式原理及实现)
+36. [vue_cli搭建vue项目](#vue_cli搭建vue项目)
 37. [防抖与节流](#防抖与节流)
-38. [调用 iframe 的子 iframe 里的 function](#调用iframe的子iframe里的function)
+38. [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
 39. [对象深克隆](#对象深克隆)
 40. [px2rem_postcss](#px2rem_postcss)
 41. [eventBus](#eventBus)
-42. [在 Vue 中使用 RSA 加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
-43. [JSON 数据中含有需要 unescape 字符串的处理](#JSON数据中含有需要unescape字符串的处理)
+42. [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
+43. [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
 44. [px2rem](#px2rem)
-45. [图片转 base64 格式](#图片转base64格式)
+45. [图片转base64格式](#图片转base64格式)
 46. [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
 
-## git 基本操作
 
+
+
+## git基本操作
 ```javascript
 git init demo //初始化
 
@@ -118,42 +119,40 @@ rm    //删除文件；一般的删除操作用rm即可
 -v, --verbose    详细显示进行的步骤
 ----------------------
 ```
+git权威指南教程：http://www.icoolxue.com/album/show/41
 
-git 权威指南教程：http://www.icoolxue.com/album/show/41
 
 ## 微信公众平台文档
-
 https://developers.weixin.qq.com/miniprogram/dev/
 
-## 大白话讲解 promise
 
+## 大白话讲解promise
 https://www.cnblogs.com/lvdabao/p/es6-promise-1.html
 
-## 前端布局神器 flex
 
+## 前端布局神器flex
 https://www.cnblogs.com/qingchunshiguang/p/8011103.html
 
-## js 模块化编程之彻底弄懂 amd 与 cmd
 
+## js模块化编程之彻底弄懂amd与cmd
 https://www.cnblogs.com/chenguangliang/p/5856701.html
 
-## git_push 错误 failed_to_push_some_refs_to
 
+## git_push错误failed_to_push_some_refs_to
 ```javascript
 在github库中对某个文件进行了在线的编辑，并且没有同步到本地库，之后我在本地库添加了文件test.txt，并想提交到github，出现以下错误：error：failed to push some refs to。
-这个问题是因为远程库与本地库不一致造成的，那么我们把远程库同步到本地库就可以了。
+这个问题是因为远程库与本地库不一致造成的，那么我们把远程库同步到本地库就可以了。 
 使用指令 git pull --rebase origin master
 这条指令的意思是把远程库中的更新合并到本地库中，--rebase的作用是取消掉本地库中刚刚的commit，并把他们接到更新后的版本库之中。
 ```
-
 https://blog.csdn.net/mbuger/article/details/70197532
 
-## 使用 flexible 实现手淘 H5 页面的终端适配
 
+## 使用flexible实现手淘H5页面的终端适配
 https://github.com/amfe/article/issues/17?utm_source=caibaojian.com
 
-## webpack
 
+## webpack
 ```javascript
 // 在终端中使用npm init命令可以自动创建这个package.json文件
 npm init
@@ -291,44 +290,41 @@ module.exports = {
   ]
 };
 ```
-
 仅供参考（版本有点旧）：https://www.jianshu.com/p/42e11515c10f
 
-## video 搭配 canvas 的神奇效果
 
+## video搭配canvas的神奇效果
 http://html5doctor.com/video-canvas-magic/
 
-## video 在安卓大部分浏览器包括微信最顶层的问题
 
+## video在安卓大部分浏览器包括微信最顶层的问题
 解决不了。
 https://segmentfault.com/q/1010000004436205/a-1020000004436328
 
-## js 控制输入框光标位置
 
+## js控制输入框光标位置
 ```javascript
 var inpObj = document.getElementById(inputId);
 if (inpObj.setSelectionRange) {
-  inpObj.setSelectionRange(0, inpObj.value.length);
+    inpObj.setSelectionRange(0, inpObj.value.length);
 }
 ```
-
 https://blog.csdn.net/foralienzhou/article/details/52437929
 
-## jquery 中 attr 和 prop 的区别介绍
 
+## jquery中attr和prop的区别介绍
 ```javascript
 对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。
 对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
 ```
-
 https://www.jb51.net/article/88068.htm
 
-## 拖放排序插件 sortable
 
+## 拖放排序插件sortable
 https://segmentfault.com/a/1190000008209715
 
-## ios 与 android 的 new_date 之坑
 
+## ios与android的new_date之坑
 ```javascript
 例如：
 var date = '2016-02-28 16:42:54.0';
@@ -344,19 +340,18 @@ new Date(date)
 new Date(date.replace(/\-/g,'/').replace('.0',''));
 //The Feb 18 2016 16:42:54 GMT+0800 (CST)
 ```
-
 http://www.mamicode.com/info-detail-1392511.html
 
-## 原生 js 实现瀑布流效果
 
+## 原生js实现瀑布流效果
 https://segmentfault.com/a/1190000012621936
 
-## 微信小程序 rsa 签名验签加密解密
 
+## 微信小程序rsa签名验签加密解密
 https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
 
-## 解决 vs2017 隐藏高级保存选项命令
 
+## 解决vs2017隐藏高级保存选项命令
 ```javascript
 （1）单击“工具”|“自定义”命令，弹出“自定义”对话框。
 （2）单击“命令”标签，进入“命令”选项卡。
@@ -368,12 +363,11 @@ https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
 （8）单击“关闭”按钮，完成“高级保存选项”命令的添加操作。
 ```
 
-## airbnb_javascript 标准
-
+## airbnb_javascript标准
 https://github.com/airbnb/javascript#table-of-contents
 
-## export_default 和 export 的区别
 
+## export_default和export的区别
 ```javascript
 (1).export与export default均可用于导出常量、函数、文件、模块等
 (2).你可以在其它文件或模块中通过import+(常量 | 函数 | 文件 | 模块)名的方式，将其导入，以便能够对其进行使用
@@ -384,7 +378,7 @@ https://github.com/airbnb/javascript#table-of-contents
 1.export
 //a.js
 export const str = "blablabla~";
-export function log(sth) {
+export function log(sth) { 
   return sth;
 }
 对应的导入方式：
@@ -411,14 +405,13 @@ export default person（person不能加大括号）
 // b.js
 本质上，a.js文件的export default输出一个叫做default的变量，然后系统允许你为它取任意名字。所以可以为import的模块起任何变量名，且不需要用大括号包含
 import any from "./a.js"
-import any12 from "./a.js"
+import any12 from "./a.js" 
 console.log(any,any12)   // boy,boy
 ```
-
 https://www.jianshu.com/p/edaf43e9384f
 
-## 微信小程序授权的写法
 
+## 微信小程序授权的写法
 ```javascript
 // utils.js
 export const getCurrentLocation = () => {
@@ -550,18 +543,18 @@ getWxInvoice(noRetry) {
 }
 ```
 
-## 微信小程序获取和修改上一个页面的数据
 
+## 微信小程序获取和修改上一个页面的数据
 ```javascript
 var pages = getCurrentPages();
-var Page = pages[pages.length - 1]; //当前页
-var prevPage = pages[pages.length - 2]; //上一个页面
-var info = prevPage.data; // 获取数据
-prevPage.setData({ 键: 值 }); // 设置数据
+var Page = pages[pages.length - 1];//当前页
+var prevPage = pages[pages.length - 2];  //上一个页面
+var info = prevPage.data // 获取数据
+prevPage.setData({ 键: 值 })// 设置数据
 ```
 
-## 微信小程序解决富文本不支持的问题
 
+## 微信小程序解决富文本不支持的问题
 ```javascript
 使用wxParse插件
 
@@ -572,27 +565,26 @@ str = str.replace(/&nbsp;/g, ' ');
 修改为
 str = str.replace(/&nbsp;/g, '\xa0');
 ```
-
 https://blog.csdn.net/milli236/article/details/79668162
 
-## jQuery 的 deferred 对象详解
 
+## jQuery的deferred对象详解
 http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html
 
-## 不错的 code 练习网站
 
+## 不错的code练习网站
 https://www.codewars.com/
 
-## 深入理解 css 中 vertical_align 属性
 
+## 深入理解css中vertical_align属性
 https://www.cnblogs.com/starof/p/4512284.html?utm_source=tuicool&utm_medium=referral
 
-## JS 订阅模式
 
+## JS订阅模式
 https://www.jianshu.com/p/0aacfec05046
 
-## Vue 用 js 触发 input 选取文件点击事件
 
+## Vue用js触发input选取文件点击事件
 ```javascript
 <input
   type="file"
@@ -611,76 +603,74 @@ this.$refs.inputFile.click();
 // 或者
 this.$refs.inputFile.dispatchEvent(new MouseEvent('click'));
 ```
-
 https://www.cnblogs.com/hzx-5/p/9957726.html
 
-## 在浏览器上安装 Vue_Devtools 工具
 
+## 在浏览器上安装Vue_Devtools工具
 https://www.cnblogs.com/feiyu159/p/8666865.html
 
-## 浏览器同源政策及其规避方法
 
+## 浏览器同源政策及其规避方法
 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
 
-## 使用 async&await 封装 axios
 
+## 使用async&await封装axios
 ```javascript
-import axios from "axios";
-const qs = require("qs");
+import axios from 'axios'
+const qs = require('qs')
 const api = {
-  async get(url, data) {
+  async get (url, data) {
     try {
-      let res = await axios.get(url, { params: data });
-      res = res.data;
+      let res = await axios.get(url, {params: data})
+      res = res.data
       return new Promise((resolve) => {
         if (res.code === 0) {
-          resolve(res);
+          resolve(res)
         } else {
-          resolve(res);
+          resolve(res)
         }
-      });
+      })
     } catch (err) {
-      alert("服务器出错");
-      console.log(err);
+      alert('服务器出错')
+      console.log(err)
     }
   },
-  async post(url, data) {
+  async post (url, data) {
     try {
-      let res = await axios.post(url, qs.stringify(data));
-      res = res.data;
+      let res = await axios.post(url, qs.stringify(data))
+      res = res.data
       return new Promise((resolve, reject) => {
         if (res.code === 0) {
-          resolve(res);
+          resolve(res)
         } else {
-          reject(res);
+          reject(res)
         }
-      });
+      })
     } catch (err) {
       // return (e.message)
-      alert("服务器出错");
-      console.log(err);
+      alert('服务器出错')
+      console.log(err)
     }
   },
-};
-export { api };
+}
+export { api }
 ```
-
 https://www.jianshu.com/p/4168efdc172b
 
-## 微信小程序好友列表右侧字母导航功能
 
+## 微信小程序好友列表右侧字母导航功能
 https://blog.csdn.net/qq_25252769/article/details/81116597
 
-## axios 使用 post 方式传递参数后端接收不到
 
+## axios使用post方式传递参数后端接收不到
 https://segmentfault.com/a/1190000012635783
 
-## axios_post 提交数据的三种请求方式写法
 
+## axios_post提交数据的三种请求方式写法
 https://segmentfault.com/a/1190000015261229
 
-## 数组的一些操作
 
+## 数组的一些操作
 ```javascript
 // 数组去重
 let arr = [1, 2, 2, 3, 3, 3];
@@ -761,77 +751,74 @@ Object.entries({ name: 'Gue', age: 18}) // [['name', 'Gue'], ['age', 18]]
 Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18}
 ```
 
-## 浅谈控制反转与依赖注入
 
+## 浅谈控制反转与依赖注入
 https://zhuanlan.zhihu.com/p/33492169
 
-## Vue 响应式原理及实现
 
+## Vue响应式原理及实现
 ```javascript
-class Dep {
-  // 初始化
-  constructor() {
-    this.subscribers = new Set();
-  } // 订阅update函数列表
-  depend() {
-    if (activeUpdate) {
-      this.subscribers.add(activeUpdate);
+class Dep {  // 初始化
+  constructor () {          
+    this.subscribers = new Set()
+  }  // 订阅update函数列表
+  depend () {    
+    if (activeUpdate) {     
+      this.subscribers.add(activeUpdate)
     }
-  } // 所有update函数重新运行
-  notify() {
-    this.subscribers.forEach((sub) => sub());
+  }  // 所有update函数重新运行
+  notify () {              
+    this.subscribers.forEach(sub => sub())
   }
 }
 
-function observe(obj) {
-  // 迭代对象的所有属性
+function observe (obj) {  // 迭代对象的所有属性
   // 并使用Object.defineProperty()转换成getter/setters
-  Object.keys(obj).forEach((key) => {
-    let internalValue = obj[key]; // 每个属性分配一个Dep实例
-    const dep = new Dep();
-    Object.defineProperty(obj, key, {
+  Object.keys(obj).forEach(key => {    
+    let internalValue = obj[key]    // 每个属性分配一个Dep实例
+    const dep = new Dep()    
+    Object.defineProperty(obj, key, {    
       // getter负责注册订阅者
-      get() {
-        dep.depend();
-        return internalValue;
-      },
+      get () {
+        dep.depend()        
+        return internalValue
+      },      
       // setter负责通知改变
-      set(newVal) {
-        const changed = internalValue !== newVal;
-        internalValue = newVal;
+      set (newVal) {        
+        const changed = internalValue !== newVal
+        internalValue = newVal        
         // 触发后重新计算
         if (changed) {
-          dep.notify();
+          dep.notify()
         }
-      },
-    });
-  });
-  return obj;
+      }
+    })
+  })  
+  return obj
 }
 
-let activeUpdate = null;
-function autorun(update) {
-  // 包裹update函数到"wrappedUpdate"函数中，
+let activeUpdate = null
+function autorun (update) {  // 包裹update函数到"wrappedUpdate"函数中，
   // "wrappedUpdate"函数执行时注册和注销自身
   const wrappedUpdate = () => {
-    activeUpdate = wrappedUpdate;
-    update();
-    activeUpdate = null;
-  };
-  wrappedUpdate();
+    activeUpdate = wrappedUpdate
+    update()
+    activeUpdate = null
+  }
+  wrappedUpdate()
 }
 
 // 调用
-const state = { count: 0 };
-observe(state);
-autorun(() => {
-  console.log(state.count);
-}); // 输出 count is: 0
-state.count++; // 输出 count is: 1
+const state = { count: 0 }
+observe(state)
+autorun(() => {  
+  console.log(state.count)
+})// 输出 count is: 0
+state.count++// 输出 count is: 1
 ```
 
-## vue_cli 搭建 vue 项目
 
+## vue_cli搭建vue项目
 ```javascript
 // 下载vue-cli脚手架
 npm install --global vue-cli
@@ -849,120 +836,126 @@ npm run dev
 npm run build
 ```
 
-## 防抖与节流
 
+## 防抖与节流
 ```javascript
 // 防抖
-var debounce = function (fn, delayTime) {
+var debounce = function(fn, delayTime) {
   var timer = null;
-  return function () {
-    if (timer) clearTimeout(timer);
+  return function() {
+    if(timer) clearTimeout(timer);
     var _this = this;
     var args = arguments;
-    timer = setTimeout(function () {
+    timer = setTimeout(function(){
       fn.apply(_this, args);
-    }, delayTime);
-  };
-};
+    }, delayTime)
+  }
+}
 
-input.onkeydown = debounce(function () {
+input.onkeydown = debounce(function() { 
   // do something
 }, 2000);
 
+
 // 节流
-var throttle = function (fn, delayTime) {
+var throttle = function(fn, delayTime) {
   var isFinished = true;
-  return function () {
-    if (!isFinished) return;
+  return function() {
+    if(!isFinished) return;
     isFinished = false;
     var _this = this;
     var args = arguments;
-    setTimeout(function () {
+    setTimeout(function(){
       fn.apply(_this, args);
       isFinished = true;
-    }, delayTime);
-  };
-};
+    }, delayTime)
+  }
+}
 
-part1.onscroll = throttle(function () {
-  console.log("scroll");
+part1.onscroll = throttle(function() { 
+    console.log('scroll')
 }, 2000);
+
 
 // 注：demo文件夹里有例子
 ```
 
-## 调用 iframe 的子 iframe 里的 function
 
+## 调用iframe的子iframe里的function
 ```javascript
 // 遇到的问题： 有时候 window.frames['iframeName'] 能获取到，但有时又是undefined
 // 试过 iframe.contentWindow.document.getElementById ，也是undefined
 // 下面调试均是在控制台里输入
 // 例子一：
-var iframe_1 = window.frames["iframe1"];
-iframe_1; // Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
-var iframe_2 = iframe_1.frames["layui-layer-iframe1"]; // VM8981:1 Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
-iframe_1; // Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:1
-window.name; // iframe1
+var iframe_1 = window.frames['iframe1'];
+iframe_1// Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+var iframe_2 = iframe_1.frames['layui-layer-iframe1']// VM8981:1 Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
+iframe_1// Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:1
+window.name// iframe1
+
 
 // 例子二：
-window.name; // ""
-var iframe_1 = window.frames["iframe1"]; // undefined
-iframe_1; // undefined
-window.name; // iframe1
+window.name// ""
+var iframe_1 = window.frames['iframe1']// undefined
+iframe_1// undefined
+window.name// iframe1
+
 
 // 例子三：
-window.name; // ""
-var iframe_1 = window.frames["iframe1"]; // undefined
-iframe_1; // Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
-iframe_1; // 这里再确认一遍 Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
-var iframe_2 = iframe_1.frames["layui-layer-iframe1"]; // Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
-window.name; // iframe1
+window.name// ""
+var iframe_1 = window.frames['iframe1']// undefined
+iframe_1// Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+iframe_1// 这里再确认一遍 Window {speechSynthesis: SpeechSynthesis, caches: CacheStorage, localStorage: Storage, sessionStorage: Storage, webkitStorageInfo: DeprecatedStorageInfo…}
+var iframe_2 = iframe_1.frames['layui-layer-iframe1']// Uncaught ReferenceError: iframe_1 is not defined at <anonymous>:1:16
+window.name// iframe1
+
 
 // 现象：看上去很奇怪，iframe_1一时是有值的，一时缺变成了undefined
 // 估计：难道与F12选中的当前窗口有关系？
 // 总结：经过验证，就是与F12选中的当前页面有关。因为在找名称为 layui-layer-iframe1 的iframe时，用F12选择元素后，改变了当前的window。用 window.name 判断清楚当前的页面就一目了然了。
 
+
 // 附上帮龙爷解决问题的代码：
 // 浏览器为ie11
-var frame_mainFrame = window.frames["mainFrame"];
-var frame_main = frame_mainFrame.document.frames["main"];
-var frame_page = frame_main.document.frames["page"];
+var frame_mainFrame = window.frames['mainFrame'];
+var frame_main = frame_mainFrame.document.frames['main'];
+var frame_page = frame_main.document.frames['page'];
 frame_page.downloadData(1, 3000);
 ```
 
-## 对象深克隆
 
+## 对象深克隆
 ```javascript
-const deepClone = (obj) => JSON.parse(JSON.stringify(obj));
+const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
 // 上述clone的方法会忽略function和undefined的字段，对date类型支持貌似也不友好。而且只能克隆原始对象自身的值
 // 结论：对于纯数据的json对象的深克隆，可以使用JSON.parse()和JSON.stringify()方法
 
-const deepClone = (obj) => {
-  if (obj === null) return null;
-  if (obj.constructor !== "object") return obj;
-  if (obj.constructor === Date) return new Date(obj);
-  if (obj.constructor === RegExp) return new RegExp(obj);
-  var newObj = new obj.constructor(); //保持继承的原型
-  for (let key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      let val = obj[key];
-      //newObj[key] = typeof val === 'object' ? arguments.callee(val) : val;
-      newObj[key] = typeof val === "object" ? deepClone(val) : val; // 避免使用aguments.callee
+
+const deepClone = obj => {
+    if(obj === null) return null;
+    if(obj.constructor !== 'object') return obj;
+    if(obj.constructor === Date) return new Date(obj);
+    if(obj.constructor === RegExp) return new RegExp(obj);
+    var newObj = new obj.constructor(); //保持继承的原型
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+            let val = obj[key];
+            //newObj[key] = typeof val === 'object' ? arguments.callee(val) : val;
+            newObj[key] = typeof val === 'object' ? deepClone(val) : val;// 避免使用aguments.callee
+        }
     }
-  }
-  return newObj;
-};
+    return newObj;
+}
 
 // 上述方法能完美实现深拷贝
 // 拓展：callee 是 arguments 对象的一个属性。它可以用于引用该函数的函数体内当前正在执行的函数。这在函数的名称是未知时很有用，例如在没有名称的函数表达式 (也称为“匿名函数”)内。
 // 警告：在严格模式下，第5版 ECMAScript (ES5) 禁止使用 arguments.callee()。当一个函数必须调用自身的时候, 避免使用 arguments.callee(), 通过要么给函数表达式一个名字,要么使用一个函数声明.
 ```
-
 https://www.cnblogs.com/tangjiao/p/9313829.html
 
-## px2rem_postcss
 
+## px2rem_postcss
 ```javascript
 npm install postcss-loader
 
@@ -982,11 +975,10 @@ module.exports = {
   }
 }
 ```
-
 https://github.com/songsiqi/px2rem-postcss
 
-## eventBus
 
+## eventBus
 ```javascript
 // eventBus.js
 import Vue from "vue";
@@ -1009,11 +1001,10 @@ onMenuIconClick() {
   this.$bus.$emit("eventName");
 }
 ```
-
 https://www.jianshu.com/p/af9cb05bfbaf
 
-## 在 Vue 中使用 RSA 加密解密加签解签
 
+## 在Vue中使用RSA加密解密加签解签
 ```javascript
 // 首先引入jsencrypt
 npm install jsencrypt --save
@@ -1034,7 +1025,7 @@ RSAencrypt(pas) {
   // console.log('加密：'+jse.encrypt(pas))
   return jse.encrypt(pas);
 }
-
+  
 //解密方法
 RSAdecrypt(pas) {
   let jse = new JSEncrypt();
@@ -1044,11 +1035,10 @@ RSAdecrypt(pas) {
   return jse.decrypt(pas);
 }
 ```
-
 https://juejin.im/post/5c27331be51d4535c9267fa9
 
-## JSON 数据中含有需要 unescape 字符串的处理
 
+## JSON数据中含有需要unescape字符串的处理
 ```javascript
 // 登录后返回的数据需要经过以下处理（为了统一进行unescape处理）
 JSON.parse(unescape(JSON.stringify(res.data)))
@@ -1071,8 +1061,8 @@ JSON.parse(unescape(JSON.stringify(res.data).replace(/%22/g, '%2522').replace(/%
 // escape('%') 的结果为 "%25"
 ```
 
-## px2rem
 
+## px2rem
 ```javascript
 // 1.下载并引入lib-flexible
 npm install --save lib-flexible
@@ -1174,8 +1164,8 @@ module.exports = vuxLoader.merge(webpackConfig, {
 });
 ```
 
-## 图片转 base64 格式
 
+## 图片转base64格式
 ```javascript
 function getBase64(img) {
   function getBase64Image(img, width, height) {
@@ -1203,8 +1193,8 @@ function getBase64(img) {
 }
 ```
 
-## 浏览器跨域请求处理方法
 
+## 浏览器跨域请求处理方法
 ```javascript
 // 1.document.domain + iframe
 
