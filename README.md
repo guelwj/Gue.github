@@ -49,6 +49,7 @@
 44. [px2rem](#px2rem)
 45. [图片转base64格式](#图片转base64格式)
 46. [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
+47. [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
 
 
 
@@ -1233,3 +1234,38 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 ```
 
 https://www.cnblogs.com/PheonixHkbxoic/p/5760838.html
+
+
+## 获取两个日期之间的日期数组
+```javascript
+function(beginDate, endDate) {
+    var arr = [];
+    var dates = [];
+
+    // 设置两个日期UTC时间
+　　var db = new Date(beginDate);
+　　var de = new Date(endDate);
+
+    // 获取两个日期GTM时间
+　　var s = db.getTime() - 24 * 60 * 60 * 1000;
+　　var d = de.getTime() - 24 * 60 * 60 * 1000;
+
+    // 获取到两个日期之间的每一天的毫秒数
+　　for (var i = s; i <= d;) {
+　　　　i = i + 24 * 60 * 60 * 1000;
+        arr.push(parseInt(i))
+　　}
+    
+    // 获取每一天的时间  YY-MM-DD
+    for( var j in arr ){
+        var time = new Date(arr[j]);
+        var year = time.getFullYear(time);
+        var mouth = (time.getMonth() + 1)>=10?(time.getMonth() + 1):('0'+(time.getMonth() + 1));
+        var day = time.getDate()>=10?time.getDate():('0'+time.getDate());
+        var YYMMDD = year + '-' + mouth + '-' + day;
+        dates.unshift(YYMMDD)
+    }
+
+    return dates;
+}
+```
