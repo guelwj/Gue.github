@@ -50,6 +50,7 @@
 45. [图片转base64格式](#图片转base64格式)
 46. [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
 47. [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
+48. [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
 
 
 
@@ -1269,3 +1270,33 @@ function(beginDate, endDate) {
     return dates;
 }
 ```
+
+
+## bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug
+```javascript
+bug情况为: 
+当我们使用bootstrap-select的动态搜索下拉框时，例如在搜索框输入da，中文输入法应该是出现: 1.打 2.大 3.达 ... 这样的内容。
+但实际情况是，搜索框直接键入了d，然后中文搜索为a，输入法输出: 1.啊 2.阿 3.吖 ...
+这是由于bootstrap-select的部分js，让部分中文字符，在输入法输入还没有完成时，就打断了中文键入，导致不能完整地在输入框内输入字符。
+
+以bootstrap.select 1.11.2版本为例；解决方法如下：
+1、修改bootstrap-select/1.11.2/js/bootstrap-select.js
+在1477行:
+        if (that.$searchbox.val()) that.$lis.not('.hidden, .divider, .dropdown-header').eq(0).addClass('active').children('a').focus();
+        $(this).focus();
+这2句话全部注释掉
+
+2、修改bootstrap-select/1.11.2/js/bootstrap-select.min.js
+先格式化该文件，将全部无空格的文件变成易于读写的格式，找到513行:
+d.$lis.filter(".active").removeClass("active"), d.$searchbox.val() && d.$lis.not(".hidden, .divider, .dropdown-header").eq(0).addClass("active").children("a").focus(), a(this).focus()
+
+将这句话改为:
+d.$lis.filter(".active").removeClass("active")
+
+其中，d.$searchbox.val()&&d.$lis.not(".hidden, .divider, .dropdown-header").eq(0).addClass("active").children("a").focus(),a(this).focus()
+这部分是要注释掉或者删掉的。
+
+修改完成这两个文件后，注意清除浏览器缓存，再刷新该bootstrap-select动态搜索下拉框的页面，就可以不打断中文输入法输入，完整键入中文字符了。
+```
+
+https://blog.csdn.net/moqiluoji/article/details/104608076
