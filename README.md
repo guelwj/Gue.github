@@ -3,54 +3,40 @@
 >记录平时项目中遇到问题时的解决方案，附上能找到答案的网址。分享一些不错的资源。
 
 ## 目录：
-1. [git基本操作](#git基本操作)
-2. [微信公众平台文档](#微信公众平台文档)
-3. [大白话讲解promise](#大白话讲解promise)
-4. [前端布局神器flex](#前端布局神器flex)
-5. [js模块化编程之彻底弄懂amd与cmd](#js模块化编程之彻底弄懂amd与cmd)
-6. [git_push错误failed_to_push_some_refs_to](#git_push错误failed_to_push_some_refs_to)
-7. [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
-8. [webpack](#webpack)
-9. [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
-10. [video在安卓大部分浏览器包括微信最顶层的问题](#video在安卓大部分浏览器包括微信最顶层的问题)
-11. [js控制输入框光标位置](#js控制输入框光标位置)
-12. [jquery中attr和prop的区别介绍](#jquery中attr和prop的区别介绍)
-13. [拖放排序插件sortable](#拖放排序插件sortable)
-14. [ios与android的new_date之坑](#ios与android的new_date之坑)
-15. [原生js实现瀑布流效果](#原生js实现瀑布流效果)
-16. [微信小程序rsa签名验签加密解密](#微信小程序rsa签名验签加密解密)
-17. [解决vs2017隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
-18. [airbnb_javascript标准](#airbnb_javascript标准)
-19. [export_default和export的区别](#export_default和export的区别)
-20. [微信小程序授权的写法](#微信小程序授权的写法)
-21. [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
-22. [微信小程序解决富文本不支持的问题](#微信小程序解决富文本不支持的问题)
-23. [jQuery的deferred对象详解](#jQuery的deferred对象详解)
-24. [不错的code练习网站](#不错的code练习网站)
-25. [深入理解css中vertical_align属性](#深入理解css中vertical_align属性)
-26. [JS订阅模式](#JS订阅模式)
-27. [Vue用js触发input选取文件点击事件](#Vue用js触发input选取文件点击事件)
-28. [浏览器同源政策及其规避方法](#浏览器同源政策及其规避方法)
-29. [使用async&await封装axios](#使用async&await封装axios)
-30. [微信小程序好友列表右侧字母导航功能](#微信小程序好友列表右侧字母导航功能)
-31. [axios使用post方式传递参数后端接收不到](#axios使用post方式传递参数后端接收不到)
-32. [axios_post提交数据的三种请求方式写法](#axios_post提交数据的三种请求方式写法)
-33. [数组的一些操作](#数组的一些操作)
-34. [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
-35. [Vue响应式原理及实现](#Vue响应式原理及实现)
-36. [vue_cli搭建vue项目](#vue_cli搭建vue项目)
-37. [防抖与节流](#防抖与节流)
-38. [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
-39. [对象深克隆](#对象深克隆)
-40. [px2rem_postcss](#px2rem_postcss)
-41. [eventBus](#eventBus)
-42. [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
-43. [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
-44. [px2rem](#px2rem)
-45. [图片转base64格式](#图片转base64格式)
-46. [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
-47. [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
-48. [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
+* [git基本操作](#git基本操作)
+* [git_push错误](#git_push错误)
+* [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
+* [webpack](#webpack)
+* [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
+* [js控制输入框光标位置](#js控制输入框光标位置)
+* [jquery中attr和prop的区别介绍](#jquery中attr和prop的区别介绍)
+* [ios与android的new_date之坑](#ios与android的new_date之坑)
+* [原生js实现瀑布流效果](#原生js实现瀑布流效果)
+* [微信小程序rsa签名验签加密解密](#微信小程序rsa签名验签加密解密)
+* [解决vs2017隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
+* [export_default和export的区别](#export_default和export的区别)
+* [微信小程序授权的写法](#微信小程序授权的写法)
+* [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
+* [微信小程序解决富文本不支持的问题](#微信小程序解决富文本不支持的问题)
+* [JS订阅模式](#JS订阅模式)
+* [浏览器同源政策及其规避方法](#浏览器同源政策及其规避方法)
+* [封装axios](#封装axios)
+* [axios的三种post请求方式写法](#axios的三种post请求方式写法)
+* [数组的一些操作](#数组的一些操作)
+* [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
+* [Vue响应式原理及实现](#Vue响应式原理及实现)
+* [防抖与节流](#防抖与节流)
+* [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
+* [对象深克隆](#对象深克隆)
+* [eventBus](#eventBus)
+* [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
+* [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
+* [px2rem](#px2rem)
+* [图片转base64格式](#图片转base64格式)
+* [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
+* [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
+* [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
+* [网站速度优化](#网站速度优化)
 
 
 
@@ -124,23 +110,7 @@ rm    //删除文件；一般的删除操作用rm即可
 git权威指南教程：http://www.icoolxue.com/album/show/41
 
 
-## 微信公众平台文档
-https://developers.weixin.qq.com/miniprogram/dev/
-
-
-## 大白话讲解promise
-https://www.cnblogs.com/lvdabao/p/es6-promise-1.html
-
-
-## 前端布局神器flex
-https://www.cnblogs.com/qingchunshiguang/p/8011103.html
-
-
-## js模块化编程之彻底弄懂amd与cmd
-https://www.cnblogs.com/chenguangliang/p/5856701.html
-
-
-## git_push错误failed_to_push_some_refs_to
+## git_push错误
 ```javascript
 在github库中对某个文件进行了在线的编辑，并且没有同步到本地库，之后我在本地库添加了文件test.txt，并想提交到github，出现以下错误：error：failed to push some refs to。
 这个问题是因为远程库与本地库不一致造成的，那么我们把远程库同步到本地库就可以了。 
@@ -299,11 +269,6 @@ module.exports = {
 http://html5doctor.com/video-canvas-magic/
 
 
-## video在安卓大部分浏览器包括微信最顶层的问题
-解决不了。
-https://segmentfault.com/q/1010000004436205/a-1020000004436328
-
-
 ## js控制输入框光标位置
 ```javascript
 var inpObj = document.getElementById(inputId);
@@ -320,10 +285,6 @@ https://blog.csdn.net/foralienzhou/article/details/52437929
 对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
 ```
 https://www.jb51.net/article/88068.htm
-
-
-## 拖放排序插件sortable
-https://segmentfault.com/a/1190000008209715
 
 
 ## ios与android的new_date之坑
@@ -364,9 +325,6 @@ https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
 （7）选中“控件”列表中的“高级保存选项”选项，单击“上移”或者“下移”按钮，调整该命令的位置。
 （8）单击“关闭”按钮，完成“高级保存选项”命令的添加操作。
 ```
-
-## airbnb_javascript标准
-https://github.com/airbnb/javascript#table-of-contents
 
 
 ## export_default和export的区别
@@ -570,42 +528,8 @@ str = str.replace(/&nbsp;/g, '\xa0');
 https://blog.csdn.net/milli236/article/details/79668162
 
 
-## jQuery的deferred对象详解
-http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html
-
-
-## 不错的code练习网站
-https://www.codewars.com/
-
-
-## 深入理解css中vertical_align属性
-https://www.cnblogs.com/starof/p/4512284.html?utm_source=tuicool&utm_medium=referral
-
-
 ## JS订阅模式
 https://www.jianshu.com/p/0aacfec05046
-
-
-## Vue用js触发input选取文件点击事件
-```javascript
-<input
-  type="file"
-  multiple
-  name="file"
-  accept=".pdf"
-  ref="inputFile"
-  class="upload_input"
-  @click="inputFileOnClick"
-  @change="inputFileOnChange"
->
-
-// 调起文件选择弹窗
-this.$refs.inputFile.click();
-
-// 或者
-this.$refs.inputFile.dispatchEvent(new MouseEvent('click'));
-```
-https://www.cnblogs.com/hzx-5/p/9957726.html
 
 
 ## 在浏览器上安装Vue_Devtools工具
@@ -616,27 +540,11 @@ https://www.cnblogs.com/feiyu159/p/8666865.html
 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
 
 
-## 使用async&await封装axios
+## 封装axios
 ```javascript
 import axios from 'axios'
 const qs = require('qs')
-const api = {
-  async get (url, data) {
-    try {
-      let res = await axios.get(url, {params: data})
-      res = res.data
-      return new Promise((resolve) => {
-        if (res.code === 0) {
-          resolve(res)
-        } else {
-          resolve(res)
-        }
-      })
-    } catch (err) {
-      alert('服务器出错')
-      console.log(err)
-    }
-  },
+export const api = {
   async post (url, data) {
     try {
       let res = await axios.post(url, qs.stringify(data))
@@ -649,26 +557,16 @@ const api = {
         }
       })
     } catch (err) {
-      // return (e.message)
       alert('服务器出错')
       console.log(err)
     }
-  },
+  }
 }
-export { api }
 ```
 https://www.jianshu.com/p/4168efdc172b
 
 
-## 微信小程序好友列表右侧字母导航功能
-https://blog.csdn.net/qq_25252769/article/details/81116597
-
-
-## axios使用post方式传递参数后端接收不到
-https://segmentfault.com/a/1190000012635783
-
-
-## axios_post提交数据的三种请求方式写法
+## axios的三种post请求方式写法
 https://segmentfault.com/a/1190000015261229
 
 
@@ -820,34 +718,15 @@ state.count++// 输出 count is: 1
 ```
 
 
-## vue_cli搭建vue项目
-```javascript
-// 下载vue-cli脚手架
-npm install --global vue-cli
-
-// 生成项目，形成基本结构
-vue init webpack projectName
-
-// 安装需要的依赖包
-npm install packageName
-
-// 运行
-npm run dev
-
-// 打包
-npm run build
-```
-
-
 ## 防抖与节流
 ```javascript
 // 防抖
-var debounce = function(fn, delayTime) {
-  var timer = null;
+let debounce = function(fn, delayTime) {
+  let timer = null;
   return function() {
     if(timer) clearTimeout(timer);
-    var _this = this;
-    var args = arguments;
+    let _this = this;
+    let args = arguments;
     timer = setTimeout(function(){
       fn.apply(_this, args);
     }, delayTime)
@@ -860,13 +739,13 @@ input.onkeydown = debounce(function() {
 
 
 // 节流
-var throttle = function(fn, delayTime) {
-  var isFinished = true;
+let throttle = function(fn, delayTime) {
+  let isFinished = true;
   return function() {
     if(!isFinished) return;
     isFinished = false;
-    var _this = this;
-    var args = arguments;
+    let _this = this;
+    let args = arguments;
     setTimeout(function(){
       fn.apply(_this, args);
       isFinished = true;
@@ -955,29 +834,6 @@ const deepClone = obj => {
 // 警告：在严格模式下，第5版 ECMAScript (ES5) 禁止使用 arguments.callee()。当一个函数必须调用自身的时候, 避免使用 arguments.callee(), 通过要么给函数表达式一个名字,要么使用一个函数声明.
 ```
 https://www.cnblogs.com/tangjiao/p/9313829.html
-
-
-## px2rem_postcss
-```javascript
-npm install postcss-loader
-
-var px2rem = require('postcss-px2rem');
-
-module.exports = {
-  module: {
-    loaders: [
-      {
-        test: /\.css$/,
-        loader: "style-loader!css-loader!postcss-loader"
-      }
-    ]
-  },
-  postcss: function() {
-    return [px2rem({remUnit: 75})];
-  }
-}
-```
-https://github.com/songsiqi/px2rem-postcss
 
 
 ## eventBus
@@ -1240,30 +1096,30 @@ https://www.cnblogs.com/PheonixHkbxoic/p/5760838.html
 ## 获取两个日期之间的日期数组
 ```javascript
 function(beginDate, endDate) {
-    var arr = [];
-    var dates = [];
+    let arr = [];
+    let dates = [];
 
     // 设置两个日期UTC时间
-　　var db = new Date(beginDate);
-　　var de = new Date(endDate);
+　　let db = new Date(beginDate);
+　　let de = new Date(endDate);
 
     // 获取两个日期GTM时间
-　　var s = db.getTime() - 24 * 60 * 60 * 1000;
-　　var d = de.getTime() - 24 * 60 * 60 * 1000;
+　　let s = db.getTime() - 24 * 60 * 60 * 1000;
+　　let d = de.getTime() - 24 * 60 * 60 * 1000;
 
     // 获取到两个日期之间的每一天的毫秒数
-　　for (var i = s; i <= d;) {
+　　for (let i = s; i <= d;) {
 　　　　i = i + 24 * 60 * 60 * 1000;
         arr.push(parseInt(i))
 　　}
     
     // 获取每一天的时间  YY-MM-DD
-    for( var j in arr ){
-        var time = new Date(arr[j]);
-        var year = time.getFullYear(time);
-        var mouth = (time.getMonth() + 1)>=10?(time.getMonth() + 1):('0'+(time.getMonth() + 1));
-        var day = time.getDate()>=10?time.getDate():('0'+time.getDate());
-        var YYMMDD = year + '-' + mouth + '-' + day;
+    for( let j in arr ){
+        let time = new Date(arr[j]);
+        let year = time.getFullYear(time);
+        let mouth = (time.getMonth() + 1)>=10?(time.getMonth() + 1):('0'+(time.getMonth() + 1));
+        let day = time.getDate()>=10?time.getDate():('0'+time.getDate());
+        let YYMMDD = year + '-' + mouth + '-' + day;
         dates.unshift(YYMMDD)
     }
 
@@ -1300,3 +1156,16 @@ d.$lis.filter(".active").removeClass("active")
 ```
 
 https://blog.csdn.net/moqiluoji/article/details/104608076
+
+
+## 网站速度优化
+```javascript
+1.减少HTTP请求数
+2.样式表放在网页Head部分
+3.把JS文件放到网页底部
+4.css sprite
+5.压缩图片为webp格式
+6.使用lazyload
+7.使用CDN，把静态文件分发到CDN服务器
+8.http的expires，搭配server端配置Cache-Control// <meta http-equiv="Expires"  content="Wed, 26 Feb 1997 08:21:57 GMT">
+```
