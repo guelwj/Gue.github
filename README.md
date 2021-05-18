@@ -1,6 +1,6 @@
 # Gue君爷的日常note
 
->记录平时项目中遇到问题时的解决方案，附上能找到答案的网址。分享一些不错的资源。
+>记录日常项目中遇到的问题的解决方案与心得。
 
 ## 目录：
 * [git基本操作](#git基本操作)
@@ -37,6 +37,9 @@
 * [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
 * [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
 * [网站速度优化](#网站速度优化)
+* [JS数字精度丢失的问题](#JS数字精度丢失的问题)
+* [解决页面国际化问题](#解决页面国际化问题)
+* [页面seo优化](#页面seo优化)
 
 
 
@@ -1089,7 +1092,6 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // 2.在被请求的网站上，设置HTTP头
 "Access-Control-Allow-Origin:*" //值为*或指定的域名
 ```
-
 https://www.cnblogs.com/PheonixHkbxoic/p/5760838.html
 
 
@@ -1154,7 +1156,6 @@ d.$lis.filter(".active").removeClass("active")
 
 修改完成这两个文件后，注意清除浏览器缓存，再刷新该bootstrap-select动态搜索下拉框的页面，就可以不打断中文输入法输入，完整键入中文字符了。
 ```
-
 https://blog.csdn.net/moqiluoji/article/details/104608076
 
 
@@ -1168,4 +1169,136 @@ https://blog.csdn.net/moqiluoji/article/details/104608076
 6.使用lazyload
 7.使用CDN，把静态文件分发到CDN服务器
 8.http的expires，搭配server端配置Cache-Control// <meta http-equiv="Expires"  content="Wed, 26 Feb 1997 08:21:57 GMT">
+```
+
+
+## JS数字精度丢失的问题
+```javascript
+let num = 0.1 + 0.2;
+console.log(num)// 0.30000000000000004
+
+原因：
+计算机的二进制实现和位数限制有些数无法有限表示。
+
+比如：
+0.1 >> 0.0001 1001 1001 1001…（1001无限循环）
+此时只能模仿十进制进行四舍五入了，但是二进制只有 0 和 1 两个，于是变为 0 舍 1 入。这即是计算机中部分浮点数运算时出现误差，丢失精度的根本原因。
+
+解决方案：
+对于整数，前端出现问题的几率可能比较低，毕竟很少有业务需要需要用到超大整数，只要运算结果不超过 Math.pow(2, 53) 就不会丢失精度。
+对于小数，把小数放大为整数（乘倍数），再缩小回原来倍数（除倍数）// (0.1*10 + 0.2*10) / 10 == 0.3
+```
+
+
+## 解决页面国际化问题
+```javascript
+// 1.写两套一模一样除了语种不同的页面。
+// 这个是最好解决，技术含量最低的一种办法，那么弊端也就很明显了，占内存大，麻烦。
+
+// 2.引入谷歌的插件。
+// 最大的弊端就是翻译不可控。
+
+// 3.使用translater.js实现翻译功能。
+// 这是一个利用HTML注释的页面翻译解决方案。对于少量的静态页面，这种解决方案显得更简单。
+// 安装：$ npm install translater.js
+// 使用：
+<div>
+  这里是中文
+  <!--{jp}ここは日本語です-->
+  <!--{en}Here is English-->
+</div>
+
+let tran = new Translater({
+  lang:"default"
+});
+tran.setLang('jp')
+
+// 4.i18n实现国际化。
+// 安装
+npm install vue-i18n --save-dev
+
+// 在main.js文件中引入
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n) // 通过插件的形式挂载，通过全局方法 Vue.use() 使用插件const i18n = new VueI18n({
+  locale: 'zh', // 语言标识 //this.$i18n.locale // 通过切换locale的值来实现语言切换
+  messages: {
+    'zh': require('./VueI18n/language-zh'),// 引入language-zh.js  language-en.js
+    'en': require('./VueI18n/language-en')
+  }
+})
+Vue.config.productionTip = false
+new Vue({
+  el: '#app',
+  router,
+  i18n,
+  components: { App },
+  template: '<App/>'
+})
+
+// 在src下新建文件夹（文件名字可自己定）VueI18n 然后再文件夹下将两个文件language-zh.js和language-en.js
+// language-zh.js
+{
+　　"lang":{
+　　　　"home": "首页",
+　　　　"name": '中文'
+　　}
+}
+// language-en.js
+{
+　　"lang":{
+　　　　"home": "HomePage",
+　　　　"name": 'Chinese'
+　　}
+}
+
+// 在组件中使用
+<template>
+  <div class="content">
+    <span>{{ $t('lang.home')}}</span>
+    <span>{{ $t('lang.name')}}</span>
+    <span @click="changeLaguages()">切换语言</span>
+    <!-- <span v-if="lang==='zh'"  @click="changezh" style="display:block" class="color">中文</span> -->
+    <!-- <span v-else ="lang==='en'" @click="changeen" style="display:block">english</span> -->
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      lang: 'zh'
+    }
+  },
+  methods: {
+    changeLaguages () {
+      console.log(this.$i18n.locale)
+      let lang = this.$i18n.locale === 'zh' ? 'en' : 'zh'
+      this.$i18n.locale = lang
+    }
+    // changezh () {
+    //   this.lang = '中文'
+    //   this.$i18n.locale = 'zh'
+    // },
+    // changeen () {
+    //   this.lang = 'english'
+    //   this.$i18n.locale = 'en'
+    // }
+  }
+}
+</script>
+```
+
+
+## 页面seo优化
+```javascript
+1.标题的设置
+2.元描述// <meta name="description" content="This is content.">
+3.设置H1标签
+4.图片添加alt文本
+5.标签中如果有“title”、“description”、“keywords”等属性，尽量都填上
+6.高质量的网站内容
+7.设置好404页面
+8.清理网站死链接
+9.精简代码
+10.网址简短，关键字丰富
 ```
