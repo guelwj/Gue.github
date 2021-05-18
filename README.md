@@ -40,6 +40,9 @@
 * [JS数字精度丢失的问题](#JS数字精度丢失的问题)
 * [解决页面国际化问题](#解决页面国际化问题)
 * [页面seo优化](#页面seo优化)
+* [常见http状态码](#常见http状态码)
+* [some的实现](#some的实现)
+* [判断是否为数组的方法](#判断是否为数组的方法)
 
 
 
@@ -591,6 +594,17 @@ console.log(newArr); // [1, 2, 3]
 [1, [2, 3]].flat(2); // [1, 2, 3]
 [1, [2, 3, [4, 5[...]]]].flat(Infinity); // [1,2,3,4...n]
 
+function flatten(arr, result = []) {
+  for (let item of arr) {
+    if (Array.isArray(item)) {
+      flatten(item, result)
+    } else {
+      result.push(item)
+    }
+  }
+  return result;
+}
+
 
 // 获取数组最大值
 let arr = [1, 2, 3];
@@ -613,7 +627,7 @@ console.log(resultArr) // 15
 [1, 2, 3].includes(4) // false
 [1, 2, 3].indexOf(4) // -1
 [1, 2, 3, 4, 3].find(item => item === 3) // 3 获取数组中符合的第一个元素
-[1, 2, 3].find(item => item === 3) // 2
+[1, 2, 3].findIndex(item => item === 3) // 2
 
 
 // 类数组转化
@@ -724,42 +738,36 @@ state.count++// 输出 count is: 1
 ## 防抖与节流
 ```javascript
 // 防抖
-let debounce = function(fn, delayTime) {
+let debounce = (fn, delayTime) => {
   let timer = null;
-  return function() {
-    if(timer) clearTimeout(timer);
-    let _this = this;
+  return () => {
+    if (timer) clearTimeout(timer);
     let args = arguments;
-    timer = setTimeout(function(){
-      fn.apply(_this, args);
+    timer = setTimeout(() => {
+      fn.apply(this, arguments)
     }, delayTime)
   }
 }
-
 input.onkeydown = debounce(function() { 
   // do something
 }, 2000);
 
-
 // 节流
-let throttle = function(fn, delayTime) {
+let throttle = (fn, delayTime) => {
   let isFinished = true;
-  return function() {
-    if(!isFinished) return;
+  return () => {
+    if (!isFinished) return;
     isFinished = false;
-    let _this = this;
     let args = arguments;
-    setTimeout(function(){
-      fn.apply(_this, args);
+    setTimeout(() => {
+      fn.apply(this, args)
       isFinished = true;
     }, delayTime)
   }
 }
-
-part1.onscroll = throttle(function() { 
-    console.log('scroll')
+page.onscroll = throttle(function() { 
+  console.log('scroll')
 }, 2000);
-
 
 // 注：demo文件夹里有例子
 ```
@@ -1301,4 +1309,60 @@ export default {
 8.清理网站死链接
 9.精简代码
 10.网址简短，关键字丰富
+```
+
+
+## 常见http状态码
+```javascript
+// 1** 信息，服务器收到请求，需要请求者继续执行操作
+// 2** 成功，操作被成功接收并处理
+// 3** 重定向，需要进一步的操作以完成请求
+// 4** 客户端错误，请求包含语法错误或无法完成请求
+// 5** 服务器错误，服务器在处理请求的过程中发生了错误
+
+// 200 OK 请求成功。一般用于GET与POST请求
+// 301 Moved Permanently 永久移动
+// 302 Found 	临时移动
+// 403 Forbidden 服务器理解客户端的请求，但是拒绝执行此请求
+// 404 Not Found 服务器无法根据客户端的请求找到资源
+// 405 Method Not Allowed 客户端请求中的方法被禁止
+// 500 Internal Server Error 服务器内部错误，无法完成请求
+// 502 Bad Gateway 作为网关或者代理工作的服务器尝试执行请求时，从远程服务器接收到了一个无效的响应
+// 503 Service Unavailable 由于超载或系统维护，服务器暂时的无法处理客户端的请求
+```
+
+
+## some的实现
+```javascript
+Array.prototype.some = (fn, thisValue) => {// thisValue可选。对象作为该执行回调时使用，传递给函数，用作 "this" 的值。如果省略了 thisValue ，"this" 的值为 "undefined"
+  if (type of fn !== 'function') return false;
+  let arr = this;
+  for (let i = 0; i < arr.length; i++) {
+    let result = fn.call(thisValue, arr[i], i, arr);
+    if (result) return true;
+  }
+  return false;
+}
+```
+
+
+## 判断是否为数组的方法
+```javascript
+// 1.instance of
+let a = [];
+a instanceof Array; //true
+let b = {};
+b instanceof Array; //false
+
+// 2.constructor
+let a = [1,3,4];
+a.constructor === Array;//true
+
+// 3.Object.prototype.toString.call()
+let a = [1,2,3]
+Object.prototype.toString.call(a) === '[object Array]';//true
+
+// 4.Array.isArray()
+let a = [1,2,3]
+Array.isArray(a);//true
 ```
