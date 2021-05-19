@@ -43,6 +43,7 @@
 * [常见http状态码](#常见http状态码)
 * [some的实现](#some的实现)
 * [判断是否为数组的方法](#判断是否为数组的方法)
+* [http缓存](#http缓存)
 
 
 
@@ -1176,7 +1177,9 @@ https://blog.csdn.net/moqiluoji/article/details/104608076
 5.压缩图片为webp格式
 6.使用lazyload
 7.使用CDN，把静态文件分发到CDN服务器
-8.http的expires，搭配server端配置Cache-Control// <meta http-equiv="Expires"  content="Wed, 26 Feb 1997 08:21:57 GMT">
+8.Expires与Cache-Control
+// <meta http-equiv="Expires"  content="Wed, 26 Feb 1997 08:21:57 GMT">
+// <meta http-equiv="Cache-Control" content="max-age=3600" />
 ```
 
 
@@ -1366,3 +1369,40 @@ Object.prototype.toString.call(a) === '[object Array]';//true
 let a = [1,2,3]
 Array.isArray(a);//true
 ```
+
+
+## http缓存
+```javascript
+浏览器每次发起请求，都会先在浏览器缓存中查找该请求的结果以及缓存标识。
+浏览器每次拿到服务器返回的请求结果，都会将该结果和缓存标识存入浏览器缓存中。
+
+缓存的资源存哪里？
+1.memory cache// 内存，退出进程时数据会被清除，一般存脚本、字体、图片
+2.disk cache// 硬盘，退出进程时数据不会被清除，一般存非脚本，如css等
+
+强制缓存：
+向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程。主要有三种情况：
+1.不存在该缓存结果和缓存标识，强制缓存失效，则直接向服务器发起请求。
+2.存在该缓存结果和缓存标识，且该结果尚未失效，强制缓存生效，直接返回该结果。
+3.存在该缓存结果和缓存标识，但该结果已失效，强制缓存失效，则使用协商缓存。
+
+控制强制缓存的字段分别是Expires和Cache-Control，其中Cache-Control优先级比Expires高。
+// <meta http-equiv="Expires"  content="Wed, 26 Feb 1997 08:21:57 GMT">
+// <meta http-equiv="Cache-Control" content="max-age=3600" />
+
+协商缓存：
+强制缓存失效后，浏览器携带缓存标识向服务器发起请求，由服务器根据缓存标识决定是否使用缓存的过程。主要有两种情况：
+1.协商缓存生效，返回304。// 使用浏览器缓存的结果
+2.协商缓存失效，返回200和请求结果。
+
+协商缓存的标识也是在响应报文的HTTP头中和请求结果一起返回给浏览器的，控制协商缓存的字段分别有：Last-Modified / If-Modified-Since和Etag / If-None-Match；其中Etag / If-None-Match的优先级比Last-Modified / If-Modified-Since高。
+
+Last-Modified是服务器响应请求时，返回该资源文件在服务器最后被修改的时间。
+If-Modified-Since则是客户端再次发起该请求时，携带上次请求返回的Last-Modified值，通过此字段值告诉服务器该资源上次请求返回的最后被修改时间。服务器收到该请求，发现请求头含有If-Modified-Since字段，则会根据If-Modified-Since的字段值与该资源在服务器的最后被修改时间做对比，若服务器的资源最后被修改时间大于If-Modified-Since的字段值，则重新返回资源，状态码为200；否则则返回304，代表资源无更新，可继续使用缓存文件。
+
+Etag / If-None-Match 同理。
+
+总结：
+强制缓存优先于协商缓存进行，若强制缓存(Expires和Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回304，继续使用缓存。
+```
+https://juejin.cn/post/6844903593275817998
