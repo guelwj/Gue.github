@@ -18,7 +18,6 @@
 * [微信小程序授权的写法](#微信小程序授权的写法)
 * [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
 * [微信小程序解决富文本不支持的问题](#微信小程序解决富文本不支持的问题)
-* [JS订阅模式](#JS订阅模式)
 * [浏览器同源政策及其规避方法](#浏览器同源政策及其规避方法)
 * [封装axios](#封装axios)
 * [axios的三种post请求方式写法](#axios的三种post请求方式写法)
@@ -44,6 +43,7 @@
 * [some的实现](#some的实现)
 * [判断是否为数组的方法](#判断是否为数组的方法)
 * [http缓存](#http缓存)
+* [JS订阅模式](#JS订阅模式)
 
 
 
@@ -533,10 +533,6 @@ str = str.replace(/&nbsp;/g, ' ');
 str = str.replace(/&nbsp;/g, '\xa0');
 ```
 https://blog.csdn.net/milli236/article/details/79668162
-
-
-## JS订阅模式
-https://www.jianshu.com/p/0aacfec05046
 
 
 ## 在浏览器上安装Vue_Devtools工具
@@ -1406,3 +1402,55 @@ Etag / If-None-Match 同理。
 强制缓存优先于协商缓存进行，若强制缓存(Expires和Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回304，继续使用缓存。
 ```
 https://juejin.cn/post/6844903593275817998
+
+
+## JS订阅模式
+```javascript
+// 用发布-订阅模式，模拟购房者与售楼处的故事
+let event = {
+  clients: [],
+  listen(key, fn) {
+    if (!this.clients[key]) this.clients[key] = [];
+    this.clients[key].push(fn);
+  },
+  trigger(key, money) {
+    let fns = this.clients[key];
+    if (!fns || fns.length == 0) return;
+    fns.forEach(fn => {
+      fn.apply(this, [money])
+    })
+  }
+}
+
+// 再定义一个installEvent函数，用于给所有对象动态安装发布-订阅功能
+// 如：另一家售楼处也想要这个功能，就可以调用这个注册了，不同再写多一次这段代码
+let installEvent = obj => {
+    for (let i in event) {
+        obj[i] = event[i]
+    }
+}
+
+// 给售楼处对象salesOffices动态增加发布-订阅功能
+let salesOffices = {}
+installEvent(salesOffices)
+// 小明订阅信息
+salesOffices.listen('squareMeter88', price => {
+    console.log('小明，你看中的88平方的房子，价格=' + price)
+})
+// 小光订阅信息
+salesOffices.listen('squareMeter88', price => {
+    console.log('小光，你看中的88平方的房子，价格=' + price)
+})
+// 小红订阅信息
+salesOffices.listen('squareMeter100', price => {
+    console.log('小红，你看中的100平方的房子，价格=' + price)
+})
+salesOffices.trigger('squareMeter88', 10000)
+salesOffices.trigger('squareMeter100', 50000)
+
+// 运行结果：
+// 小明，你看中的88平方的房子，价格=10000
+// 小光，你看中的88平方的房子，价格=10000
+// 小红，你看中的100平方的房子，价格=50000
+```
+https://www.jianshu.com/p/0aacfec05046
