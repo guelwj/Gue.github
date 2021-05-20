@@ -44,6 +44,7 @@
 * [判断是否为数组的方法](#判断是否为数组的方法)
 * [http缓存](#http缓存)
 * [JS订阅模式](#JS订阅模式)
+* [闭包](#闭包)
 
 
 
@@ -1321,7 +1322,7 @@ export default {
 
 // 200 OK 请求成功。一般用于GET与POST请求
 // 301 Moved Permanently 永久移动
-// 302 Found 	临时移动
+// 302 Found 临时移动
 // 403 Forbidden 服务器理解客户端的请求，但是拒绝执行此请求
 // 404 Not Found 服务器无法根据客户端的请求找到资源
 // 405 Method Not Allowed 客户端请求中的方法被禁止
@@ -1454,3 +1455,37 @@ salesOffices.trigger('squareMeter100', 50000)
 // 小红，你看中的100平方的房子，价格=50000
 ```
 https://www.jianshu.com/p/0aacfec05046
+
+
+## 闭包
+```javascript
+闭包：能够读取其他函数内部变量的函数。
+
+特点：
+1.让外部访问函数内部变量成为可能；
+2.可以避免使用全局变量，防止全局变量污染；
+3.局部变量会常驻在内存中；
+4.会造成内存泄漏（有一块内存空间被长期占用，而不被释放）
+
+每次外部函数执行的时候，外部函数的引用地址不同，都会重新创建一个新的地址。
+
+// 例子：
+function outerFn(){
+  let i = 0; 
+  function innerFn(){
+      i++;
+      console.log(i);
+  }
+  return innerFn;
+}
+let inner = outerFn();  //每次外部函数执行的时候,都会开辟一块内存空间,外部函数的地址不同，都会重新创建一个新的地址
+inner();
+inner();
+inner();
+let inner2 = outerFn();
+inner2();
+inner2();
+inner2();
+
+// 输出：1 2 3 1 2 3
+```
