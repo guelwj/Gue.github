@@ -1346,6 +1346,17 @@ Array.prototype.some = function(fn, thisValue) {// thisValue可选参数。对�
   return false;
 }
 // 注意：some函数不能用箭头函数，不然 let arr = this 语句中的this指向会有问题
+
+// 在some的基础上稍微改动一下，就可以实现every
+Array.prototype.every = function(fn, thisValue) {
+  if (type of fn !== 'function') return false;
+  let arr = this;
+  for (let i = 0; i < arr.length; i++) {
+    let result = fn.call(thisValue, arr[i], i, arr);
+    if (!result) return false;
+  }
+  return true;
+}
 ```
 
 
