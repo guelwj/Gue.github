@@ -738,11 +738,12 @@ state.count++// 输出 count is: 1
 // 防抖
 let debounce = (fn, delayTime) => {
   let timer = null;
-  return () => {
+  return function() {// 这里注意不能用箭头函数，会报错：arguments is not defined
     if (timer) clearTimeout(timer);
+    let _this = this;
     let args = arguments;
     timer = setTimeout(() => {
-      fn.apply(this, arguments)
+      fn.apply(_this, arguments)
     }, delayTime)
   }
 }
@@ -753,12 +754,13 @@ input.onkeydown = debounce(function() {
 // 节流
 let throttle = (fn, delayTime) => {
   let isFinished = true;
-  return () => {
+  return function() {// 这里注意不能用箭头函数，会报错：arguments is not defined
     if (!isFinished) return;
     isFinished = false;
+    let _this = this;
     let args = arguments;
     setTimeout(() => {
-      fn.apply(this, args)
+      fn.apply(_this, args)
       isFinished = true;
     }, delayTime)
   }
