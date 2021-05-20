@@ -1336,7 +1336,7 @@ export default {
 
 ## some的实现
 ```javascript
-Array.prototype.some = (fn, thisValue) => {// thisValue可选。对象作为该执行回调时使用，传递给函数，用作 "this" 的值。如果省略了 thisValue ，"this" 的值为 "undefined"
+Array.prototype.some = function(fn, thisValue) {// thisValue可选参数。对象作为该执行回调时使用，传递给函数，用作 "this" 的值。如果省略了 thisValue ，"this" 的值为 "undefined"
   if (type of fn !== 'function') return false;
   let arr = this;
   for (let i = 0; i < arr.length; i++) {
@@ -1345,6 +1345,7 @@ Array.prototype.some = (fn, thisValue) => {// thisValue可选。对象作为该�
   }
   return false;
 }
+// 注意：some函数不能用箭头函数，不然 let arr = this 语句中的this指向会有问题
 ```
 
 
