@@ -1408,13 +1408,13 @@ https://juejin.cn/post/6844903593275817998
 ```javascript
 // 用发布-订阅模式，模拟购房者与售楼处的故事
 let event = {
-  clients: [],
+  clientList: [],
   listen(key, fn) {
-    if (!this.clients[key]) this.clients[key] = [];
-    this.clients[key].push(fn);
+    if (!this.clientList[key]) this.clientList[key] = [];
+    this.clientList[key].push(fn);
   },
   trigger(key, money) {
-    let fns = this.clients[key];
+    let fns = this.clientList[key];
     if (!fns || fns.length == 0) return;
     fns.forEach(fn => {
       fn.apply(this, [money])
