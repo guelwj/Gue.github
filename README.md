@@ -23,12 +23,12 @@
 * [axios的三种post请求方式写法](#axios的三种post请求方式写法)
 * [数组的一些操作](#数组的一些操作)
 * [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
-* [Vue响应式原理及实现](#Vue响应式原理及实现)
+* [vue响应式原理及实现](#vue响应式原理及实现)
 * [防抖与节流](#防抖与节流)
 * [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
 * [对象深克隆](#对象深克隆)
 * [eventBus](#eventBus)
-* [在Vue中使用RSA加密解密加签解签](#在Vue中使用RSA加密解密加签解签)
+* [在vue中使用RSA加密解密加签解签](#在vue中使用RSA加密解密加签解签)
 * [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
 * [px2rem](#px2rem)
 * [图片转base64格式](#图片转base64格式)
@@ -45,6 +45,7 @@
 * [http缓存](#http缓存)
 * [JS订阅模式](#JS订阅模式)
 * [闭包](#闭包)
+* [vue全局注册组件](#vue全局注册组件)
 
 
 
@@ -671,7 +672,7 @@ Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18}
 https://zhuanlan.zhihu.com/p/33492169
 
 
-## Vue响应式原理及实现
+## vue响应式原理及实现
 ```javascript
 class Dep {  // 初始化
   constructor () {          
@@ -873,7 +874,7 @@ onMenuIconClick() {
 https://www.jianshu.com/p/af9cb05bfbaf
 
 
-## 在Vue中使用RSA加密解密加签解签
+## 在vue中使用RSA加密解密加签解签
 ```javascript
 // 首先引入jsencrypt
 npm install jsencrypt --save
@@ -1502,4 +1503,66 @@ inner2();
 inner2();
 
 // 输出：1 2 3 1 2 3
+```
+
+
+## vue全局注册组件
+```javascript
+// components/index.js
+const getComponents = file => {
+  let componentList = [];
+  file.keys().forEach(path => {
+    const component = file(path).default;
+    componentList.push({
+      name: component.name
+      component
+    })
+  })
+
+  return componentList;
+}
+
+let file1 = require.context('.file1', true, /.vue$/);
+let file2 = require.context('.file2', true, /.vue$/);
+let file3 = require.context('.file3', true, /.vue$/);
+
+const file1Components = getComponents(file1);
+const file2Components = getComponents(file2);
+const file3Components = getComponents(file3);
+
+const componentList = [...file1Components, ...file2Components, ...file2Components];
+
+export default {
+  install: Vue => {
+    componentList.forEach({ name, component } => {
+      Vue.component(name, component)
+    })
+  }
+}
+
+// main.js
+import globalComponents from "@/components/index";
+Vue.use(globalComponents)
+
+// ps：
+// 这里用到require.context
+// require.context(directory, useSubdirectories, regExp)
+// directory: 要查找的文件路径 useSubdirectories: 是否查找子目录 regExp: 要匹配文件的正则
+// require.context执行后，返回一个方法webpackContext，这个方法又返回一个__webpack_require__，这个__webpack_require__就相当于require或者import。同时webpackContext还有二个静态方法keys与resolve，一个id属性。
+// keys: 返回匹配成功模块的名字组成的数组
+// resolve: 接受一个参数request，request为test文件夹下面匹配文件的相对路径，返回这个匹配文件相对于整个工程的相对路径
+// id: 执行环境的id，返回的是一个字符串，主要用在module.hot.accept
+
+// const ctx = require.context('./components/', true, /\.js$/)
+// console.log(ctx.keys())
+// ["./A.js", "./B.js", "./C.js", "./D.js"]
+
+// 相当于
+// let map = {
+//   "./A.js": "./src/components/test/components/A.js",
+//   "./B.js": "./src/components/test/components/B.js",
+//   "./C.js": "./src/components/test/components/C.js",
+//   "./D.js": "./src/components/test/components/D.js"
+// };
+// Object.keys(map)
 ```
