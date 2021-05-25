@@ -46,7 +46,7 @@
 * [JS订阅模式](#JS订阅模式)
 * [闭包](#闭包)
 * [vue全局注册组件](#vue全局注册组件)
-* [Promise.all的错误处理](#Promise.all的错误处理)
+* [Promise_all的错误处理](#Promise_all的错误处理)
 
 
 
@@ -1569,14 +1569,15 @@ Vue.use(globalComponents)
 ```
 
 
-## Promise.all的错误处理
+## Promise_all的错误处理
 ```javascript
+// Promise.all()方法
 // 如果其中任何一个被拒绝，主Promise.all([..])就会立即被拒绝，并丢弃其他所有promise的全部结果
 // 因此要记住为每个promise关联一个错误的处理函数
 let p1 = Promise.resolve(1).catch(function(err) {
   return err;
 });
-let p2 = Promise.reject(2).catch(function(err) {
+let p2 = Promise.reject('error').catch(function(err) {
   return err;
 });
 let p3 = new Promise((resolve, reject) => {
@@ -1586,7 +1587,7 @@ let p3 = new Promise((resolve, reject) => {
 }); 
 
 Promise.all([p1, p2, p3]).then(values => {
-  console.log(values); // [1, 2, "test"]
+  console.log(values); // [1, "error", "test"]
   // 如果不p1 p2 p3加上catch函数，则永远不会走到这里，因为p2 reject了
 }).catch(function(err) {
   console.log('不会走到这里'); // 加上catch函数之后，就不会走到这里
