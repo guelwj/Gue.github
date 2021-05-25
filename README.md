@@ -828,7 +828,7 @@ const deepClone = obj => JSON.parse(JSON.stringify(obj));
 
 const deepClone = obj => {
     if(obj === null) return null;
-    if(obj.constructor !== 'object') return obj;
+    if(obj.constructor !== Object) return obj;
     if(obj.constructor === Date) return new Date(obj);
     if(obj.constructor === RegExp) return new RegExp(obj);
     var newObj = new obj.constructor(); //保持继承的原型
