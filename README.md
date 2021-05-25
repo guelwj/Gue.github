@@ -1586,9 +1586,17 @@ let p3 = new Promise((resolve, reject) => {
   return err;
 }); 
 
-Promise.all([p1, p2, p3]).then(values => {
-  console.log(values); // [1, "error", "test"]
+Promise.all([p1, p2, p3]).then(res => {
   // 如果不p1 p2 p3加上catch函数，则永远不会走到这里，因为p2 reject了
+  console.log(res); // [1, "error", "test"]
+  
+  res.map((v, index) => {
+    if(v == 'error'){
+      console.log('第' + (index + 1) + '个请求失败')
+    }else{
+      console.log(v)
+    }
+  })
 }).catch(function(err) {
   console.log('不会走到这里'); // 加上catch函数之后，就不会走到这里
 });
