@@ -1574,15 +1574,15 @@ Vue.use(globalComponents)
 // Promise.all()方法
 // 如果其中任何一个被拒绝，主Promise.all([..])就会立即被拒绝，并丢弃其他所有promise的全部结果
 // 因此要记住为每个promise关联一个错误的处理函数
-let p1 = Promise.resolve(1).catch(function(err) {
+let p1 = Promise.resolve(1).catch(err => {
   return err;
 });
-let p2 = Promise.reject('error').catch(function(err) {
+let p2 = Promise.reject('error').catch(err => {
   return err;
 });
 let p3 = new Promise((resolve, reject) => {
   setTimeout(resolve, 100, "test");
-}).catch(function(err) {
+}).catch(err => {
   return err;
 }); 
 
@@ -1597,7 +1597,7 @@ Promise.all([p1, p2, p3]).then(res => {
       console.log(v)
     }
   })
-}).catch(function(err) {
+}).catch(err => {
   console.log('不会走到这里'); // 加上catch函数之后，就不会走到这里
 });
 ```
