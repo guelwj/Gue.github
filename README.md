@@ -31,7 +31,6 @@
 * [在vue中使用RSA加密解密加签解签](#在vue中使用RSA加密解密加签解签)
 * [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
 * [px2rem](#px2rem)
-* [图片转base64格式](#图片转base64格式)
 * [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
 * [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
 * [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
@@ -47,6 +46,7 @@
 * [闭包](#闭包)
 * [vue全局注册组件](#vue全局注册组件)
 * [Promise_all的错误处理](#Promise_all的错误处理)
+* [前端对图片的处理方式](#前端对图片的处理方式)
 
 
 
@@ -1036,35 +1036,6 @@ module.exports = vuxLoader.merge(webpackConfig, {
 ```
 
 
-## 图片转base64格式
-```javascript
-function getBase64(img) {
-  function getBase64Image(img, width, height) {
-    //width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
-    var canvas = document.createElement("canvas");
-    canvas.width = width ? width : img.width;
-    canvas.height = height ? height : img.height;
-
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    var dataURL = canvas.toDataURL();
-    console.log(dataURL);
-    return dataURL;
-  }
-  var image = new Image();
-  image.crossOrigin = "";
-  image.src = img;
-  var deferred = $.Deferred();
-  if (img) {
-    image.onload = function () {
-      deferred.resolve(getBase64Image(image)); //将base64传给done上传处理
-    };
-    return deferred.promise();
-  }
-}
-```
-
-
 ## 浏览器跨域请求处理方法
 ```javascript
 // 1.document.domain + iframe
@@ -1601,3 +1572,95 @@ Promise.all([p1, p2, p3]).then(res => {
   console.log('不会走到这里'); // 加上catch函数之后，就不会走到这里
 });
 ```
+
+
+## 前端对图片的处理方式
+图片在前端显示有三种方式：url、base64、blob
+
+url: 一般来说，图片的显示还是建议使用url的方式比较好。如果后端传过来的字段是图片路径的话。
+
+base64：如果图片较大，图片的色彩层次比较丰富，则不适合使用这种方式，因为其Base64编码后的字符串非常大，会明显增大HTML页面，影响加载速度。如果图片像loading或者表格线这样的，大小极小，但又占据了一次HTTP请求，而很多地方都会使用。则非常适用“base64:URL图片”技术进行优化了。
+优点：
+1.减少了http请求
+2.某些文件可以避免跨域问题
+3.没有图片更新要重新上传，还要清理缓存的问题
+缺点：
+1.IE6/IE7以下的浏览器是不支持的
+2.增加了CSS文件的尺寸
+3.图片完成后还需要base64编码，增加了一定的工作量。
+
+blob: 当后端返回特定的图片二进制流的时候，就像我第一part里的情景再现说的，前端用blob容器接收。图片用blob展示会比较好。
+
+```javascript
+// 1.url转base64
+urlToBase64(url) {
+  return new Promise ((resolve,reject) => {
+    let image = new Image();
+    image.onload = function() {
+      let canvas = document.createElement('canvas');
+      canvas.width = width ? width : img.width;
+      canvas.height = height ? height : img.height;
+
+      // 将图片插入画布并开始绘制
+      canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      // result
+      let result = canvas.toDataURL('image/png');
+      resolve(result);
+    };
+
+    // CORS 策略，会存在跨域问题https://stackoverflow.com/questions/20424279/canvas-todataurl-securityerror
+    image.setAttribute("crossOrigin",'Anonymous');
+    image.src = url;
+
+    // 图片加载失败的错误处理
+    image.onerror = () => {
+      reject(new Error('图片流异常'));
+  });
+}
+
+// base64转blob
+// 原理：利用URL.createObjectURL为blob对象创建临时的URL
+base64ToBlob ({b64data = '', contentType = '', sliceSize = 512} = {}) {
+  return new Promise((resolve, reject) => {
+    // 使用 atob() 方法将数据解码
+    let byteCharacters = atob(b64data);
+    let byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      let slice = byteCharacters.slice(offset, offset + sliceSize);
+      let byteNumbers = [];
+      for (let i = 0; i < slice.length; i++) {
+          byteNumbers.push(slice.charCodeAt(i));
+      }
+      // 8 位无符号整数值的类型化数组。内容将初始化为 0。
+      // 如果无法分配请求数目的字节，则将引发异常。
+      byteArrays.push(new Uint8Array(byteNumbers));
+    }
+    let result = new Blob(byteArrays, {
+      type: contentType
+    })
+    result = Object.assign(result,{
+      // jartto: 这里一定要处理一下 URL.createObjectURL
+      preview: URL.createObjectURL(result),
+      name: `图片示例.png`
+    });
+    resolve(result)
+  })
+}
+
+// blob转base64
+// 原理：利用fileReader的readAsDataURL，将blob转为base64
+blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      resolve(e.target.result);
+    };
+    fileReader.readAsDataURL(blob);
+    fileReader.onerror = () => {
+      reject(new Error('文件流异常'));
+    };
+  });
+}
+```
+https://www.jianshu.com/p/64d240292814
