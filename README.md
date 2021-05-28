@@ -1579,17 +1579,17 @@ Promise.all([p1, p2, p3]).then(res => {
 
 url: 一般来说，图片的显示还是建议使用url的方式比较好。如果后端传过来的字段是图片路径的话。
 
-base64：如果图片较大，图片的色彩层次比较丰富，则不适合使用这种方式，因为其Base64编码后的字符串非常大，会明显增大HTML页面，影响加载速度。如果图片像loading或者表格线这样的，大小极小，但又占据了一次HTTP请求，而很多地方都会使用。则非常适用“base64:URL图片”技术进行优化了。
+base64：如果图片较大，图片的色彩层次比较丰富，则不适合使用这种方式，因为其Base64编码后的字符串非常大，会明显增大HTML页面，影响加载速度。如果图片像loading或者表格线这样的，大小极小，但又占据了一次HTTP请求，而且很多地方都会使用的场景，则非常适用base64进行优化。
 优点：
-1.减少了http请求
-2.某些文件可以避免跨域问题
-3.没有图片更新要重新上传，还要清理缓存的问题
+1.减少了http请求；
+2.某些文件可以避免跨域问题；
+3.没有图片更新要重新上传，还要清理缓存的问题。
 缺点：
-1.IE6/IE7以下的浏览器是不支持的
-2.增加了CSS文件的尺寸
+1.IE6/IE7以下的浏览器不支持；
+2.增加了CSS文件的尺寸；
 3.图片完成后还需要base64编码，增加了一定的工作量。
 
-blob: 当后端返回特定的图片二进制流的时候，就像我第一part里的情景再现说的，前端用blob容器接收。图片用blob展示会比较好。
+blob: 当后端返回特定的图片二进制流的时候。
 
 ```javascript
 // 1.url转base64
@@ -1661,6 +1661,27 @@ blobToBase64(blob) {
       reject(new Error('文件流异常'));
     };
   });
+}
+
+// axios里面，responseType默认返回数据类型是json，可将其改为返回数据类型blob
+export function getBlobImg (params) {
+  return axios.post(
+    env.URL + '/XXXX/XXX/XXXX',
+    params,
+    // 将responseType的默认json改为blob
+    {
+      responseType: 'blob',
+      emulateJSON: true
+    }
+  ).then(res => {
+    if (res.data) {
+      return Promise.resolve(res.data)
+    } else {
+      throw res
+    }
+  }).catch(err => {
+    return Promise.reject(err)
+  })
 }
 ```
 https://www.jianshu.com/p/64d240292814
