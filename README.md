@@ -139,22 +139,23 @@ https://github.com/amfe/article/issues/17?utm_source=caibaojian.com
 // 在终端中使用npm init命令可以自动创建这个package.json文件
 npm init
 
-
 // 安装Webpack
-npm install --save-dev webpack
+npm install webpack --save-dev
 
+// 这时候使用 webpack -v 会出现’webpack’ 不是内部或外部命令，也不是可运行的程序或批处理文件。
+// 要先全局安装 webpack 和webpack-cli 再局部安装 webpack 和webpack-cli 
+// 继续安装
+npm install –save-dev webpack-cli
+npm install –global webpack
+npm install –global webpack-cli
 
-// webpack的使用方法，填写路径的时候不用添加{}    webpack {entry file} {destination for bundled file}
-// webpack非全局安装的情况    例如：node_modules/.bin/webpack app/main.js public/bundle.js
 webpack demo.js demo.bundle.js
 // 报错。这是为什么呢?原因是我的webpack版本过高,原来的命令已经不适用了
 // 更换打包命令
 webpack demo.js -o demo.bundle.js
 
-
 // 使用webpack构建本地服务器
 npm install --save-dev webpack-dev-server
-
 
 // 配置package.json中的scripts对象，用以开启本地服务器：
 "scripts": {
@@ -163,17 +164,14 @@ npm install --save-dev webpack-dev-server
   "server": "webpack-dev-server --open"
 }
 
-
 // 安装babel，npm一次性安装多个依赖模块，模块之间用空格隔开
 // `babel-loader@8.x`是webpack用于`Babel 7.x`的一个整合loader模块，`Babel 7.x`已经把所有的相关的包从`babel-`迁移到了`@babel`的npm环境仓库。
 // 所以通过使用`@babel/core`代替`babel-core`来安装：
 // 总的来说，babel舍弃了以前的 babel-*-* 的命名方式，改成了@babel/*-*，修改依赖和.babelrc文件后就能正常启动项目了。
 npm install --save-dev @babel/core babel-loader @babel/preset-env @babel/preset-react @babel/cli
 
-
 // 使用React，记得先安装 React 和 React-DOM
 npm install --save react react-dom
-
 
 // presets里的参数也要改，presets: ["@babel/preset-env", "@babel/preset-react"]
 module: {
@@ -191,19 +189,15 @@ module: {
   ]
 }
 
-
 // 安装css的loader
 npm install --save-dev style-loader css-loader
-
 
 // 安装PostCSS
 // PostCSS 是一个允许使用 JS 插件转换样式的工具。 这些插件可以检查（lint）你的 CSS，支持 CSS Variables 和 Mixins， 编译尚未被浏览器广泛支持的先进的 CSS 语法，内联图片，以及其它很多优秀的功能。
 npm install --save-dev postcss-loader autoprefixer
 
-
 // 安装HtmlWebpackPlugin插件
 npm install --save-dev html-webpack-plugin
-
 
 // 避免缓存带来的影响，在输出文件名后加上哈希值
 output: {
@@ -211,11 +205,9 @@ output: {
   filename: "bundle-[hash].js" //打包后输出文件的文件名
 }
 
-
 // 去除build文件中的残余文件
 // 安装clean-webpack-plugin插件
 npm install --save-dev clean-webpack-plugin
-
 
 // webpack.config.js
 const webpack = require('webpack');
@@ -272,7 +264,8 @@ module.exports = {
   ]
 };
 ```
-仅供参考（版本有点旧）：https://www.jianshu.com/p/42e11515c10f
+https://www.jianshu.com/p/42e11515c10f
+https://blog.csdn.net/wscfan/article/details/81940759
 
 
 ## video搭配canvas的神奇效果
