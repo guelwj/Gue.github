@@ -47,6 +47,7 @@
 * [vue全局注册组件](#vue全局注册组件)
 * [Promise_all的错误处理](#Promise_all的错误处理)
 * [前端对图片的处理方式](#前端对图片的处理方式)
+* [从输入网址到页面显示的全过程](#从输入网址到页面显示的全过程)
 
 
 
@@ -1677,3 +1678,37 @@ export function getBlobImg (params) {
 }
 ```
 https://www.jianshu.com/p/64d240292814
+
+
+## 从输入网址到页面显示的全过程
+```javascript
+1.浏览器中输入网址URL。
+
+2.DNS解析获取域名对应的IP地址。
+
+3.建立TCP连接。// TCP，Transmission Control Protocol
+// TCP三次握手
+// (1) 建立连接时，客户端发送SYN包（SYN=i）到服务器，并进入到SYN-SEND状态，等待服务器确认。
+// (2) 服务器收到SYN包，必须确认客户的SYN（ack=i+1）,同时自己也发送一个SYN包（SYN=k）,即SYN+ACK包，此时服务器进入SYN-RECV状态。
+// (3) 客户端收到服务器的SYN+ACK包，向服务器发送确认报ACK（ack=k+1）,此包发送完毕，客户端和服务器进入ESTABLISHED状态，完成三次握手，客户端与服务器开始传送数据。
+
+// TCP四次挥手
+// (1) 第一次挥手：Client发送一个FIN，用来关闭Client到Server的数据传送，Client进入FIN_WAIT_1状态。
+// (2) 第二次挥手：Server收到FIN后，发送一个ACK给Client，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号），Server进入CLOSE_WAIT状态。
+// (3) 第三次挥手：Server发送一个FIN，用来关闭Server到Client的数据传送，Server进入LAST_ACK状态。
+// (4) 第四次挥手：Client收到FIN后，Client进入TIME_WAIT状态，接着发送一个ACK给Server，确认序号为收到序号+1，Server进入CLOSED状态，完成四次挥手。
+
+// 为什么建立连接是三次握手，而关闭连接却是四次挥手呢？
+// 这是因为服务端在LISTEN状态下，收到建立连接请求的SYN报文后，把ACK和SYN放在一个报文里发送给客户端。而关闭连接时，当收到对方的FIN报文时，仅仅表示对方不再发送数据了但是还能接收数据，己方也未必全部数据都发送给对方了。所以己方可以立即close或者发送一些数据给对方后，再发送FIN报文给对方来表示同意现在关闭连接，因此，己方ACK和FIN一般都会分开发送。
+
+4.浏览器向服务器发送HTTP请求。
+
+5.服务器响应请求。// 如果设定重定向，则重定向到新的URL地址。
+
+6.浏览器下载数据，解析HTML源文件。
+// 解析HTML以构建DOM Tree -> 构建CSSOM -> 构建Render Tree -> 布局Render Tree -> 绘制Render Tree
+
+7.浏览器发送请求获取其他嵌入在HTML中的资源。// 图片、音频、视频、CSS、JS等等
+
+8.关闭TCP连接。
+```
