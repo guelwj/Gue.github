@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="description" content="my vue"/>
+  <meta name="Keywords" content="my vue"/>
+  <title>MVue</title>
+</head>
+<body>
+  <div id="app">
+    <h1>{{msg}}</h1>
+    <div v-text="msg"></div>
+    <div v-text="person.name" v-on:click="personNameOnClick"></div>
+    <div v-text="person.job" @click="personJobOnClick"></div>
+    <div v-html="htmlContent"></div>
+    <input type="text" v-model="msg">
+  </div>
+  <script src="js/observer.js"></script>
+  <script src="js/MVue.js"></script>
+  <script>
+    let vm = new MVue({
+      el: '#app',
+      data: {
+        msg: '自己手写一个vue',
+        person: {
+          name: 'Gue',
+          job: 'web frontend engineer'
+        },
+        htmlContent: '<span>html text</span>'
+      },
+      methods: {
+        personNameOnClick() {
+          console.log('person name on click')
+        },
+        personJobOnClick() {
+          console.log('person job on click')
+        }
+      }
+    })
+  </script>
+</body>
+</html>
