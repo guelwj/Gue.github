@@ -23,7 +23,6 @@
 * [axios的三种post请求方式写法](#axios的三种post请求方式写法)
 * [数组的一些操作](#数组的一些操作)
 * [浅谈控制反转与依赖注入](#浅谈控制反转与依赖注入)
-* [vue响应式原理及实现](#vue响应式原理及实现)
 * [防抖与节流](#防抖与节流)
 * [调用iframe的子iframe里的function](#调用iframe的子iframe里的function)
 * [对象深克隆](#对象深克隆)
@@ -50,6 +49,9 @@
 * [从输入网址到页面显示的全过程](#从输入网址到页面显示的全过程)
 * [浏览器进程](#浏览器进程)
 * [手写vue](#手写vue)
+* [prototype和__proto__的区别](#prototype和__proto__的区别)
+* [js作用域与作用域链](#js作用域与作用域链)
+* [大杂烩](#大杂烩)
 
 
 
@@ -267,7 +269,6 @@ module.exports = {
   ]
 };
 ```
-https://blog.csdn.net/wscfan/article/details/81940759
 
 
 ## video搭配canvas的神奇效果
@@ -666,68 +667,6 @@ Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18}
 
 ## 浅谈控制反转与依赖注入
 https://zhuanlan.zhihu.com/p/33492169
-
-
-## vue响应式原理及实现
-```javascript
-class Dep {  // 初始化
-  constructor () {          
-    this.subscribers = new Set()
-  }  // 订阅update函数列表
-  depend () {    
-    if (activeUpdate) {     
-      this.subscribers.add(activeUpdate)
-    }
-  }  // 所有update函数重新运行
-  notify () {              
-    this.subscribers.forEach(sub => sub())
-  }
-}
-
-function observe (obj) {  // 迭代对象的所有属性
-  // 并使用Object.defineProperty()转换成getter/setters
-  Object.keys(obj).forEach(key => {    
-    let internalValue = obj[key]    // 每个属性分配一个Dep实例
-    const dep = new Dep()    
-    Object.defineProperty(obj, key, {    
-      // getter负责注册订阅者
-      get () {
-        dep.depend()        
-        return internalValue
-      },      
-      // setter负责通知改变
-      set (newVal) {        
-        const changed = internalValue !== newVal
-        internalValue = newVal        
-        // 触发后重新计算
-        if (changed) {
-          dep.notify()
-        }
-      }
-    })
-  })  
-  return obj
-}
-
-let activeUpdate = null
-function autorun (update) {  // 包裹update函数到"wrappedUpdate"函数中，
-  // "wrappedUpdate"函数执行时注册和注销自身
-  const wrappedUpdate = () => {
-    activeUpdate = wrappedUpdate
-    update()
-    activeUpdate = null
-  }
-  wrappedUpdate()
-}
-
-// 调用
-const state = { count: 0 }
-observe(state)
-autorun(() => {  
-  console.log(state.count)
-})// 输出 count is: 0
-state.count++// 输出 count is: 1
-```
 
 
 ## 防抖与节流
@@ -1754,3 +1693,95 @@ https://juejin.cn/post/6844903843197616136
 ## 手写vue
 路径：demo/MVue
 https://www.bilibili.com/video/av80611222/
+
+
+## prototype和__proto__的区别
+javascript中所有的对象都是Object的实例，并继承Object.prototype的属性和方法。
+在对象创建时，就会有一些预定义的属性，其中定义函数的时候，这个预定义属性就是prototype，这个prototype是一个普通的对象。
+而定义普通的对象的时候，就会生成一个__proto__，这个__proto__指向的是这个对象的构造函数的prototype。
+```javascript
+// example
+function A(a) {
+  this.a = a;
+}
+let a = new A('test');
+
+// 如上面所说，函数在被定义的时候就拥有了一个prototype对象。可以打印看一下
+console.log(A.prototype)
+
+// 这个__proto__指向的就是他的构造函数的prototype，而这个函数a的prototype对象的构造函数是谁呢？ 没错就是开头说到的Object.prototype
+console.log(A.prototype.__proto__ === Object.prototype)// true
+
+// 当我们声明一个函数A时就自动创建了prototype对象。
+// 而a是构造函数的A的实例，这是候a是一个对象，没有prototype属性，只有__proto__属性。
+// 而__proto__这个属性是指向他的构造函数A的prototype属性
+
+// 那么什么是原型链呢？
+// 我们都知道对象都有一个toString方法，上述的实例化对象a也可以toString，而实例化对象b本身并没有toString的方法，那他就会沿着它的__proto__向他的构造函数A的prototype对象去找，而这里也没有，那他就会继续沿着A.prototype.__proto__向上找。
+// 而A.prototype.__proto__指向的就是Object.prototype。
+// 这就是原型链查找，而则一层一层的链接关系就是原型链。
+```
+
+
+## js作用域与作用域链
+作用域：作用域就是代码的执行环境，全局执行环境就是全局作用域，函数的执行环境就是私有作用域，它们都是栈内存。
+
+作用域链：一般情况下，变量取值会到创建这个变量的函数的作用域中取值。但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域为止，这么一个查找过程形成的链条就叫做作用域链。
+```javascript
+var scope = 'global';
+function test(){
+  console.log(scope)
+  var scope = 'local';
+  console.log(scope)
+}
+test()
+// undefined
+// local
+
+// 为什么第一句不会输出"global"？
+// 因为javascript没有块级作用域，而是函数作用域
+// 函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。
+// 上述代码可重写为：
+var scope = 'global';
+function test(){
+  var scope;
+  console.log(scope)
+  var scope = 'local';
+  console.log(scope)
+}
+test()
+// 由于函数作用域的特性，我们可以将变量声明“提前”到函数体顶部，同时变量的调用还在原来位置。
+
+// js没有块级作用域
+var name="global";
+if(true){
+    var name="local";
+    console.log(name)
+}
+console.log(name);
+// local
+// local
+
+// 都输出是“local"，如果有块级作用域，明显if语句里创建局部变量name，并不会修改全局name，可是没有这样，所以js没有块级作用域
+```
+
+
+## 大杂烩
+```javascript
+Array.prototype.toString.call([1, 2, 3, 4])// "1,2,3,4"
+typeof(NaN)// "number"
+typeof(('abcd') * 1)// "number"
+typeof(('abcd') + 1)// "string"
+
+
+// 求输出
+function f1() {
+  alert(1);
+}
+function f2() {
+  alert(2)
+}
+var f3 = f1.call;
+f1.call(f2);// 1
+f3.call(f2);// 2
+```
