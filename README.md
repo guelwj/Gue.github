@@ -1768,13 +1768,13 @@ console.log(name);
 
 ## 大杂烩
 ```javascript
+// question
 Array.prototype.toString.call([1, 2, 3, 4])// "1,2,3,4"
 typeof(NaN)// "number"
 typeof(('abcd') * 1)// "number"
 typeof(('abcd') + 1)// "string"
 
-
-// 求输出
+// question
 function f1() {
   alert(1);
 }
@@ -1784,4 +1784,13 @@ function f2() {
 var f3 = f1.call;
 f1.call(f2);// 1
 f3.call(f2);// 2
+
+// question：虚拟 DOM 好处？
+// 减小页面渲染的次数，提升页面性能。
+// 虚拟DOM存储在内存中，对元素的修改是在虚拟DOM中进行，修改完后，比较虚拟DOM和真实DOM的差异，当有差异时，再一次性渲染页面。
+
+// question：var和let的区别？
+// 1.var是函数作用域，let是块作用域。// 例如在for循环中，用let定义的变量i在for循环外部是不能访问的，但是var可以
+// 2.let不能在定义之前访问该变量，但是var可以。// 声明提前
+// 3.let不能被重新定义，但是var可以。
 ```
