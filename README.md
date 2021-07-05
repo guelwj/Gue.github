@@ -1833,8 +1833,8 @@ obj.__proto__= Fn.prototype;
 // 3、绑定this指向，执行构造函数
 let result = Fn.call(obj);// Fn为构造函数
 
-// 4、判断Fn的返回值类型：如果是值类型，返回fn。如果是引用类型，就返回这个引用类型的对象
-return result instanceof Object? result: obj;
+// 4、判断返回值类型
+return result instanceof Object ? result: obj;
 ```
 
 
