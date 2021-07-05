@@ -768,7 +768,7 @@ const deepClone = obj => {
     if(obj.constructor !== Object) return obj;
     if(obj.constructor === Date) return new Date(obj);
     if(obj.constructor === RegExp) return new RegExp(obj);
-    var newObj = new obj.constructor(); //保持继承的原型
+    let newObj = new obj.constructor(); //保持继承的原型
     for(let key in obj){
         if(obj.hasOwnProperty(key)){
             let val = obj[key];
