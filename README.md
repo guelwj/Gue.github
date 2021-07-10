@@ -33,6 +33,7 @@
 * [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
 * [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
 * [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
+* [var和let的区别](#var和let的区别)
 * [网站速度优化](#网站速度优化)
 * [JS数字精度丢失的问题](#JS数字精度丢失的问题)
 * [解决页面国际化问题](#解决页面国际化问题)
@@ -55,7 +56,6 @@
 * [vue中computed和watch的区别](#vue中computed和watch的区别)
 * [js的new操作符做了哪些事情](#js的new操作符做了哪些事情)
 * [Set和Map](#Set和Map)
-* [大杂烩](#大杂烩)
 
 
 
@@ -1078,6 +1078,14 @@ d.$lis.filter(".active").removeClass("active")
 https://blog.csdn.net/moqiluoji/article/details/104608076
 
 
+## var和let的区别
+```javascript
+1.var是函数作用域，let是块作用域。// 例如在for循环中，用let定义的变量i在for循环外部是不能访问的，但是var可以
+2.let不能在定义之前访问该变量，但是var可以。// 声明提前
+3.let不能被重新定义，但是var可以。
+```
+
+
 ## 网站速度优化
 ```javascript
 1.减少HTTP请求数
@@ -1807,19 +1815,11 @@ arr.length = 0;
 
 ## vue中computed和watch的区别
 ```javascript
-// 计算属性computed :
-1、支持缓存，只有依赖数据发生改变，才会重新进行计算；
-2、不支持异步，当computed内有异步操作时无效，无法监听数据的变化；
-3、computed属性值会默认走缓存，计算属性是基于它们的响应式依赖进行缓存的，也就是基于data中声明过或者父组件传递的props中的数据通过计算得到的值；
-4、如果一个属性是由其他属性计算而来的，这个属性依赖其他属性，是一个多对一或者一对一，一般用computed；
-5、如果computed属性属性值是函数，那么默认会走get方法；函数的返回值就是属性的属性值；在computed中的，属性都有一个get和一个set方法，当数据变化时，调用set方法。
-
-// 侦听属性watch：
-1、不支持缓存，数据变，直接会触发相应的操作；
-2、watch支持异步；
-3、监听的函数接收两个参数，第一个参数是最新的值；第二个参数是输入之前的值；
-4、当一个属性发生变化时，需要执行对应的操作；一对多；
-5、监听数据必须是data中声明过或者父组件传递过来的props中的数据，当数据变化时，触发其他操作，函数有两个参数，immediate：组件加载立即触发回调函数执行，deep: 深度监听，为了发现对象内部值的变化，复杂类型的数据时使用，例如数组中的对象内容的改变，注意监听数组的变动不需要这么做。注意：deep无法监听到数组的变动和对象的新增，参考vue数组变异，只有以响应式的方式触发才会被监听到。
+1.computed会产生新的属性，产生的新的属性与data中原有的属性功能没有区别，用法一样；watch不会产生新的属性。
+2.从属性名上，computed是计算属性，也就是依赖其它的属性计算所得出最后的值。watch是去监听一个值的变化，然后执行相对应的函数。
+3.从实现上，computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算。watch在每次监听的值变化时，都会执行回调。其实从这一点来看，都是在依赖的值变化之后，去执行回调。如果一个值依赖多个属性（多对一），用computed肯定是更加方便的。如果一个值变化后会引起一系列操作，或者一个值变化会引起一系列值的变化（一对多），用watch更加方便一些。
+4.watch的回调里面会传入监听属性的新旧值，通过这两个值可以做一些特定的操作。computed通常就是简单的计算。
+5.watch和computed并没有哪个更底层，watch内部调用的是vm.$watch，它们的共同之处就是每个定义的属性都单独建立了一个Watcher对象。
 ```
 
 
@@ -1868,34 +1868,4 @@ return result instanceof Object ? result: obj;
 
 // 总结
 WeakSet 的对象值与 WeakMap 的键都是弱引用的，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 或 WeakMap 中）。用于解决内存泄漏，提高性能。
-```
-
-
-## 大杂烩
-```javascript
-// question
-Array.prototype.toString.call([1, 2, 3, 4])// "1,2,3,4"
-typeof(NaN)// "number"
-typeof(('abcd') * 1)// "number"
-typeof(('abcd') + 1)// "string"
-
-// question
-function f1() {
-  alert(1);
-}
-function f2() {
-  alert(2)
-}
-var f3 = f1.call;
-f1.call(f2);// 1
-f3.call(f2);// 2
-
-// question：虚拟 DOM 好处？
-// 减小页面渲染的次数，提升页面性能。
-// 虚拟DOM存储在内存中，对元素的修改是在虚拟DOM中进行，修改完后，比较虚拟DOM和真实DOM的差异，当有差异时，再一次性渲染页面。
-
-// question：var和let的区别？
-// 1.var是函数作用域，let是块作用域。// 例如在for循环中，用let定义的变量i在for循环外部是不能访问的，但是var可以
-// 2.let不能在定义之前访问该变量，但是var可以。// 声明提前
-// 3.let不能被重新定义，但是var可以。
 ```
