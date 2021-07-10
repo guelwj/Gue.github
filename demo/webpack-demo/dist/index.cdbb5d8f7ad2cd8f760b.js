@@ -1,0 +1,1 @@
+(self.webpackChunkwebpack_demo=self.webpackChunkwebpack_demo||[]).push([[826],{138:(e,n,t)=>{(async function(){const e=document.createElement("div"),{default:n}=await t.e(216).then(t.t.bind(t,486,23));return e.innerHTML=n.join(["Hello","webpack"]," "),e})().then((e=>{document.body.appendChild(e)}))}},e=>{"use strict";e(e.s=138)}]);

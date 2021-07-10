@@ -54,6 +54,7 @@
 * [js垃圾回收机制](#js垃圾回收机制)
 * [vue中computed和watch的区别](#vue中computed和watch的区别)
 * [js的new操作符做了哪些事情](#js的new操作符做了哪些事情)
+* [Set和Map](#Set和Map)
 * [大杂烩](#大杂烩)
 
 
@@ -664,7 +665,7 @@ Array.from(args)
 Object.keys({ name: 'Gue', age: 18}) // ['name', 'age']
 Object.values({ name: 'Gue', age: 18}) // ['Gue', 18]
 Object.entries({ name: 'Gue', age: 18}) // [['name', 'Gue'], ['age', 18]]
-Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18}
+Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18 }
 ```
 
 
@@ -1835,6 +1836,38 @@ let result = Fn.call(obj);// Fn为构造函数
 
 // 4、判断返回值类型
 return result instanceof Object ? result: obj;
+```
+
+
+## Set和Map
+```javascript
+// Set
+1.Set 对象允许你存储任何类型的唯一值，无论是原始值或者是对象引用。
+2.向 Set 加入值的时候，不会发生类型转换，所以5和"5"是两个不同的值。
+3.Set 内部判断两个值是否不同，使用的算法叫做“Same-value-zero equality”，它类似于精确相等运算符（===）。
+4.另外，NaN和undefined都可以被存储在Set 中， NaN之间被视为相同的值（尽管 NaN !== NaN）。
+
+// WeakSet
+1.WeakSet 对象允许你将弱保持对象存储在一个集合中。
+2.WeakSet 对象是一些对象值的集合, 并且其中的每个对象值都只能出现一次。
+3.和 Set 对象的区别有两点:
+  (1)与Set相比，WeakSet 只能是对象的集合，而不能是任何类型的任意值。
+  (2)WeakSet 对象中储存的对象值都是被弱引用的，即垃圾回收机制不考虑 WeakSet 对该对象的应用，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 中），所以，WeakSet 对象里有多少个成员元素，取决于垃圾回收机制有没有运行，运行前后成员个数可能不一致（被垃圾回收了）。WeakSet 对象是无法被遍历的，也没有办法拿到它包含的所有元素。
+4.WeakSet比Set更适合（和执行）跟踪对象引用，尤其是在涉及大量对象时。
+
+// Map
+1.本质上是键值对的集合，类似集合。
+2.一个 Map的键可以是任意值，包括函数、对象或任意基本类型。
+3.Map 中的 key 是有序的。
+4.Map 的键值对个数可以通过size 属性获取。
+
+// WeakMap
+1.WeakMap 对象是一组键值对的集合，其中的键是弱引用的。其键必须是对象，而值可以是任意的。
+2.键名是弱引用，键值可以是任意的，键名所指向的对象可以被垃圾回收，此时键名是无效的。
+3.由于弱引用，WeakMap 的 key 是不可枚举的。如果key 是可枚举的话，其列表将会受垃圾回收机制的影响，从而得到不确定的结果。
+
+// 总结
+WeakSet 的对象值与 WeakMap 的键都是弱引用的，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 或 WeakMap 中）。用于解决内存泄漏，提高性能。
 ```
 
 
