@@ -4,7 +4,6 @@
 
 ## 目录：
 * [git基本操作](#git基本操作)
-* [git_push错误](#git_push错误)
 * [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
 * [webpack](#webpack)
 * [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
@@ -33,7 +32,6 @@
 * [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
 * [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
 * [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
-* [var和let的区别](#var和let的区别)
 * [网站速度优化](#网站速度优化)
 * [JS数字精度丢失的问题](#JS数字精度丢失的问题)
 * [解决页面国际化问题](#解决页面国际化问题)
@@ -56,6 +54,7 @@
 * [vue中computed和watch的区别](#vue中computed和watch的区别)
 * [js的new操作符做了哪些事情](#js的new操作符做了哪些事情)
 * [Set和Map](#Set和Map)
+* [http与https](#http与https)
 
 
 
@@ -64,31 +63,35 @@
 ```javascript
 git init demo //初始化
 
-git add 文件名 //将修改过的文件add一下
-git add . //添加所有修改过的文件
+git add fileName // 将修改过的文件add一下
+git add . // 添加所有修改过的文件
 
-git ls -la 列出
-git ls -lat 列出  (两者结果一样，排列顺序不同)
+git ls -la // 列出文件列表
 
-git status 查看状态
-git status -s 会出现M 第一列出现M含义：版本库和处理中间状态有差异
-                      第二列出现M含义：工作区和当前文件有差异
+git status // 查看状态
 
 git commit -m "comment" 提交
-git commit -a -m "comment" 加了参数-a之后不需要git add就能git commit  (不推荐)
 
-git push origin master //推送到远程仓库
+// git push <远程主机名> <本地分支名>:<远程分支名>
+git push origin master // 如果省略远程分支名，则表示将本地分支推送与之存在"追踪关系"的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。
+git push origin :master // 如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支；等同于 git push origin --delete master
+git push origin // 如果当前分支与远程分支之间存在追踪关系，则本地分支和远程分支都可以省略
+git push // 如果当前分支只有一个追踪分支，那么主机名都可以省略；远程已有remote_branch分支并且已经关联本地分支local_branch且本地已经切换到local_branch
+git push -u origin master // 如果当前分支与多个主机存在追踪关系，则可以使用-u选项指定一个默认主机，这样后面就可以不加任何参数使用git push
+git push origin local_branch:remote_branch // 远程没有remote_branch分支并，本地已经切换到local_branch
 
-git branch 分支名称 //创建分支
-git checkout 分支名称 //切换到对应分支
+git branch branchName // 创建分支
+git checkout branchName // 切换到对应分支
+git branch -d branchName // -d是--delete的缩写，在使用--delete删除分支时，该分支必须完全和它的上游分支merge完成，如果没有上游分支,必须要和HEAD完全merge
+git branch -D branchName // -D是--delete --force的缩写，强制删除
+git push origin --delete branchName // 删除远程分支
 
-git fetch 分支名 //拉取
-git merge 分支名 //合并
+git fetch branchName // 拉取
+git merge branchName // 合并
+git pull branchName // 拉取并合并
+git fetch origin // 从origin服务器抓取本地没有的数据，并且更新本地数据库，移动 origin/master 指针指向新的、更新后的位置
 
-git pull 分支名 //拉取并合并
-
-使用Git下载指定分支命令为：git clone -b 分支名仓库地址
-例如：使用Git下载 gue 分支代码，使用命令：git clone -b gue https://github.com/guelwj/Gue.github.git
+git clone repositoryAddress// 克隆仓库
 ----------------------
 撤销操作：
 git checkout .             //修改过某个文件，没有git add，想撤销这次修改
@@ -97,9 +100,6 @@ git reset                  //所有在暂存区的都撤销
 git reset example.txt      //修改过某个文件，已经git add过，撤销这次修改 (暂存区目录树的重写)。
 git reset --soft commitId  //如果已经修改某几个文件，但是想撤销到某个版本，但是当前暂存区、工作区不想撤销
 git reset --hard commitId  //直接撤销回某个版本
-
-git reflog                 //可显示版本号
-git reset --hard HEAD@{0}
 ----------------------
 git stash     当前工作区暂停
 git stash pop 继续当前工作
@@ -109,38 +109,17 @@ git diff             //比较工作目录和临时修改区域（未git add加�
 git diff branchName  //比较当前目录与某个分支的差异
 git diff head        //显示工作版本和head的差别
 ----------------------
-git cat-file -p HEAD 可以查看当前版本的父版本parent，如果当前版本是由两个分支merge的话，会出现两个parent
-
-printf git |sha1sum            //保证每次提交全球唯一
-printf gitchina.org |sha1sum   //保证每次提交全球唯一
-----------------------
 linux命令：
 cd    //更换当前目录
 mkdir //创建一个新目录
 vim   //创建、修改文件
-
 rm    //删除文件；一般的删除操作用rm即可
--f, --force    忽略不存在的文件，从不给出提示。
--i, --interactive 进行交互式删除
--r, -R, --recursive   指示rm将参数中列出的全部目录和子目录均递归地删除。
--v, --verbose    详细显示进行的步骤
 ----------------------
 ```
-git权威指南教程：http://www.icoolxue.com/album/show/41
-
-
-## git_push错误
-```javascript
-在github库中对某个文件进行了在线的编辑，并且没有同步到本地库，之后我在本地库添加了文件test.txt，并想提交到github，出现以下错误：error：failed to push some refs to。
-这个问题是因为远程库与本地库不一致造成的，那么我们把远程库同步到本地库就可以了。 
-使用指令 git pull --rebase origin master
-这条指令的意思是把远程库中的更新合并到本地库中，--rebase的作用是取消掉本地库中刚刚的commit，并把他们接到更新后的版本库之中。
-```
-https://blog.csdn.net/mbuger/article/details/70197532
 
 
 ## 使用flexible实现手淘H5页面的终端适配
-https://github.com/amfe/article/issues/17?utm_source=caibaojian.com
+参考：https://github.com/amfe/article/issues/17?utm_source=caibaojian.com
 
 
 ## webpack
@@ -1078,14 +1057,6 @@ d.$lis.filter(".active").removeClass("active")
 https://blog.csdn.net/moqiluoji/article/details/104608076
 
 
-## var和let的区别
-```javascript
-1.var是函数作用域，let是块作用域。// 例如在for循环中，用let定义的变量i在for循环外部是不能访问的，但是var可以
-2.let不能在定义之前访问该变量，但是var可以。// 声明提前
-3.let不能被重新定义，但是var可以。
-```
-
-
 ## 网站速度优化
 ```javascript
 1.减少HTTP请求数
@@ -1335,7 +1306,7 @@ Etag / If-None-Match 同理。
 总结：
 强制缓存优先于协商缓存进行，若强制缓存(Expires和Cache-Control)生效则直接使用缓存，若不生效则进行协商缓存(Last-Modified / If-Modified-Since和Etag / If-None-Match)，协商缓存由服务器决定是否使用缓存，若协商缓存失效，那么代表该请求的缓存失效，重新获取请求结果，再存入浏览器缓存中；生效则返回304，继续使用缓存。
 ```
-https://juejin.cn/post/6844903593275817998
+参考：https://juejin.cn/post/6844903593275817998
 
 
 ## JS订阅模式
@@ -1870,4 +1841,20 @@ return result instanceof Object ? result: obj;
 
 // 总结
 WeakSet 的对象值与 WeakMap 的键都是弱引用的，如果没有其他的变量或属性引用这个对象值，则这个对象将会被垃圾回收掉（不考虑该对象还存在于 WeakSet 或 WeakMap 中）。用于解决内存泄漏，提高性能。
+```
+
+
+## http与https
+```javascript
+// 主要区别
+1.http是超文本传输协议，信息是明文传输；https则是在http的基础上加入了安全性的SSL/TLS加密传输协议，比http协议安全。
+2.http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。
+3.https协议需要到CA申请证书，一般免费证书较少，因而需要一定费用。
+
+// 客户端使用https方式与web服务器通信的步骤
+1.客户使用https的URL访问web服务器，要求与web服务器建立SSL连接。
+2.web服务器收到客户端请求后，会将网站的证书信息（证书中包含公钥）传送给客户端。
+3.客户端浏览器会根据与web服务器协商的SSL/TLS连接的安全等级，建立会话密钥，然后利用web服务器的公钥将会话密钥加密，再传送给web服务器。
+4.web服务器利用自己的私钥解密出会话密钥。
+5.web服务器利用会话密钥加密与客户端之间的通信。
 ```
