@@ -8,7 +8,6 @@
 * [webpack](#webpack)
 * [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
 * [js控制输入框光标位置](#js控制输入框光标位置)
-* [jquery中attr和prop的区别介绍](#jquery中attr和prop的区别介绍)
 * [ios与android的new_date之坑](#ios与android的new_date之坑)
 * [原生js实现瀑布流效果](#原生js实现瀑布流效果)
 * [微信小程序rsa签名验签加密解密](#微信小程序rsa签名验签加密解密)
@@ -55,6 +54,7 @@
 * [js的new操作符做了哪些事情](#js的new操作符做了哪些事情)
 * [Set和Map](#Set和Map)
 * [http与https](#http与https)
+* [深度作用选择器](#深度作用选择器)
 
 
 
@@ -255,7 +255,7 @@ module.exports = {
 
 
 ## video搭配canvas的神奇效果
-http://html5doctor.com/video-canvas-magic/
+参考：http://html5doctor.com/video-canvas-magic/
 
 
 ## js控制输入框光标位置
@@ -265,15 +265,7 @@ if (inpObj.setSelectionRange) {
     inpObj.setSelectionRange(0, inpObj.value.length);
 }
 ```
-https://blog.csdn.net/foralienzhou/article/details/52437929
-
-
-## jquery中attr和prop的区别介绍
-```javascript
-对于HTML元素本身就带有的固有属性，在处理时，使用prop方法。
-对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法。
-```
-https://www.jb51.net/article/88068.htm
+参考：https://blog.csdn.net/foralienzhou/article/details/52437929
 
 
 ## ios与android的new_date之坑
@@ -292,15 +284,15 @@ new Date(date)
 new Date(date.replace(/\-/g,'/').replace('.0',''));
 //The Feb 18 2016 16:42:54 GMT+0800 (CST)
 ```
-http://www.mamicode.com/info-detail-1392511.html
+参考：http://www.mamicode.com/info-detail-1392511.html
 
 
 ## 原生js实现瀑布流效果
-https://segmentfault.com/a/1190000012621936
+参考：https://segmentfault.com/a/1190000012621936
 
 
 ## 微信小程序rsa签名验签加密解密
-https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
+参考：https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
 
 
 ## 解决vs2017隐藏高级保存选项命令
@@ -357,7 +349,7 @@ import any from "./a.js"
 import any12 from "./a.js" 
 console.log(any,any12)   // boy,boy
 ```
-https://www.jianshu.com/p/edaf43e9384f
+参考：https://www.jianshu.com/p/edaf43e9384f
 
 
 ## 微信小程序授权的写法
@@ -514,15 +506,15 @@ str = str.replace(/&nbsp;/g, ' ');
 修改为
 str = str.replace(/&nbsp;/g, '\xa0');
 ```
-https://blog.csdn.net/milli236/article/details/79668162
+参考：https://blog.csdn.net/milli236/article/details/79668162
 
 
 ## 在浏览器上安装Vue_Devtools工具
-https://www.cnblogs.com/feiyu159/p/8666865.html
+参考：https://www.cnblogs.com/feiyu159/p/8666865.html
 
 
 ## 浏览器同源政策及其规避方法
-http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
+参考：http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
 
 
 ## 封装axios
@@ -548,11 +540,11 @@ export const api = {
   }
 }
 ```
-https://www.jianshu.com/p/4168efdc172b
+参考：https://www.jianshu.com/p/4168efdc172b
 
 
 ## axios的三种post请求方式写法
-https://segmentfault.com/a/1190000015261229
+参考：https://segmentfault.com/a/1190000015261229
 
 
 ## 数组的一些操作
@@ -649,7 +641,7 @@ Object.fromEntries([['name', 'Gue'], ['age', 18]]) // { name: 'Gue', age: 18 }
 
 
 ## 浅谈控制反转与依赖注入
-https://zhuanlan.zhihu.com/p/33492169
+参考：https://zhuanlan.zhihu.com/p/33492169
 
 
 ## 防抖与节流
@@ -763,7 +755,7 @@ const deepClone = obj => {
 // 拓展：callee 是 arguments 对象的一个属性。它可以用于引用该函数的函数体内当前正在执行的函数。这在函数的名称是未知时很有用，例如在没有名称的函数表达式 (也称为“匿名函数”)内。
 // 警告：在严格模式下，第5版 ECMAScript (ES5) 禁止使用 arguments.callee()。当一个函数必须调用自身的时候, 避免使用 arguments.callee(), 通过要么给函数表达式一个名字,要么使用一个函数声明.
 ```
-https://www.cnblogs.com/tangjiao/p/9313829.html
+参考：https://www.cnblogs.com/tangjiao/p/9313829.html
 
 
 ## eventBus
@@ -789,7 +781,7 @@ onMenuIconClick() {
   this.$bus.$emit("eventName");
 }
 ```
-https://www.jianshu.com/p/af9cb05bfbaf
+参考：https://www.jianshu.com/p/af9cb05bfbaf
 
 
 ## 在vue中使用RSA加密解密加签解签
@@ -823,7 +815,7 @@ RSAdecrypt(pas) {
   return jse.decrypt(pas);
 }
 ```
-https://juejin.im/post/5c27331be51d4535c9267fa9
+参考：https://juejin.im/post/5c27331be51d4535c9267fa9
 
 
 ## JSON数据中含有需要unescape字符串的处理
@@ -990,7 +982,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 // 2.在被请求的网站上，设置HTTP头
 "Access-Control-Allow-Origin:*" //值为*或指定的域名
 ```
-https://www.cnblogs.com/PheonixHkbxoic/p/5760838.html
+参考：https://www.cnblogs.com/PheonixHkbxoic/p/5760838.html
 
 
 ## 获取两个日期之间的日期数组
@@ -1054,7 +1046,7 @@ d.$lis.filter(".active").removeClass("active")
 
 修改完成这两个文件后，注意清除浏览器缓存，再刷新该bootstrap-select动态搜索下拉框的页面，就可以不打断中文输入法输入，完整键入中文字符了。
 ```
-https://blog.csdn.net/moqiluoji/article/details/104608076
+参考：https://blog.csdn.net/moqiluoji/article/details/104608076
 
 
 ## 网站速度优化
@@ -1358,7 +1350,7 @@ salesOffices.trigger('squareMeter100', 50000)
 // 小光，你看中的88平方的房子，价格=10000
 // 小红，你看中的100平方的房子，价格=50000
 ```
-https://www.jianshu.com/p/0aacfec05046
+参考：https://www.jianshu.com/p/0aacfec05046
 
 
 ## 闭包
@@ -1601,7 +1593,7 @@ export function getBlobImg (params) {
   })
 }
 ```
-https://www.jianshu.com/p/64d240292814
+参考：https://www.jianshu.com/p/64d240292814
 
 
 ## 从输入网址到页面显示的全过程
@@ -1670,12 +1662,12 @@ ps：
 进程（process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。
 线程（thread）是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位。
 ```
-https://juejin.cn/post/6844903843197616136
+参考：https://juejin.cn/post/6844903843197616136
 
 
 ## 手写vue
 路径：demo/MVue
-https://www.bilibili.com/video/av80611222/
+参考：https://www.bilibili.com/video/av80611222/
 
 
 ## prototype和__proto__的区别
@@ -1783,7 +1775,7 @@ cr.wipe = function (obj) {
 arr.length = 0;
 // 将[]赋值给一个数组对象，是清空数组的捷径（例如： arr = [];），但是需要注意的是，这种方式又创建了一个新的空对象，并且将原来的数组对象变成了一小片内存垃圾！实际上，将数组长度赋值为0（arr.length = 0）也能达到清空数组的目的，并且同时能实现数组重用，减少内存垃圾的产生。
 ```
-https://juejin.cn/post/6981588276356317214
+参考：https://juejin.cn/post/6981588276356317214
 
 
 ## vue中computed和watch的区别
@@ -1861,4 +1853,57 @@ WeakSet 的对象值与 WeakMap 的键都是弱引用的，如果没有其他的
 // ps
 公钥和私钥是通过一种算法得到的一个密钥对，用公钥加密的数据必须用私钥解密。
 会话密钥又称对称密钥，因为同一密钥用于加密和解密。
+```
+
+
+## 深度作用选择器
+```javascript
+当 <style> 标签有 scoped 属性时，它的 CSS 只作用于当前组件中的元素。
+vue组件编译后，默认只会对组件的最外层标签加入[data-v-xxxx]属性，但第二层开始就没有效果了。
+
+// 以下样式修改没有效果
+<style scoped>
+    .test .weui-cells {
+        // ...
+    }
+</style>
+
+// 因为有scoped属性的css最终编译出来都会变成这样
+.test[data-v-xxxx] .weui-cells[data-v-xxxx]
+
+// 解决方法一：
+移除 scoped 属性，或者新建一个没有 scoped 属性的 style 标签（一个.vue文件允许多个style）。
+
+// 解决方法二：
+// 深度作用选择器
+<style scoped>
+    .test >>> .weui-cells {
+        // ...
+    }
+</style>
+
+// 上述代码将会编译成
+.test[data-v-xxxx] .weui-cells {
+    // ...
+}
+
+// 而对于less或者sass等预编译，是不支持 >>> 操作符的，可以使用 /deep/ 来替换 >>> 操作符
+<style lang="scss" scoped>
+.test {
+  width: 100px;
+
+  /deep/ .el-input__inner {
+    border: 0;
+    color: #000;
+  }
+
+  /* 或者 */
+  /deep/ {
+    .el-input__inner {
+      border: 0;
+      color: #000;
+    }
+  }
+}
+</style>
 ```
