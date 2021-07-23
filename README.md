@@ -55,6 +55,7 @@
 * [Set和Map](#Set和Map)
 * [http与https](#http与https)
 * [深度作用选择器](#深度作用选择器)
+* [async/await优雅的错误处理方法](#async/await优雅的错误处理方法)
 
 
 
@@ -82,6 +83,7 @@ git push origin local_branch:remote_branch // 远程没有remote_branch分支并
 
 git branch branchName // 创建分支
 git checkout branchName // 切换到对应分支
+git checkout -b branchName origin/branchName // 取远程分支并分化一个新分支
 git branch -d branchName // -d是--delete的缩写，在使用--delete删除分支时，该分支必须完全和它的上游分支merge完成，如果没有上游分支,必须要和HEAD完全merge
 git branch -D branchName // -D是--delete --force的缩写，强制删除
 git push origin --delete branchName // 删除远程分支
@@ -1907,3 +1909,25 @@ vue组件编译后，默认只会对组件的最外层标签加入[data-v-xxxx]�
 }
 </style>
 ```
+
+
+## async/await优雅的错误处理方法
+```javascript
+const fetchData = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('fetch data')
+    }, 0)
+  })
+}
+
+// 抽离成公共方法
+const awaitWrap = (promise) => {
+  return promise
+    .then(data => [null, data])
+    .catch(err => [err, null])
+}
+
+const [err, data] = await awaitWrap(fetchData())
+```
+参考：https://www.jb51.net/article/155700.htm
