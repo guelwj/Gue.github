@@ -39,7 +39,7 @@
 * [some的实现](#some的实现)
 * [判断是否为数组的方法](#判断是否为数组的方法)
 * [http缓存](#http缓存)
-* [JS订阅模式](#JS订阅模式)
+* [js订阅模式](#js订阅模式)
 * [闭包](#闭包)
 * [vue全局注册组件](#vue全局注册组件)
 * [Promise_all的错误处理](#Promise_all的错误处理)
@@ -56,6 +56,7 @@
 * [http与https](#http与https)
 * [深度作用选择器](#深度作用选择器)
 * [async-await优雅的错误处理方法](#async-await优雅的错误处理方法)
+* [element-ui](#element-ui)
 
 
 
@@ -1303,7 +1304,7 @@ Etag / If-None-Match 同理。
 参考：https://juejin.cn/post/6844903593275817998
 
 
-## JS订阅模式
+## js订阅模式
 ```javascript
 // 用发布-订阅模式，模拟购房者与售楼处的故事
 let event = {
@@ -1930,4 +1931,11 @@ const awaitWrap = (promise) => {
 
 const [err, data] = await awaitWrap(fetchData())
 ```
-参考：https://www.jb51.net/article/155700.htm
+
+
+## element-ui
+```javascript
+// select选择器多选框，数据回显后不能修改值
+// 原因：数据层级太深，render函数没有自动更新，需手动强制刷新。
+@change="$forceUpdate()"
+```
