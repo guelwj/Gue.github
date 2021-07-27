@@ -68,8 +68,6 @@ git init demo //初始化
 git add fileName // 将修改过的文件add一下
 git add . // 添加所有修改过的文件
 
-git ls -la // 列出文件列表
-
 git status // 查看状态
 
 git commit -m "comment" 提交
@@ -113,6 +111,7 @@ git diff branchName  //比较当前目录与某个分支的差异
 git diff head        //显示工作版本和head的差别
 ----------------------
 linux命令：
+ls -la // 列出文件列表
 cd    //更换当前目录
 mkdir //创建一个新目录
 vim   //创建、修改文件
