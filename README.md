@@ -95,12 +95,13 @@ git fetch origin // 从origin服务器抓取本地没有的数据，并且更新
 git clone repositoryAddress// 克隆仓库
 ----------------------
 撤销操作：
-git checkout .             //修改过某个文件，没有git add，想撤销这次修改
+git checkout .             // 修改过某个文件，没有git add，想撤销这次修改
 
-git reset                  //所有在暂存区的都撤销
-git reset example.txt      //修改过某个文件，已经git add过，撤销这次修改 (暂存区目录树的重写)。
-git reset --soft commitId  //如果已经修改某几个文件，但是想撤销到某个版本，但是当前暂存区、工作区不想撤销
-git reset --hard commitId  //直接撤销回某个版本
+git reset                  // 所有在暂存区的都撤销
+git reset example.txt      // 修改过某个文件，已经git add过，撤销这次修改 (暂存区目录树的重写)。
+git reset --soft commitId  // 如果已经修改某几个文件，但是想撤销到某个版本，但是当前暂存区、工作区不想撤销
+git reset --hard commitId  // 直接撤销回某个版本
+git rebase -i commitId     // 使用命令后，打开一个文件，vi将需要删除版本前面的pick改为drop，然后:wq保存
 ----------------------
 git stash     当前工作区暂停
 git stash pop 继续当前工作
@@ -112,10 +113,10 @@ git diff head        //显示工作版本和head的差别
 ----------------------
 linux命令：
 ls -la // 列出文件列表
-cd    //更换当前目录
-mkdir //创建一个新目录
-vim   //创建、修改文件
-rm    //删除文件；一般的删除操作用rm即可
+cd     // 更换当前目录
+mkdir  // 创建一个新目录
+vim    // 创建、修改文件
+rm     // 删除文件；一般的删除操作用rm即可
 ----------------------
 ```
 
