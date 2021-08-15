@@ -138,3 +138,56 @@ export const openConfirm = ({
 			fail();
 		});
 };
+
+// 下载文件方法1
+export const downloadFileFromUrl = (url, filename) => {
+  const xhr = new XMLHttpRequest()
+  xhr.open('get', url)
+  xhr.responseType = 'blob'
+  xhr.send()
+  xhr.onload = function() {
+    if (this.status === 200 || this.status === 304) {
+      const objUrl = URL.createObjectURL(this.response)
+      const a = document.createElement('a')
+      a.style.display = 'none'
+      a.href = objUrl
+      if (filename) {
+        a.setAttribute('download', filename + getExtNameFromUrl(url))
+      } else {
+        try {
+          a.setAttribute('download', getUploadFileName(url))
+        } catch (e) {
+          a.setAttribute('download', '文件名')
+        }
+      }
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+    }
+  }
+}
+
+// 下载文件方法2
+export const downloadFile = (fileName, content, blobOptions = {}) => {
+	// blobOptions = {
+	//     type: 'text/csv',
+	//     endings: 'native' // or transparent
+	// };
+
+	let blob = new Blob([content], blobOptions);
+
+	// create a标签
+	let a = document.createElement('a');
+	a.innerHTML = fileName;
+	a.download = fileName;// 指定生成的文件名
+	a.href = URL.createObjectURL(blob);
+	document.body.appendChild(a);
+  
+	// create事件
+	let evt = document.createEvent("MouseEvents");
+	evt.initEvent("click", false, false);
+	a.dispatchEvent(evt);
+
+	// remove a标签
+	document.body.removeChild(a);
+}
