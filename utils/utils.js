@@ -191,3 +191,57 @@ export const downloadFile = (fileName, content, blobOptions = {}) => {
 	// remove a标签
 	document.body.removeChild(a);
 }
+
+/**
+ * 获取文件（blob）
+ * @param raw 请求返回的原始值 例如：ArrayBuffer
+ * @param typeObj Blob的文件类型
+ * @param name 文件命名
+ */
+export const downloadFileFromRawData = (raw, typeObj, name) => {
+  // 处理type
+  let type = null
+  if (raw.headers['content-disposition']) {
+    const arrayContentDisposition = raw.headers['content-disposition'].split('.')
+    const lastOne = arrayContentDisposition[arrayContentDisposition.length - 1]
+
+    const arrayFileType = Object.keys(fileType)
+    if (arrayFileType.indexOf(lastOne) !== -1) {
+      type = fileType[lastOne]
+    } else {
+      type = typeObj
+    }
+  } else {
+    type = typeObj
+  }
+
+  // 生成blob文件
+  const blob = new Blob([raw.data], { type: type.name })
+
+  // 生成名字
+  let filename = ''
+  if (name) {
+    filename = name + type.ext
+  } else {
+    filename = (raw.headers['content-disposition']
+      ? decodeURI(raw.headers['content-disposition'].match(/filename=.*/)).slice(9)
+      : '')
+  }
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    // IE和Edge的方法
+    window.navigator.msSaveOrOpenBlob(blob, filename)
+  } else {
+    // 非IE方法
+    const link = document.createElement('a')
+    link.style.display = 'none'
+    const objUrl = window.URL.createObjectURL(blob)
+    link.href = objUrl
+    link.setAttribute('download', filename)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    setTimeout(() => {
+      window.URL.revokeObjectURL(objUrl)
+    }, 5000)
+  }
+}
