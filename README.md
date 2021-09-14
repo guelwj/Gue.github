@@ -57,6 +57,7 @@
 * [深度作用选择器](#深度作用选择器)
 * [async-await优雅的错误处理方法](#async-await优雅的错误处理方法)
 * [element-ui](#element-ui)
+* [滑块验证码](#滑块验证码)
 
 
 
@@ -1939,3 +1940,8 @@ const [err, data] = await awaitWrap(fetchData())
 // 原因：数据层级太深，render函数没有自动更新，需手动强制刷新。
 @change="$forceUpdate()"
 ```
+
+
+## 滑块验证码
+网易易盾
+参考：https://support.dun.163.com/documents/15588062143475712?docId=294963579379175424
