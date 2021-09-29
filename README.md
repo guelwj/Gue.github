@@ -58,6 +58,7 @@
 * [async-await优雅的错误处理方法](#async-await优雅的错误处理方法)
 * [element-ui](#element-ui)
 * [滑块验证码](#滑块验证码)
+* [vite踩坑记录](#vite踩坑记录)
 
 
 
@@ -1945,3 +1946,15 @@ const [err, data] = await awaitWrap(fetchData())
 ## 滑块验证码
 网易易盾
 参考：https://support.dun.163.com/documents/15588062143475712?docId=294963579379175424
+
+
+## vite踩坑记录
+```javascript
+// vite启动后提示“Network: use `--host` to expose“，且无法通过网络IP访问服务
+// 参考：https://blog.csdn.net/qq_41664096/article/details/118961381
+
+// 使用socket.io-client 4.2版本会在connnect_error回调里报错：xrh poll error
+// 要卸载，重新安装4.1.2版本
+npm uninstall socket.io-client
+npm install socket.io-client@4.1.2
+```
