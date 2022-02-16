@@ -59,6 +59,7 @@
 * [element-ui](#element-ui)
 * [滑块验证码](#滑块验证码)
 * [vite踩坑记录](#vite踩坑记录)
+* [threejs](#threejs)
 
 
 
@@ -1940,6 +1941,22 @@ const [err, data] = await awaitWrap(fetchData())
 // select选择器多选框，数据回显后不能修改值
 // 原因：数据层级太深，render函数没有自动更新，需手动强制刷新。
 @change="$forceUpdate()"
+
+
+// el-form-item，通过prop来动态控制rules，此时需要增加key属性，不然表单validate校验时会出错（必填项没填，但是校验通过）
+// 例子：<el-form-item label="备注" :prop="form.auditStatus === 1 ? 'auditContent' : ''" :key="form.auditStatus"></el-form-item>
+
+
+// element-ui 下拉框change事件中添加弹窗 ，关闭弹窗select再次获取焦点
+// https://www.jianshu.com/p/edc8fce552f1
+
+
+// element-ui Cascader 级联选择器 同时返回 value 和 label
+// https://www.jianshu.com/p/29b93cb52e5d
+
+
+// element-ui的upload组件上传文件失败后，仍显示在列表上 去除
+// https://blog.csdn.net/weixin_37989267/article/details/116638153
 ```
 
 
@@ -1953,8 +1970,19 @@ const [err, data] = await awaitWrap(fetchData())
 // vite启动后提示“Network: use `--host` to expose“，且无法通过网络IP访问服务
 // 参考：https://blog.csdn.net/qq_41664096/article/details/118961381
 
+
 // 使用socket.io-client 4.2版本会在connnect_error回调里报错：xrh poll error
 // 要卸载，重新安装4.1.2版本
 npm uninstall socket.io-client
 npm install socket.io-client@4.1.2
+```
+
+
+## threejs
+```javascript
+// 手把手教你用Threejs搭建一个Web3D汽车展厅
+// https://juejin.cn/post/6981249521258856456
+
+// 模型下载网站
+// https://sketchfab.com/feed
 ```
