@@ -50,6 +50,7 @@
 * [js作用域与作用域链](#js作用域与作用域链)
 * [js垃圾回收机制](#js垃圾回收机制)
 * [vue中computed和watch的区别](#vue中computed和watch的区别)
+* [vue组件通讯方式](#vue组件通讯方式)
 * [js的new操作符做了哪些事情](#js的new操作符做了哪些事情)
 * [Set和Map](#Set和Map)
 * [http与https](#http与https)
@@ -1730,6 +1731,17 @@ arr.length = 0;
 3.从实现上，computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算。watch在每次监听的值变化时，都会执行回调。其实从这一点来看，都是在依赖的值变化之后，去执行回调。如果一个值依赖多个属性（多对一），用computed肯定是更加方便的。如果一个值变化后会引起一系列操作，或者一个值变化会引起一系列值的变化（一对多），用watch更加方便一些。
 4.watch的回调里面会传入监听属性的新旧值，通过这两个值可以做一些特定的操作。computed通常就是简单的计算。
 5.watch和computed并没有哪个更底层，watch内部调用的是vm.$watch，它们的共同之处就是每个定义的属性都单独建立了一个Watcher对象。
+```
+
+
+## vue组件通讯方式
+```javascript
+// 1.prop/emit
+// 2.v-model
+// 3.ref属性
+// 4.provide/inject；用于跨多级组件之间的通讯
+// 5.eventBus
+// 6.vuex
 ```
 
 
