@@ -5,13 +5,14 @@
 ## 目录：
 * [git基本操作](#git基本操作)
 * [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
+* [px2rem](#px2rem)
 * [webpack](#webpack)
 * [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
 * [js控制输入框光标位置](#js控制输入框光标位置)
 * [ios与android的new_date之坑](#ios与android的new_date之坑)
 * [原生js实现瀑布流效果](#原生js实现瀑布流效果)
 * [微信小程序rsa签名验签加密解密](#微信小程序rsa签名验签加密解密)
-* [解决vs2017隐藏高级保存选项命令](#解决vs2017隐藏高级保存选项命令)
+
 * [export_default和export的区别](#export_default和export的区别)
 * [微信小程序授权的写法](#微信小程序授权的写法)
 * [微信小程序获取和修改上一个页面的数据](#微信小程序获取和修改上一个页面的数据)
@@ -26,8 +27,6 @@
 * [对象深克隆](#对象深克隆)
 * [eventBus](#eventBus)
 * [在vue中使用RSA加密解密加签解签](#在vue中使用RSA加密解密加签解签)
-* [JSON数据中含有需要unescape字符串的处理](#JSON数据中含有需要unescape字符串的处理)
-* [px2rem](#px2rem)
 * [浏览器跨域请求处理方法](#浏览器跨域请求处理方法)
 * [获取两个日期之间的日期数组](#获取两个日期之间的日期数组)
 * [bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug](#bootstrap_selectpicker搜索部分中文时不支持完整中文字符输入的bug)
@@ -126,6 +125,124 @@ rm     // 删除文件；一般的删除操作用rm即可
 
 ## 使用flexible实现手淘H5页面的终端适配
 参考：https://github.com/amfe/article/issues/17?utm_source=caibaojian.com
+
+
+## px2rem
+```javascript
+// 1.下载并引入lib-flexible
+npm install --save lib-flexible
+// 在main.js中 ：import 'lib-flexible/flexible'
+
+// 2.引入px2rem-loader
+npm install --save px2rem-loader
+
+// 3.将px2rem-loader添加到cssLoaders
+// 在build/utils.js中，添加如下配置
+// 在generateLoaders方法中增加px2remLoader
+var px2remLoader = {
+  loader: "px2rem-loader",
+  options: {
+    remUnit: 75 // 设计稿宽度/10
+  }
+};
+
+function generateLoaders(loader, loaderOptions) {
+  // const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
+  const loaders = [
+    ...(options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]),
+    px2remLoader
+  ];
+  if (loader) {
+    loaders.push({
+      loader: loader + "-loader",
+      options: Object.assign({}, loaderOptions, {
+        sourceMap: options.sourceMap
+      })
+    });
+  }
+
+  // Extract CSS when that option is specified
+  // (which is the case during production build)
+  if (options.extract) {
+    return ExtractTextPlugin.extract({
+      use: loaders,
+      fallback: "vue-style-loader"
+    });
+  } else {
+    return ["vue-style-loader"].concat(loaders);
+  }
+}
+
+// vue 使用lib-flexable，px2rem 进行移动端适配 但是引入的第三方UI组件 vux 的样式缩小
+// 解决方案:将vux组件中px转化为PX，避免被转成rem
+// 在webpack.base.conf.js中 vuxLoader中配置以下代码
+module.exports = vuxLoader.merge(webpackConfig, {
+  plugins: [
+    "vux-ui",
+    {
+      name: "after-less-parser",
+      fn: function(source) {
+        if (
+          this.resourcePath.replace(/\\/g, "/").indexOf("vux/src/components") >
+          -1
+        ) {
+          source = source.replace(/px/g, "PX");
+        }
+        // 自定义的全局样式大部分不需要转换
+        if (this.resourcePath.replace(/\\/g, "/").indexOf("App.vue") > -1) {
+          source = source.replace(/px/g, "PX").replace(/-1PX/g, "-1px");
+        }
+        return source;
+      }
+    },
+    {
+      name: "style-parser",
+      fn: function(source) {
+        if (
+          this.resourcePath.replace(/\\/g, "/").indexOf("vux/src/components") >
+          -1
+        ) {
+          source = source.replace(/px/g, "PX");
+        }
+        // 避免转换1PX.less文件路径
+        if (source.indexOf("1PX.less") > -1) {
+          source = source.replace(/1PX.less/g, "1px.less");
+        }
+        return source;
+      }
+    },
+    "progress-bar",
+    {
+      name: "duplicate-style",
+      options: {
+        cssProcessorOptions: {
+          safe: true,
+          zindex: false,
+          autoprefixer: {
+            add: true,
+            browsers: ["iOS >= 7", "Android >= 4.1"]
+          }
+        }
+      }
+    }
+  ]
+});
+```
+
+
+## web移动端适配方案
+```javascript
+// 1.flexible
+// lib-flexible + postcss + px2rem
+// lib-flexible这个过渡方案已经可以放弃使用，官方已经不再维护了，不管是现在的版本还是以前的版本，都存有一定的问题，建议用vw的兼容方案来替代此方案。
+
+// 2.viewport
+// 安装postcss-px-to-viewport
+npm install postcss-px-to-viewport --save-dev
+// 创建并配置postcss.config.js
+```
+参考：https://baijiahao.baidu.com/s?id=1683314832158439430&wfr=spider&for=pc&searchword=web%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%9C%80%E6%96%B0%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88
+https://blog.csdn.net/stenphencurry/article/details/120216640
 
 
 ## webpack
@@ -301,59 +418,12 @@ new Date(date.replace(/\-/g,'/').replace('.0',''));
 参考：https://github.com/zhangzhaopds/WeixinApp_RSA_Signature
 
 
-## 解决vs2017隐藏高级保存选项命令
-```javascript
-（1）单击“工具”|“自定义”命令，弹出“自定义”对话框。
-（2）单击“命令”标签，进入“命令”选项卡。
-（3）在“菜单栏”下拉列表中，选择“文件”选项。
-（4）单击“添加命令”按钮，弹出“添加命令”对话框。
-（5）在“类别”列表中，选择“文件”选项；在“命令”列表中，选择“高级保存选项”选项。
-（6）单击“确定”按钮，关闭“添加命令”对话框。
-（7）选中“控件”列表中的“高级保存选项”选项，单击“上移”或者“下移”按钮，调整该命令的位置。
-（8）单击“关闭”按钮，完成“高级保存选项”命令的添加操作。
-```
-
-
 ## export_default和export的区别
 ```javascript
 (1).export与export default均可用于导出常量、函数、文件、模块等
 (2).你可以在其它文件或模块中通过import+(常量 | 函数 | 文件 | 模块)名的方式，将其导入，以便能够对其进行使用
 (3).在一个文件或模块中，export、import可以有多个，export default仅有一个
 (4).通过export方式导出，在导入时要加{ }，export default则不需要
-
-
-1.export
-//a.js
-export const str = "blablabla~";
-export function log(sth) { 
-  return sth;
-}
-对应的导入方式：
-//b.js
-import { str, log } from 'a'; //也可以分开写两次，导入的时候带花括号
-
-
-2.export default
-//a.js
-const str = "blablabla~";
-export default str;
-对应的导入方式：
-//b.js
-import str from 'a'; //导入的时候没有花括号
-
-
-使用export default命令，为模块指定默认输出，这样就不需要知道所要加载模块的变量名
-//a.js
-let person = "boy";
-export default person（person不能加大括号）
-//原本直接export person外部是无法识别的，加上default就可以了.但是一个文件内最多只能有一个export default。
-其实此处相当于为person变量值"boy"起了一个系统默认的变量名default，自然default只能有一个值，所以一个文件内不能有多个export default。
-
-// b.js
-本质上，a.js文件的export default输出一个叫做default的变量，然后系统允许你为它取任意名字。所以可以为import的模块起任何变量名，且不需要用大括号包含
-import any from "./a.js"
-import any12 from "./a.js" 
-console.log(any,any12)   // boy,boy
 ```
 参考：https://www.jianshu.com/p/edaf43e9384f
 
@@ -824,150 +894,19 @@ RSAdecrypt(pas) {
 参考：https://juejin.im/post/5c27331be51d4535c9267fa9
 
 
-## JSON数据中含有需要unescape字符串的处理
-```javascript
-// 登录后返回的数据需要经过以下处理（为了统一进行unescape处理）
-JSON.parse(unescape(JSON.stringify(res.data)))
-
-// 返回的结果
-{"errcode":"0","errmsg":"","resultcode":"0","resultmsg":"","data":{"tableCount":"3","table1_rowCount":"1","table1":[{"UserID":"888840717208","UserCode":"13926112334","UserName":"伍永祺","IsAdmin":"0","JobName":"销售顾问","HeadImg":"hbb/UserHeadImg/888840717208_1491905224578_969.PNG","DepID":"680770339","Phone":"13926112334","GesturesPWD":"","EntID":"881000000001","EntCode":"hbb","EntName":"货宝宝网络科技有限公司","LogoImg":"881000000001/Other/888120596564_1523328944332_355.JPG","DepName":"厦门代理"}],"table2_rowCount":"1","table2":[{"CommunicationsSig":"{"IsSucc":1,"UserSig":{"TLS.Identifier":"888840717208","TLS.account_type":"1552","TLS.appid_at_3rd":"1400002796","TLS.expiry_after":"604800","TLS.sdk_appid":"1400002796","TLS.sig":"eJx1kE1PgzAAhu-8iqZXjJauH2CyAzN16XAuBBIXLw1CWapYEQqZGv*7C2rk4nt9nuRJ3g8PAADzm*y8KMuXwTrl3loNwSWAAaUYnv3xtjWVKpxadNU3J*g0zCM2s-SxNZ1WRe10N1kMkRChmWEqbZ2pzQ8PTyOIBxyjcGb11ZOaiv*nenOY4FakV1J00pLRHtaYJ9bdjT67j-OjkD3VOtv4i8FcvK4e9o1Yu9jEQb2JrV9ub5MikTTi0fXA6-24yx5Fk4g0blbSL98HyvN0uZwlnXn*-YZxRDhmBHqf3hd*tFZf","TLS.signed":"appid_at_3rd,account_type,identifier,sdk_appid,time,expire_after","TLS.time" : "2019/8/29 10:54:24"}}","accountID":"1200","accountType":"1552","env":"0","HWPushID":"161","XMPushID":"162"}],"table3_rowCount":"1","table3":[{"BankService":"http://service.hbbyun.com:8012/HBB_BankDataWebService/DataWebService.asmx","OssService":"http://service.hbbyun.com:8012/HBB_OssDataWebService/DataWebService.asmx","OssSystemDomain":"http://cdn-hbbsystem.hbbyun.com","OssCustomerDomain":"http://hbbcustomer-test.hbbyun.com","Bucket":"hbbcustomer-test","Endpoint":"http://oss-cn-shenzhen.aliyuncs.com","LogsService":"http://service.hbbyun.com:8012/HBB_LogsDataWebService/DataWebService.asmx","OpenService":"http://service.hbbyun.com:8012/HBB_OpenDataWebService/DataWebService.asmx"}]}}
-
-// 由于table2中的CommunicationsSig字段内容的本来就含有escape了的字符串
-// 所以在执行unescape时，把CommunicationsSig字段的内容也解析了
-// 导致双引号的匹配错乱了，JSON.parse时报错
-
-// 解决方法：
-// 把CommunicationsSig字段内容的双引号（%22）替换为（%2522）
-// 将%号转义为%25，再把回车%0D和换行%0A替换为空字符串
-JSON.parse(unescape(JSON.stringify(res.data).replace(/%22/g, '%2522').replace(/%0D/g,'').replace(/%0A/g,'')))
-
-// 最后就能得到一个JSON.parse后的正确的object
-// 附：
-// escape('"') 的结果为 "%22"
-// escape('%') 的结果为 "%25"
-```
-
-
-## px2rem
-```javascript
-// 1.下载并引入lib-flexible
-npm install --save lib-flexible
-// 在main.js中 ：import 'lib-flexible/flexible'
-
-// 2.引入px2rem-loader
-npm install --save px2rem-loader
-
-// 3.将px2rem-loader添加到cssLoaders
-// 在build/utils.js中，添加如下配置
-// 在generateLoaders方法中增加px2remLoader
-var px2remLoader = {
-  loader: "px2rem-loader",
-  options: {
-    remUnit: 75 // 设计稿宽度/10
-  }
-};
-
-function generateLoaders(loader, loaderOptions) {
-  // const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
-  const loaders = [
-    ...(options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]),
-    px2remLoader
-  ];
-  if (loader) {
-    loaders.push({
-      loader: loader + "-loader",
-      options: Object.assign({}, loaderOptions, {
-        sourceMap: options.sourceMap
-      })
-    });
-  }
-
-  // Extract CSS when that option is specified
-  // (which is the case during production build)
-  if (options.extract) {
-    return ExtractTextPlugin.extract({
-      use: loaders,
-      fallback: "vue-style-loader"
-    });
-  } else {
-    return ["vue-style-loader"].concat(loaders);
-  }
-}
-
-// vue 使用lib-flexable，px2rem 进行移动端适配 但是引入的第三方UI组件 vux 的样式缩小
-// 解决方案:将vux组件中px转化为PX，避免被转成rem
-// 在webpack.base.conf.js中 vuxLoader中配置以下代码
-module.exports = vuxLoader.merge(webpackConfig, {
-  plugins: [
-    "vux-ui",
-    {
-      name: "after-less-parser",
-      fn: function(source) {
-        if (
-          this.resourcePath.replace(/\\/g, "/").indexOf("vux/src/components") >
-          -1
-        ) {
-          source = source.replace(/px/g, "PX");
-        }
-        // 自定义的全局样式大部分不需要转换
-        if (this.resourcePath.replace(/\\/g, "/").indexOf("App.vue") > -1) {
-          source = source.replace(/px/g, "PX").replace(/-1PX/g, "-1px");
-        }
-        return source;
-      }
-    },
-    {
-      name: "style-parser",
-      fn: function(source) {
-        if (
-          this.resourcePath.replace(/\\/g, "/").indexOf("vux/src/components") >
-          -1
-        ) {
-          source = source.replace(/px/g, "PX");
-        }
-        // 避免转换1PX.less文件路径
-        if (source.indexOf("1PX.less") > -1) {
-          source = source.replace(/1PX.less/g, "1px.less");
-        }
-        return source;
-      }
-    },
-    "progress-bar",
-    {
-      name: "duplicate-style",
-      options: {
-        cssProcessorOptions: {
-          safe: true,
-          zindex: false,
-          autoprefixer: {
-            add: true,
-            browsers: ["iOS >= 7", "Android >= 4.1"]
-          }
-        }
-      }
-    }
-  ]
-});
-```
-
-
 ## 浏览器跨域请求处理方法
 ```javascript
-// 1.document.domain + iframe
+// 1.动态创建script，因为script标签不受同源策略的限制。
 
-// 2.location.hash + iframe
+// 2.JSONP；包含两部分：回调函数和数据
 
-// 3.window.name + iframe
+// 3.postMessage
 
-// 4.动态创建script，因为script标签不受同源策略的限制。
+// 4.web socket
 
-// 5.JSONP
+// 5.iframe
 
-// 6.postMessage
-
-// 7.web sockets
-
-// 8.CORS；CORS背后的思想，就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功，还是应该失败。
+// 6.CORS；CORS背后的思想，就是使用自定义的HTTP头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功，还是应该失败。
 
 
 // 总结：
@@ -1940,7 +1879,7 @@ const [err, data] = await awaitWrap(fetchData())
 ```javascript
 // select选择器多选框，数据回显后不能修改值
 // 原因：数据层级太深，render函数没有自动更新，需手动强制刷新。
-@change="$forceUpdate()"
+// 解决方法：@change="$forceUpdate()"
 
 
 // el-form-item，通过prop来动态控制rules，此时需要增加key属性，不然表单validate校验时会出错（必填项没填，但是校验通过）
@@ -1948,15 +1887,18 @@ const [err, data] = await awaitWrap(fetchData())
 
 
 // element-ui 下拉框change事件中添加弹窗 ，关闭弹窗select再次获取焦点
-// https://www.jianshu.com/p/edc8fce552f1
+// 解决方法：增加变量selectDisabled来控制，触发change事件弹出弹窗时，selectDisabled置true，弹窗结束后置false
+// 参考：https://www.jianshu.com/p/edc8fce552f1
 
 
 // element-ui Cascader 级联选择器 同时返回 value 和 label
-// https://www.jianshu.com/p/29b93cb52e5d
+// 解决方法：用getCheckedNodes方法
+// 官方文档：https://element.eleme.cn/#/zh-CN/component/cascader#cascader-methods
+// 参考：https://www.jianshu.com/p/29b93cb52e5d
 
 
 // element-ui的upload组件上传文件失败后，仍显示在列表上 去除
-// https://blog.csdn.net/weixin_37989267/article/details/116638153
+// 参考：https://blog.csdn.net/weixin_37989267/article/details/116638153
 ```
 
 
