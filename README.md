@@ -6,6 +6,7 @@
 * [git基本操作](#git基本操作)
 * [使用flexible实现手淘h5页面的终端适配](#使用flexible实现手淘h5页面的终端适配)
 * [px2rem](#px2rem)
+* [web移动端适配方案](#web移动端适配方案)
 * [webpack](#webpack)
 * [video搭配canvas的神奇效果](#video搭配canvas的神奇效果)
 * [js控制输入框光标位置](#js控制输入框光标位置)
