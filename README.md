@@ -60,6 +60,7 @@
 * [滑块验证码](#滑块验证码)
 * [vite踩坑记录](#vite踩坑记录)
 * [threejs](#threejs)
+* [plugins](#plugins)
 
 
 
@@ -1939,4 +1940,33 @@ npm install socket.io-client@4.1.2
 
 // 模型下载网站
 // https://sketchfab.com/feed
+```
+
+
+## plugins
+```javascript
+// js-cookie
+// https://github.com/js-cookie/js-cookie
+
+// svg-sprite-loader
+// https://www.jianshu.com/p/70f9c9268c83
+
+// iconfont
+// https://blog.csdn.net/weixin_43877778/article/details/120887789?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7-120887789-blog-121940333.pc_relevant_multi_platform_whitelistv2&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7-120887789-blog-121940333.pc_relevant_multi_platform_whitelistv2&utm_relevant_index=9
+
+// Export2Excel - vue导出excel
+// https://www.csdn.net/tags/OtDacg4sMzYyMjItYmxvZwO0O0OO0O0O.html
+
+// xlsx
+// https://www.npmjs.com/package/xlsx/v/0.17.0
+
+// js-file-download - 文件下载
+
+// SortableJS - 功能强大的JavaScript 拖拽库
+
+// vue-grid-layout 拖拽库
+// https://github.com/jbaysolutions/vue-grid-layout
+
+// dhtmlx-gantt 甘特图
+// https://docs.dhtmlx.com/gantt/
 ```
