@@ -61,6 +61,7 @@
 * [vite踩坑记录](#vite踩坑记录)
 * [threejs](#threejs)
 * [plugins](#plugins)
+* [echarts](#echarts)
 
 
 
@@ -1969,4 +1970,12 @@ npm install socket.io-client@4.1.2
 
 // dhtmlx-gantt 甘特图
 // https://docs.dhtmlx.com/gantt/
+```
+
+
+## echarts
+```javascript
+// 使用echarts宽度100%变成100px问题
+// 解决：用v-if
+// 参考：https://blog.csdn.net/m0_48507640/article/details/107737938?spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107737938-blog-112176058.pc_relevant_sortByAnswer&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-107737938-blog-112176058.pc_relevant_sortByAnswer&utm_relevant_index=1
 ```
