@@ -123,6 +123,16 @@ mkdir  // 创建一个新目录
 vim    // 创建、修改文件
 rm     // 删除文件；一般的删除操作用rm即可
 ----------------------
+// 使用git clone命令拉取代码报错fatal: repository 'xxx.git/' not found
+// 解决：用有权限的账号去拉取就好了;如果用户名有@符号，要转义成%40
+git clone http://username:password@git.xxx.com/xxx/xxx.git
+
+// exited with error code: 128
+// 原因：有的库有改动，不能通过git://访问，可改为使用https://来访问
+// 解决：在请求git://地址时，自动替换为https://
+git config --global url."https://".insteadOf git://
+// 删除这个设置
+git config --global unset url."https://".insteadOf
 ```
 
 
