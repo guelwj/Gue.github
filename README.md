@@ -63,6 +63,7 @@
 * [plugins](#plugins)
 * [echarts](#echarts)
 * [flex布局](#flex布局)
+* [vue.config.js](#vue.config.js)
 
 
 
@@ -2001,6 +2002,52 @@ ul {
 
   li {
     writing-mode: horizontal-tb
+  }
+}
+```
+
+
+## vue.config.js
+```javascript
+module.exports = {
+  devServer: {
+    port: '9527', // 端口号
+    open: true, // 配置自动启动浏览器
+    proxy: { // 代理服务器设置
+      /**
+       * 原理理解： 假设我的本地地址为: http://192.168.163.100:9527 (即http://localhost:9527)
+       *            服务器地址为: http://192.168.1.111:8760;
+       *            该服务器上的接口为：/api/xxx/xxx
+       *            如果我通过axios将接口直接写成
+       *            axios.get(http://192.168.1.111:8760/api/xxx/xxx)
+       *            那么这个时候从http://192.168.163.100:9527 到 http://192.168.1.111:8760/api/xxx/xxx
+       *            是存在跨域限制的。
+       *
+       *            所以，项目中在设置axios时是这样做的
+       *            1. 设置了一个baseURL 为process.env.VUE_APP_BASE_API, 这里我设置的值是'/my_test_proxy'
+       *            （process.env.VUE_APP_BASE_API这个环境变量的可以在项目的.env.development文件里配置，
+       *              代表调试环境，这个可以自己随意设置一个字符串，最好是复杂一点，能够做到标识,
+       *              在.env.production里面将这个变量设置为'',生产环境的url就不会带这个变量了。
+       *              这里我们跨域设置都讨论的是调试环境，在生产环境就要通过服务器的nginx配置了,
+       *              这里不作讨论）
+       *            2. 将axios的接口写成 baseURL+ 接口路径，即 /my_test_proxy +/api/xxx/xxx
+       *              (axios会在url前面加上配置的baseURL，这个在axios官网有说明)
+       *            3.请求的时候 浏览器上显示的是http://localhost:9527/my_test_proxy/api/xxx/xxx
+       *            4.因为有config里面的代理设置，即遇到'/my_test_proxy'，将它前面的地址
+       *              代理到http://192.168.1.111:8760，并且允许跨域
+       *            5. 并且将'/my_test_proxy'重写为''，即http://localhost:9527 变为
+       *              了http://192.168.1.111:8760，'/my_test_proxy'变为了''
+       *            6. 那么现在请求到的地址变为http://192.168.1.111:8760/api/xxx/xxx
+       *            7. 即成功代理给我们要访问的服务器，并解决了跨域问题
+       */
+      [process.env.VUE_APP_BASE_API]: {
+        target: 'http://192.168.1.111:8760',
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: '' // 将'/my_test_proxy'重写为空
+        }
+      }
+    }
   }
 }
 ```
